@@ -74,8 +74,8 @@ class _LoginState extends State<Login> {
                 GestureDetector(
                   onTap: () {},
                   child: Container(
-                    width: size.width * 0.06,
-                    height: size.height * 0.05,
+                    width: size.width * 0.13,
+                    height: size.height * 0.08,
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ttrana_pos/login.dart';
+import 'package:ttrana_pos/pages/login.dart';
 import 'package:ttrana_pos/pages/loginRegister.dart';
 
 void main() {
@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.

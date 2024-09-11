@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ttrana_pos/login.dart';
+import 'package:ttrana_pos/pages/login.dart';
+import 'package:ttrana_pos/pages/register.dart';
 
 class LoginRegister extends StatefulWidget {
   @override
@@ -148,9 +149,7 @@ class _LoginRegisterScreenState extends State<LoginRegister> {
                           if (perubahan) ...[
                             Login(),
                           ] else ...[
-                            Text("register"),
-                            TextField(),
-                            TextField()
+                            RegisterPage(),
                           ],
                         ],
                       ),
