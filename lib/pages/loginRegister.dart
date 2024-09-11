@@ -16,6 +16,7 @@ class _LoginRegisterScreenState extends State<LoginRegister> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Stack(
         children: [
           Column(
