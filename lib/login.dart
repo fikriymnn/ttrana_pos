@@ -95,7 +95,7 @@ class _LoginState extends State<Login> {
                             height: 40,
                           ),
                           TextFieldInpute(
-                            textEditingController: emailController,
+                            textEditingController: passwordController,
                             hintText: "Password",
                             prefixIcon: Icon(
                               Icons.lock,
