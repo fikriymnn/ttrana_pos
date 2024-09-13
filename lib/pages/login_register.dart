@@ -21,7 +21,7 @@ class _LoginRegisterState extends State<LoginRegister> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Column(
@@ -41,13 +41,13 @@ class _LoginRegisterState extends State<LoginRegister> {
             ),
           ),
           Center(
-            child: Container(
+            child: SizedBox(
               width: size.width * 0.8,
               height: size.height * 0.8,
               child: Stack(
                 children: [
                   AnimatedPositioned(
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     left: perubahan ? size.width * 0.45 : 0,
                     right: perubahan ? 0 : size.width * 0.45,
                     top: 0,
@@ -61,10 +61,10 @@ class _LoginRegisterState extends State<LoginRegister> {
                             color: Colors.black.withOpacity(0.5),
                             spreadRadius: 1,
                             blurRadius: 10,
-                            offset: Offset(10, 10),
+                            offset: const Offset(10, 10),
                           ),
                         ],
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           image: AssetImage(
                             'assets/images/background.jpg',
                           ),
@@ -132,7 +132,7 @@ class _LoginRegisterState extends State<LoginRegister> {
                     ),
                   ),
                   AnimatedPositioned(
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     left: perubahan ? 0 : size.width * 0.35,
                     right: perubahan ? size.width * 0.35 : 0,
                     top: 0,
@@ -140,7 +140,7 @@ class _LoginRegisterState extends State<LoginRegister> {
                     child: Container(
                       width: size.width * 0.4,
                       height: size.height * 0.6,
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         boxShadow: [
@@ -155,9 +155,9 @@ class _LoginRegisterState extends State<LoginRegister> {
                       child: Stack(
                         children: [
                           if (perubahan) ...[
-                            Login(),
+                            const Login(),
                           ] else ...[
-                            Register(),
+                            const Register(),
                           ],
                         ],
                       ),
