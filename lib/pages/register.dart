@@ -160,7 +160,7 @@ class _RegisterState extends State<Register> {
                     height: size.height * 0.015,
                   ),
                   CustomButton(
-                    teks: "Buat",
+                    text: "Buat",
                     onTap: () {},
                   ),
                 ],

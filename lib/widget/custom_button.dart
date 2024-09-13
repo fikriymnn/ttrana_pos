@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomButton extends StatelessWidget {
-  final String teks;
+  final String text;
   final void Function()? onTap;
-  const CustomButton({super.key, required this.teks, this.onTap});
+  const CustomButton({super.key, required this.text, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class CustomButton extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            teks,
+            text,
             style: GoogleFonts.josefinSans(
               fontSize: size.width * 0.016,
               fontWeight: FontWeight.w500,
