@@ -15,7 +15,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController notelpController = TextEditingController();
-  String _terpilih = 'opsi 1';
+  String _selected = 'opsi 1';
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -122,10 +122,10 @@ class _RegisterState extends State<Register> {
                       ),
                       Radio(
                         value: 'opsi 1',
-                        groupValue: _terpilih,
+                        groupValue: _selected,
                         onChanged: (String? value) {
                           setState(() {
-                            _terpilih = value!;
+                            _selected = value!;
                           });
                         },
                       ),
@@ -139,10 +139,10 @@ class _RegisterState extends State<Register> {
                       ),
                       Radio(
                         value: 'opsi 2',
-                        groupValue: _terpilih,
+                        groupValue: _selected,
                         onChanged: (String? value) {
                           setState(() {
-                            _terpilih = value!;
+                            _selected = value!;
                           });
                         },
                       ),

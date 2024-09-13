@@ -11,7 +11,7 @@ class LoginRegister extends StatefulWidget {
 }
 
 class _LoginRegisterState extends State<LoginRegister> {
-  bool perubahan = true;
+  bool isChanged = true;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
@@ -25,7 +25,9 @@ class _LoginRegisterState extends State<LoginRegister> {
       body: Stack(
         children: [
           Column(
-            children: [Image.asset('assets/images/elementhijau.png')],
+            children: [
+              Image.asset('assets/images/elementhijau.png'),
+            ],
           ),
           Positioned(
             child: Row(
@@ -48,8 +50,8 @@ class _LoginRegisterState extends State<LoginRegister> {
                 children: [
                   AnimatedPositioned(
                     duration: const Duration(milliseconds: 500),
-                    left: perubahan ? size.width * 0.45 : 0,
-                    right: perubahan ? 0 : size.width * 0.45,
+                    left: isChanged ? size.width * 0.45 : 0,
+                    right: isChanged ? 0 : size.width * 0.45,
                     top: 0,
                     bottom: 0,
                     child: Container(
@@ -89,7 +91,7 @@ class _LoginRegisterState extends State<LoginRegister> {
                             height: size.height * 0.03,
                           ),
                           Text(
-                            perubahan
+                            isChanged
                                 ? "Tap disini jika kamu belum\nmemiliki akun di OrnaTredec"
                                 : "Tap disini jika kamu susdah\nmemiliki akun di OrnaTredec",
                             style: GoogleFonts.josefinSans(
@@ -104,7 +106,7 @@ class _LoginRegisterState extends State<LoginRegister> {
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  perubahan = !perubahan;
+                                  isChanged = !isChanged;
                                 });
                               },
                               child: Container(
@@ -118,7 +120,7 @@ class _LoginRegisterState extends State<LoginRegister> {
                                         color: Colors.white)),
                                 child: Center(
                                   child: Text(
-                                    perubahan ? 'Buat' : 'Masuk',
+                                    isChanged ? 'Buat' : 'Masuk',
                                     style: GoogleFonts.josefinSans(
                                       color: Colors.white,
                                     ),
@@ -133,8 +135,8 @@ class _LoginRegisterState extends State<LoginRegister> {
                   ),
                   AnimatedPositioned(
                     duration: const Duration(milliseconds: 500),
-                    left: perubahan ? 0 : size.width * 0.35,
-                    right: perubahan ? size.width * 0.35 : 0,
+                    left: isChanged ? 0 : size.width * 0.35,
+                    right: isChanged ? size.width * 0.35 : 0,
                     top: 0,
                     bottom: 0,
                     child: Container(
@@ -148,13 +150,13 @@ class _LoginRegisterState extends State<LoginRegister> {
                             color: Colors.black.withOpacity(0.5),
                             spreadRadius: 1,
                             blurRadius: 10,
-                            offset: Offset(perubahan ? 0 : 10, 10),
+                            offset: Offset(isChanged ? 0 : 10, 10),
                           ),
                         ],
                       ),
                       child: Stack(
                         children: [
-                          if (perubahan) ...[
+                          if (isChanged) ...[
                             const Login(),
                           ] else ...[
                             const Register(),
