@@ -76,7 +76,7 @@ class _LoginState extends State<Login> {
                           height: size.width * 0.02,
                         ),
                         CustomButton(
-                          teks: "Masuk",
+                          text: "Masuk",
                           onTap: () {},
                         ),
                       ],
