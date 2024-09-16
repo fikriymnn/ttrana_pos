@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ttrana_pos/pages/login_register.dart';
 import 'package:ttrana_pos/widget/custom_button.dart';
 import 'package:ttrana_pos/widget/custom_textfield.dart';
 
@@ -15,7 +17,54 @@ class _RegisterState extends State<Register> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController notelpController = TextEditingController();
-  String _selected = 'opsi 1';
+  String _terpilih = 'opsi 1';
+
+  final Dio _dio =
+      Dio(); //menggunakan plugin Dio untuk menghubungkan server ke flutter
+
+  void _register() async {
+    //fungsi
+    final username = usernameController.text;
+    final email = emailController.text;
+    final password = passwordController.text;
+    final nohp = notelpController.hashCode;
+
+    try {
+      final response = await _dio.post(
+        'https://74gslzvj-8000.asse.devtunnels.ms/api/register', //menggunakan URL untuk menghubungkan API
+        data: {
+          // menginisialisasi value value yang ada di database
+          'username': username,
+          'email': email,
+          'password': password,
+          'no_hp': nohp,
+          'role': _terpilih,
+        },
+      );
+
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text(
+                  'Pendaftaran berhasil')), //notif untuk registrasi berhasil
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                LoginRegister(), //jika berhasil maka akan langsung pindah page ke page Login
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content:
+                Text('Pendaftaran login gagal')), //notif untuk registrasi gagal
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -56,6 +105,7 @@ class _RegisterState extends State<Register> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomTextfield(
+                          //menggunakan textfield untuk pengisian format
                           textEditingController: usernameController,
                           hintText: "Username",
                           prefixIcon: Icon(
@@ -63,6 +113,7 @@ class _RegisterState extends State<Register> {
                             color: const Color(0xFF3F9272),
                             size: size.width * 0.027,
                           ),
+                          isPass: false,
                         ),
                         SizedBox(
                           height: size.width * 0.01,
@@ -75,6 +126,7 @@ class _RegisterState extends State<Register> {
                             color: const Color(0xFF3F9272),
                             size: size.width * 0.027,
                           ),
+                          isPass: false,
                         ),
                         SizedBox(
                           height: size.width * 0.01,
@@ -87,19 +139,20 @@ class _RegisterState extends State<Register> {
                             size: size.width * 0.027,
                             color: const Color(0xFF3F9272),
                           ),
+                          isPass: true,
                         ),
                         SizedBox(
                           height: size.width * 0.01,
                         ),
                         CustomTextfield(
-                          textEditingController: notelpController,
-                          hintText: "No Telepon",
-                          prefixIcon: Icon(
-                            Icons.phone,
-                            size: size.width * 0.027,
-                            color: const Color(0xFF3F9272),
-                          ),
-                        ),
+                            textEditingController: notelpController,
+                            hintText: "No Telepon",
+                            prefixIcon: Icon(
+                              Icons.phone,
+                              size: size.width * 0.027,
+                              color: const Color(0xFF3F9272),
+                            ),
+                            isPass: false),
                       ],
                     ),
                   ),
@@ -121,11 +174,12 @@ class _RegisterState extends State<Register> {
                         width: size.width * 0.1,
                       ),
                       Radio(
-                        value: 'opsi 1',
-                        groupValue: _selected,
+                        //menggunakan wdiget radio untuk memiloih role
+                        value: 'kasir',
+                        groupValue: _terpilih,
                         onChanged: (String? value) {
                           setState(() {
-                            _selected = value!;
+                            _terpilih = value!;
                           });
                         },
                       ),
@@ -138,11 +192,11 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                       Radio(
-                        value: 'opsi 2',
-                        groupValue: _selected,
+                        value: 'admin',
+                        groupValue: _terpilih,
                         onChanged: (String? value) {
                           setState(() {
-                            _selected = value!;
+                            _terpilih = value!;
                           });
                         },
                       ),
@@ -161,7 +215,7 @@ class _RegisterState extends State<Register> {
                   ),
                   CustomButton(
                     text: "Buat",
-                    onTap: () {},
+                    onTap: _register, //menggunakan fungsi registrasi
                   ),
                 ],
               ),

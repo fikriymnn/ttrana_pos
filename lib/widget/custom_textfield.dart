@@ -10,7 +10,7 @@ class CustomTextfield extends StatelessWidget {
   const CustomTextfield({
     super.key,
     required this.textEditingController,
-    this.isPass = false,
+    required this.isPass,
     required this.hintText,
     this.prefixIcon,
   });
