@@ -16,6 +16,7 @@ class _LoginState extends State<Login> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final Dio _dio = Dio(); //menggunakan plugin Dio untuk menghubungkan server
+  bool _changed = true;
 
   void _login() async {
     //fungsi
@@ -94,10 +95,14 @@ class _LoginState extends State<Login> {
                           //menggunakan textfield untuk mengisi format login
                           textEditingController: usernameController,
                           hintText: "Username",
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: const Color(0xFF3F9272),
-                            size: size.width * 0.027,
+                          typeKeyword: TextInputType.name,
+                          prefixIcon: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.person,
+                              color: const Color(0xFF3F9272),
+                              size: size.width * 0.027,
+                            ),
                           ),
                           isPass: false,
                         ),
@@ -107,19 +112,27 @@ class _LoginState extends State<Login> {
                         CustomTextfield(
                           textEditingController: passwordController,
                           hintText: "Password",
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            size: size.width * 0.027,
-                            color: const Color(0xFF3F9272),
+                          typeKeyword: TextInputType.visiblePassword,
+                          prefixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _changed = !_changed;
+                              });
+                            },
+                            icon: Icon(
+                              _changed ? Icons.lock : Icons.lock_open_outlined,
+                              color: const Color(0xFF3F9272),
+                              size: size.width * 0.027,
+                            ),
                           ),
-                          isPass: true,
+                          isPass: _changed,
                         ),
                         SizedBox(
                           height: size.width * 0.02,
                         ),
                         CustomButton(
                           text: "Masuk",
-                          onTap: _login, //menggunakan fungsi yang dibuat tadi
+                          onTap: _login, //memanggil fungsi yang sudah dibuat
                         ),
                       ],
                     ),
