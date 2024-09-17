@@ -5,14 +5,15 @@ class CustomTextfield extends StatelessWidget {
   final TextEditingController textEditingController;
   final bool isPass;
   final String hintText;
-  final Icon? prefixIcon;
+  final IconButton? prefixIcon;
+  final TextInputType typeKeyword;
 
   const CustomTextfield({
     super.key,
     required this.textEditingController,
     required this.isPass,
     required this.hintText,
-    this.prefixIcon,
+    this.prefixIcon, required this.typeKeyword,
   });
 
   @override
@@ -21,6 +22,7 @@ class CustomTextfield extends StatelessWidget {
     return TextField(
       obscureText: isPass,
       controller: textEditingController,
+      keyboardType: typeKeyword,
       decoration: InputDecoration(
         fillColor: const Color(0xFFE3FFF3),
         filled: true, // Agar fillColor terlihat
