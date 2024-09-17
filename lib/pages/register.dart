@@ -53,7 +53,7 @@ class _RegisterState extends State<Register> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                LoginRegister(), //jika berhasil maka akan langsung pindah page ke page Login
+                const LoginRegister(), //jika berhasil maka akan langsung pindah page ke page Login
           ),
         );
       }
@@ -111,15 +111,13 @@ class _RegisterState extends State<Register> {
                           hintText: "Username",
                           typeKeyword: TextInputType.name,
                           prefixIcon: IconButton(
-                            onPressed: () {},
-                            icon: IconButton(
                               onPressed: () {},
                               icon: Icon(
                                 Icons.person,
                                 color: const Color(0xFF3F9272),
                                 size: size.width * 0.027,
                               ),
-                            ),
+                           
                           ),
                           isPass: false,
                         ),
@@ -133,15 +131,13 @@ class _RegisterState extends State<Register> {
                           typeKeyword: TextInputType.emailAddress,
                           prefixIcon: IconButton(
                             onPressed: () {},
-                            icon: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.email,
-                                color: const Color(0xFF3F9272),
-                                size: size.width * 0.027,
-                              ),
+                            icon: Icon(
+                              Icons.email,
+                              color: const Color(0xFF3F9272),
+                              size: size.width * 0.027,
                             ),
                           ),
+
                           isPass: false,
                         ),
                         SizedBox(
@@ -153,18 +149,17 @@ class _RegisterState extends State<Register> {
                           hintText: "Password",
                           typeKeyword: TextInputType.visiblePassword,
                           prefixIcon: IconButton(
-                            onPressed: () {},
-                            icon: IconButton(
-                              onPressed: () {
-                                setState(() {
+                            onPressed: () {
+                              setState(
+                                () {
                                   _changed = !_changed;
-                                });
-                              },
-                              icon: Icon(
-                                _changed ? Icons.lock : Icons.lock_open_rounded,
-                                color: const Color(0xFF3F9272),
-                                size: size.width * 0.027,
-                              ),
+                                },
+                              );
+                            },
+                            icon: Icon(
+                              _changed ? Icons.lock : Icons.lock_open_rounded,
+                              color: const Color(0xFF3F9272),
+                              size: size.width * 0.027,
                             ),
                           ),
                           isPass: _changed,
@@ -179,13 +174,10 @@ class _RegisterState extends State<Register> {
                           typeKeyword: TextInputType.number,
                           prefixIcon: IconButton(
                             onPressed: () {},
-                            icon: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.phone,
-                                color: const Color(0xFF3F9272),
-                                size: size.width * 0.027,
-                              ),
+                            icon: Icon(
+                              Icons.phone,
+                              color: const Color(0xFF3F9272),
+                              size: size.width * 0.027,
                             ),
                           ),
                           isPass: false,
