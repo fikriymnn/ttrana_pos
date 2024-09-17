@@ -15,6 +15,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool _changed = true;
   final Dio _dio = Dio(); //menggunakan plugin Dio untuk menghubungkan server
 
   void _login() async {
@@ -89,28 +90,44 @@ class _LoginState extends State<Login> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomTextfield(
-                          //menggunakan textfield untuk mengisi format login
+                          //menggunakan textfield untuk pengisian format
                           textEditingController: usernameController,
                           hintText: "Username",
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: const Color(0xFF3F9272),
-                            size: size.width * 0.027,
+                          typeKeyword: TextInputType.emailAddress,
+                          prefixIcon: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.email,
+                              color: const Color(0xFF3F9272),
+                              size: size.width * 0.027,
+                            ),
                           ),
-                          isPass: false, typeKeyword: null,
+
+                          isPass: false,
                         ),
                         SizedBox(
                           height: size.width * 0.02,
                         ),
                         CustomTextfield(
+                          //menggunakan textfield untuk pengisian format
                           textEditingController: passwordController,
                           hintText: "Password",
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            size: size.width * 0.027,
-                            color: const Color(0xFF3F9272),
+                          typeKeyword: TextInputType.visiblePassword,
+                          prefixIcon: IconButton(
+                            onPressed: () {
+                              setState(
+                                () {
+                                  _changed = !_changed;
+                                },
+                              );
+                            },
+                            icon: Icon(
+                              _changed ? Icons.lock : Icons.lock_open_rounded,
+                              color: const Color(0xFF3F9272),
+                              size: size.width * 0.027,
+                            ),
                           ),
-                          isPass: true,
+                          isPass: _changed,
                         ),
                         SizedBox(
                           height: size.width * 0.02,
