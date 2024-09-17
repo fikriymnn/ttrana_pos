@@ -97,7 +97,7 @@ class _LoginState extends State<Login> {
                             color: const Color(0xFF3F9272),
                             size: size.width * 0.027,
                           ),
-                          isPass: false,
+                          isPass: false, typeKeyword: null,
                         ),
                         SizedBox(
                           height: size.width * 0.02,
