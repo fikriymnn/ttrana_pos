@@ -18,6 +18,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController notelpController = TextEditingController();
   String _terpilih = 'opsi 1';
+  bool _changed = true;
 
   final Dio _dio =
       Dio(); //menggunakan plugin Dio untuk menghubungkan server ke flutter
@@ -108,10 +109,17 @@ class _RegisterState extends State<Register> {
                           //menggunakan textfield untuk pengisian format
                           textEditingController: usernameController,
                           hintText: "Username",
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: const Color(0xFF3F9272),
-                            size: size.width * 0.027,
+                          typeKeyword: TextInputType.name,
+                          prefixIcon: IconButton(
+                            onPressed: () {},
+                            icon: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.person,
+                                color: const Color(0xFF3F9272),
+                                size: size.width * 0.027,
+                              ),
+                            ),
                           ),
                           isPass: false,
                         ),
@@ -119,12 +127,20 @@ class _RegisterState extends State<Register> {
                           height: size.width * 0.01,
                         ),
                         CustomTextfield(
+                          //menggunakan textfield untuk pengisian format
                           textEditingController: emailController,
                           hintText: "Email",
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: const Color(0xFF3F9272),
-                            size: size.width * 0.027,
+                          typeKeyword: TextInputType.emailAddress,
+                          prefixIcon: IconButton(
+                            onPressed: () {},
+                            icon: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.email,
+                                color: const Color(0xFF3F9272),
+                                size: size.width * 0.027,
+                              ),
+                            ),
                           ),
                           isPass: false,
                         ),
@@ -132,27 +148,48 @@ class _RegisterState extends State<Register> {
                           height: size.width * 0.01,
                         ),
                         CustomTextfield(
+                          //menggunakan textfield untuk pengisian format
                           textEditingController: passwordController,
                           hintText: "Password",
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            size: size.width * 0.027,
-                            color: const Color(0xFF3F9272),
+                          typeKeyword: TextInputType.visiblePassword,
+                          prefixIcon: IconButton(
+                            onPressed: () {},
+                            icon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _changed = !_changed;
+                                });
+                              },
+                              icon: Icon(
+                                _changed ? Icons.lock : Icons.lock_open_rounded,
+                                color: const Color(0xFF3F9272),
+                                size: size.width * 0.027,
+                              ),
+                            ),
                           ),
-                          isPass: true,
+                          isPass: _changed,
                         ),
                         SizedBox(
                           height: size.width * 0.01,
                         ),
                         CustomTextfield(
-                            textEditingController: notelpController,
-                            hintText: "No Telepon",
-                            prefixIcon: Icon(
-                              Icons.phone,
-                              size: size.width * 0.027,
-                              color: const Color(0xFF3F9272),
+                          //menggunakan textfield untuk pengisian format
+                          textEditingController: notelpController,
+                          hintText: "No Telephone",
+                          typeKeyword: TextInputType.number,
+                          prefixIcon: IconButton(
+                            onPressed: () {},
+                            icon: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.phone,
+                                color: const Color(0xFF3F9272),
+                                size: size.width * 0.027,
+                              ),
                             ),
-                            isPass: false),
+                          ),
+                          isPass: false,
+                        ),
                       ],
                     ),
                   ),
@@ -215,7 +252,7 @@ class _RegisterState extends State<Register> {
                   ),
                   CustomButton(
                     text: "Buat",
-                    onTap: _register, //menggunakan fungsi registrasi
+                    onTap: _register, //memanggil fungsi registrasi
                   ),
                 ],
               ),
