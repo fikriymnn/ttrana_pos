@@ -34,7 +34,7 @@ class _LoginState extends State<Login> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Login berhasil')), //notif jika login berhasil
         );
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => TestLoginBerhasil(
@@ -45,7 +45,7 @@ class _LoginState extends State<Login> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login gagal')), //notif jika login gagal
+        const SnackBar(content: Text('Login gagal')), //notif jika login gagal
       );
     }
   }
