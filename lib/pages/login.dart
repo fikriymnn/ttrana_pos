@@ -45,7 +45,9 @@ class _LoginState extends State<Login> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login gagal')), //notif jika login gagal
+        const SnackBar(
+          content: Text('Login gagal'),
+        ), //notif jika login gagal
       );
     }
   }
