@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ttrana_pos/pages/test_login_berhasil.dart';
+import 'package:ttrana_pos/pages/sidebar/main_page.dart';
 import 'package:ttrana_pos/widget/custom_button.dart';
 import 'package:ttrana_pos/widget/custom_textfield.dart';
 
@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => TestLoginBerhasil(
+            builder: (context) => MainPage(
                 username:
                     username), //jika berhasil maka akan langsung pindah page
           ),
