@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ttrana_pos/pages/sidebar/pages.dart';
+import 'package:ttrana_pos/pages/sidebar/page_sidebar/barang.dart';
+import 'package:ttrana_pos/pages/sidebar/page_sidebar/kategori.dart';
+import 'package:ttrana_pos/pages/sidebar/page_sidebar/keuangan.dart';
+import 'package:ttrana_pos/pages/sidebar/page_sidebar/pengaturan.dart';
+import 'package:ttrana_pos/pages/sidebar/page_sidebar/produk.dart';
+import 'package:ttrana_pos/pages/sidebar/page_sidebar/stok.dart';
+import 'package:ttrana_pos/pages/sidebar/page_sidebar/tambah_produk.dart';
 import 'package:ttrana_pos/pages/sidebar/sidebar_widget.dart';
 
 class MainPage extends StatefulWidget {
@@ -23,14 +29,13 @@ class _MainPageState extends State<MainPage> {
 
   // Daftar halaman berdasarkan item sidebar yang dipilih
   final List<Widget> _pages = [
-    HomePage(),
-    FinancePage(), 
-    ManagementPage(), 
-    AddProductPage(), 
-    SettingsPage(), 
-    barang(),
-    kategori(),
-    stok(),
+    Produk(),
+    Keuangan(), 
+    Barang(), 
+    Kategori(), 
+    Stok(), 
+    TambahProduk(),
+    Pengaturan(),
   ];
 
   @override
