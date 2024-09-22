@@ -6,7 +6,7 @@ import 'package:ttrana_pos/pages/sidebar/page_sidebar/pengaturan.dart';
 import 'package:ttrana_pos/pages/sidebar/page_sidebar/produk.dart';
 import 'package:ttrana_pos/pages/sidebar/page_sidebar/stok.dart';
 import 'package:ttrana_pos/pages/sidebar/page_sidebar/tambah_produk.dart';
-import 'package:ttrana_pos/pages/sidebar/sidebar_widget.dart';
+import 'package:ttrana_pos/pages/sidebar/sidebar.dart';
 
 class MainPage extends StatefulWidget {
   final String? username;
