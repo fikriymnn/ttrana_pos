@@ -139,25 +139,25 @@ class _SidebarState extends State<Sidebar> {
                         Animasi(
                           icon: MdiIcons.bookmarkBox,
                           text: 'Barang',
+                          selected: _selected[4],
+                          onTap: () {
+                            _onItemTapped(4);
+                          },
+                        ),
+                        Animasi(
+                          icon: AbilIcon.kategori,
+                          text: 'Kategori',
                           selected: _selected[5],
                           onTap: () {
                             _onItemTapped(5);
                           },
                         ),
                         Animasi(
-                          icon: AbilIcon.kategori,
-                          text: 'Kategori',
+                          icon: MdiIcons.basketCheckOutline,
+                          text: 'Stok',
                           selected: _selected[6],
                           onTap: () {
                             _onItemTapped(6);
-                          },
-                        ),
-                        Animasi(
-                          icon: MdiIcons.basketCheckOutline,
-                          text: 'Stok',
-                          selected: _selected[7],
-                          onTap: () {
-                            _onItemTapped(7);
                           },
                         ),
                       ],
@@ -166,14 +166,14 @@ class _SidebarState extends State<Sidebar> {
                 Animasi(
                   icon: AbilIcon.add_to_queue,
                   text: "Tambah Produk",
-                  selected: _selected[3],
-                  onTap: () => _onItemTapped(3),
+                  selected: _selected[2],
+                  onTap: () => _onItemTapped(2),
                 ),
                 Animasi(
                   icon: Icons.settings,
                   text: "Pengaturan",
-                  selected: _selected[4],
-                  onTap: () => _onItemTapped(4),
+                  selected: _selected[3],
+                  onTap: () => _onItemTapped(3),
                 ),
               ],
             ),
