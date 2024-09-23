@@ -30,10 +30,10 @@ class _MainPageState extends State<MainPage> {
   // Daftar halaman berdasarkan item sidebar yang dipilih
   final List<Widget> _pages = [
     Produk(),
-    Keuangan(), 
-    Barang(), 
-    Kategori(), 
-    Stok(), 
+    Keuangan(),
+    Barang(),
+    Kategori(),
+    Stok(),
     TambahProduk(),
     Pengaturan(),
   ];
@@ -51,6 +51,7 @@ class _MainPageState extends State<MainPage> {
                 _isManagementExpanded = value;
               });
             },
+            username: widget.username ?? 'Guest',
           ), // Sidebar
           Expanded(
             child:

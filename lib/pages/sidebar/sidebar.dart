@@ -4,12 +4,14 @@ import 'package:ttrana_pos/widget/abil_icon_icons.dart';
 import 'package:ttrana_pos/pages/sidebar/animation.dart';
 
 class Sidebar extends StatefulWidget {
+  final String? username;
   final Function(int) onItemSelected;
   final bool isManagementExpanded;
   final Function(bool) onManagementExpandToggle;
 
   const Sidebar({
     super.key,
+    required this.username,
     required this.onItemSelected,
     required this.isManagementExpanded,
     required this.onManagementExpandToggle,
@@ -81,10 +83,10 @@ class _SidebarState extends State<Sidebar> {
               ),
             ],
           ),
-          const ListTile(
-            leading: CircleAvatar(),
-            title: Text("Nabil Ganteng"),
-            subtitle: Text("Admin"),
+          ListTile(
+            leading: const CircleAvatar(),
+            title: Text(widget.username ?? 'Guest'),
+            subtitle: const Text("Admin"),
           ),
           SizedBox(height: size.width * 0.005),
           Expanded(
