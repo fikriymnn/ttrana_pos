@@ -54,7 +54,16 @@ class _SidebarState extends State<Sidebar> {
     final size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 0.23,
-      color: const Color.fromARGB(255, 25, 222, 189), // Warna sidebar
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFF167960),
+            Color(0xFF28DFB1),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ), // Warna sidebar
       child: Column(
         children: [
           Row(
