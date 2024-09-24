@@ -24,10 +24,10 @@ class CurvePainter extends CustomPainter {
     path.lineTo(300, 40);
     path.close();
 
-    path.moveTo(300, 75);
-    path.quadraticBezierTo(300, 75, animValue3, 75);
-    path.lineTo(animValue1, 75);
-    path.quadraticBezierTo(animValue2, 75, animValue2, 40);
+    path.moveTo(300, 65);
+    path.quadraticBezierTo(300, 65, animValue3, 65);
+    path.lineTo(animValue1, 65);
+    path.quadraticBezierTo(animValue2, 65, animValue2, 40);
     path.lineTo(300, 40);
     path.close();
 

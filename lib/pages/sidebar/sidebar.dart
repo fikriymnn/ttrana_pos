@@ -31,7 +31,7 @@ class _SidebarState extends State<Sidebar> {
     false,
     false,
   ]; // Status terpilih
-  bool isManagementMenuExpanded = false; // For submenu visibility control
+  bool subMenu = false; // For submenu visibility control
 
   // Fungsi untuk menangani item yang dipilih
   void _onItemTapped(int index) {
@@ -56,7 +56,7 @@ class _SidebarState extends State<Sidebar> {
     final size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 0.23,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
             Color(0xFF167960),
@@ -129,20 +129,20 @@ class _SidebarState extends State<Sidebar> {
                         ),
                       ),
                       trailing: Icon(
-                        isManagementMenuExpanded
+                        subMenu
                             ? Icons.keyboard_arrow_up
                             : Icons.keyboard_arrow_down,
                         color: Colors.white,
                       ),
                       onTap: () {
                         setState(() {
-                          isManagementMenuExpanded = !isManagementMenuExpanded;
+                          subMenu = !subMenu;
                         });
                       },
                     ),
                   ),
                 ),
-                if (isManagementMenuExpanded)
+                if (subMenu)
                   Padding(
                     padding: EdgeInsets.only(left: size.width * 0.05),
                     child: Column(
