@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ttrana_pos/pages/sidebar/curve_pointer/curve_pointer_m.dart';
 
 class AnimasiM extends StatefulWidget {
@@ -6,7 +7,7 @@ class AnimasiM extends StatefulWidget {
   final IconData icon;
   final Function onTap;
   final bool selected;
-  final TextStyle? textstyle;
+  final GoogleFonts? googleFonts;
 
   const AnimasiM({
     super.key,
@@ -14,7 +15,7 @@ class AnimasiM extends StatefulWidget {
     required this.onTap,
     required this.selected,
     required this.icon,
-    this.textstyle,
+    this.googleFonts,
   });
 
   @override
@@ -127,7 +128,7 @@ class _AnimasiMState extends State<AnimasiM> with TickerProviderStateMixin {
                   SizedBox(width: size.width * 0.014),
                   Text(
                     widget.text,
-                    style: TextStyle(
+                    style: GoogleFonts.josefinSans(
                       color: _color.value,
                       fontSize: size.width * 0.015,
                       fontWeight: FontWeight.bold,

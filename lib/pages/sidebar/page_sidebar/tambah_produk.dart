@@ -336,7 +336,7 @@ class _TambahProdukState extends State<TambahProduk> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
@@ -348,7 +348,7 @@ class _TambahProdukState extends State<TambahProduk> {
                           Container(
                             child: IconButton(
                               onPressed: () {},
-                              icon: Icon(
+                              icon:const Icon(
                                 Icons.add_box_outlined,
                                 color: Color(0xFF3F9272),
                               ),
@@ -373,15 +373,15 @@ class _TambahProdukState extends State<TambahProduk> {
                               Text(
                                 "Nama Kategori",
                                 style: GoogleFonts.josefinSans(
-                                    color: Color(0xFF3F9272)),
+                                    color:const Color(0xFF3F9272)),
                               ),
                               Container(
                                 width: size.width * 0.15,
                                 child: TextField(
                                   decoration: InputDecoration(
                                     fillColor: Colors
-                                        .white, // Warna latar belakang putih
-                                    filled: true, // Mengaktifkan fillColor
+                                        .white,
+                                    filled: true, 
 
                                     hintStyle: GoogleFonts.josefinSans(
                                       fontWeight: FontWeight.w300,
@@ -431,7 +431,7 @@ class _TambahProdukState extends State<TambahProduk> {
                           ),
                         ],
                       ), //
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Row(
@@ -475,7 +475,7 @@ class _TambahProdukState extends State<TambahProduk> {
                               Text(
                                 "Stok",
                                 style: GoogleFonts.josefinSans(
-                                    color: Color(0xFF3F9272)),
+                                    color: const Color(0xFF3F9272)),
                               ),
                               Container(
                                 width: size.width * 0.05,
@@ -501,7 +501,7 @@ class _TambahProdukState extends State<TambahProduk> {
                           ),
                         ],
                       ), //
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Row(
@@ -513,7 +513,7 @@ class _TambahProdukState extends State<TambahProduk> {
                               Text(
                                 "Nama Kategori",
                                 style: GoogleFonts.josefinSans(
-                                    color: Color(0xFF3F9272)),
+                                    color: const Color(0xFF3F9272)),
                               ),
                               Container(
                                 width: size.width * 0.15,

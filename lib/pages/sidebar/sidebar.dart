@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:ttrana_pos/pages/sidebar/animasi/animasi_m.dart';
 import 'package:ttrana_pos/responsive.dart';
@@ -149,7 +150,7 @@ class _SidebarState extends State<Sidebar> {
                             ),
                             Text(
                               "Management",
-                              style: TextStyle(
+                              style: GoogleFonts.josefinSans(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: size.width * 0.015,
@@ -237,7 +238,7 @@ class _SidebarState extends State<Sidebar> {
                             ),
                             Text(
                               "Pengaturan",
-                              style: TextStyle(
+                              style: GoogleFonts.josefinSans(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: size.width * 0.015,
@@ -402,7 +403,7 @@ class _SidebarState extends State<Sidebar> {
                               ),
                               Text(
                                 "Management",
-                                style: TextStyle(
+                                style: GoogleFonts.josefinSans(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: size.width * 0.015,
@@ -490,7 +491,7 @@ class _SidebarState extends State<Sidebar> {
                               ),
                               Text(
                                 "Pengaturan",
-                                style: TextStyle(
+                                style: GoogleFonts.josefinSans(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: size.width * 0.015,

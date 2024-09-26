@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ttrana_pos/pages/sidebar/page_sidebar/barang.dart';
 import 'package:ttrana_pos/pages/sidebar/page_sidebar/database.dart';
 import 'package:ttrana_pos/pages/sidebar/page_sidebar/kategori.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/keuangan.dart';
+import 'package:ttrana_pos/pages/sidebar/page_sidebar/keuangan/keuangan.dart';
 import 'package:ttrana_pos/pages/sidebar/page_sidebar/metode_bayar.dart';
 import 'package:ttrana_pos/pages/sidebar/page_sidebar/printer_struck.dart';
 import 'package:ttrana_pos/pages/sidebar/page_sidebar/produk/produk.dart';
