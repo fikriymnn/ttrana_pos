@@ -53,7 +53,7 @@ class _RegisterState extends State<Register> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                const LoginRegister(), //jika berhasil maka akan langsung pindah page ke page Login
+                LoginRegister(), //jika berhasil maka akan langsung pindah page ke page Login
           ),
         );
       }
@@ -111,13 +111,12 @@ class _RegisterState extends State<Register> {
                           hintText: "Username",
                           typeKeyword: TextInputType.name,
                           prefixIcon: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.person,
-                                color: const Color(0xFF3F9272),
-                                size: size.width * 0.027,
-                              ),
-                           
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.person,
+                              color: const Color(0xFF3F9272),
+                              size: size.width * 0.027,
+                            ),
                           ),
                           isPass: false,
                         ),
