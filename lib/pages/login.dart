@@ -6,7 +6,9 @@ import 'package:ttrana_pos/widget/custom_button.dart';
 import 'package:ttrana_pos/widget/custom_textfield.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
+  const Login({
+    super.key,
+  });
 
   @override
   State<Login> createState() => _LoginState();
