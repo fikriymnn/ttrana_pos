@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ttrana_pos/pages/login_register.dart';
+import 'package:ttrana_pos/pages/sidebar/main_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Aplikasi POS',
-      home: LoginRegister(),
+      home: MainPage(),
     );
   }
 }

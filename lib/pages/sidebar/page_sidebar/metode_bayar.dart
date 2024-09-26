@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Pengaturan extends StatelessWidget {
-  const Pengaturan({super.key});
+class MetodeBayar extends StatelessWidget {
+  const MetodeBayar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text("pangaturan"),
+      child: Text("Metode Bayar"),
     );
   }
 }

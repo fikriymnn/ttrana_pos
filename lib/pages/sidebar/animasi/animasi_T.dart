@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:ttrana_pos/pages/sidebar/curve_pointer.dart';
+import 'package:ttrana_pos/pages/sidebar/curve_pointer/curve_pointer_t.dart';
 
-class Animasi extends StatefulWidget {
+class AnimasiT extends StatefulWidget {
   final String text;
   final IconData icon;
   final Function onTap;
   final bool selected;
   final TextStyle? textstyle;
 
-  const Animasi({super.key, 
+  const AnimasiT({
+    super.key,
     required this.text,
     required this.onTap,
     required this.selected,
@@ -17,13 +18,12 @@ class Animasi extends StatefulWidget {
   });
 
   @override
-  State<Animasi> createState() => _AnimasiState();
+  State<AnimasiT> createState() => _AnimasiTState();
 }
 
-class _AnimasiState extends State<Animasi> with TickerProviderStateMixin {
+class _AnimasiTState extends State<AnimasiT> with TickerProviderStateMixin {
   late AnimationController _controller1;
   late AnimationController _controller2;
-
   late Animation<double> _anim1;
   late Animation<double> _anim2;
   late Animation<double> _anim3;
@@ -35,7 +35,6 @@ class _AnimasiState extends State<Animasi> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    // Initialize animation controllers
     _controller1 = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 250),
@@ -45,19 +44,11 @@ class _AnimasiState extends State<Animasi> with TickerProviderStateMixin {
       duration: const Duration(milliseconds: 275),
     );
 
-    _anim1 = Tween(begin: 101.0, end: 75.0).animate(_controller1);
-    _anim2 = Tween(begin: 101.0, end: 25.0).animate(_controller2);
-    _anim3 = Tween(begin: 101.0, end: 50.0).animate(_controller2);
-    _color = ColorTween(end: Colors.green, begin: Colors.white)
-        .animate(_controller2);
-
-    // Initialize the animation state based on the initial selection status
     if (widget.selected) {
       _controller1.forward();
       _controller2.forward();
     }
 
-    // Add listeners to update the UI when the animation changes
     _controller1.addListener(() {
       setState(() {});
     });
@@ -67,10 +58,9 @@ class _AnimasiState extends State<Animasi> with TickerProviderStateMixin {
   }
 
   @override
-  void didUpdateWidget(Animasi oldWidget) {
+  void didUpdateWidget(AnimasiT oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // Update the animation state based on whether the item is selected or not
     if (!widget.selected) {
       _controller1.reverse();
       _controller2.reverse();
@@ -83,35 +73,46 @@ class _AnimasiState extends State<Animasi> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    // Animasi sekarang responsif terhadap ukuran layar
+    _anim1 = Tween(begin: size.width * 0.1, end: size.width * 0.05)
+        .animate(_controller1);
+    _anim2 = Tween(begin: size.width * 0.1, end: size.width * 0.02)
+        .animate(_controller2);
+    _anim3 = Tween(begin: size.width * 0.1, end: size.width * 0.05)
+        .animate(_controller2);
+
+    _color = ColorTween(end: Colors.green, begin: Colors.white)
+        .animate(_controller2);
+
     return GestureDetector(
       onTap: () {
-        widget.onTap(); // Call the parent tap function
+        widget.onTap(); // Memanggil fungsi onTap dari parent
       },
       child: MouseRegion(
         onEnter: (value) {
           setState(() {
-            hovered = true; // Set hover status when the mouse enters
+            hovered = true; // Status hover true ketika mouse masuk
           });
         },
         onExit: (value) {
           setState(() {
-            hovered = false; // Reset hover status when the mouse exits
+            hovered = false; // Status hover false ketika mouse keluar
           });
         },
         child: Stack(
           children: [
-            if (widget.selected) // Only draw the CurvePainter if selected
+            if (widget.selected) // Hanya menampilkan CustomPaint jika selected
               CustomPaint(
-                painter: CurvePainter(
-                  animValue1: _anim3.value,
+                painter: CurvePainterT(
+                  animValue3: _anim3.value,
                   animValue2: _anim2.value,
-                  animValue3: _anim1.value,
+                  animValue1: _anim1.value,
                 ),
               ),
-            SizedBox(
-              height: size.height * 0.11,
+            Container(
+              height: size.height * 0.1,
               width: size.width,
-              // color: Colors.black,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
