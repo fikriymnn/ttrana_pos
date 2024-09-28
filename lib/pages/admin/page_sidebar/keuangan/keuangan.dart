@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/keuangan/pemasukan.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/keuangan/pengeluaran.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/keuangan/pemasukan.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/keuangan/pengeluaran.dart';
 import 'package:ttrana_pos/responsive.dart';
 
 class Keuangan extends StatefulWidget {

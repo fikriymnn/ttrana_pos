@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/barang.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/database.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/kategori.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/keuangan/keuangan.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/metode_bayar.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/printer_struck.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/produk/produk.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/profile.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/rating_aplikasi.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/stok.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/tambah_produk.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/tambah_staff.dart';
-import 'package:ttrana_pos/pages/sidebar/sidebar.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/barang.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/database.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/kategori.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/keuangan/keuangan.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/metode_bayar.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/printer_struck.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/produk/produk.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/profile.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/rating_aplikasi.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/stok.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_produk.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_staff.dart';
+import 'package:ttrana_pos/pages/admin/sidebar.dart';
 
 class MainPage extends StatefulWidget {
   final String? username;

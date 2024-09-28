@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ttrana_pos/pages/login_register.dart';
-import 'package:ttrana_pos/pages/sidebar/main_page.dart';
+import 'package:ttrana_pos/pages/admin/main_page.dart';
+import 'package:ttrana_pos/pages/kasir/main_page_kasir.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +15,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(

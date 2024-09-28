@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:ttrana_pos/pages/sidebar/animasi/animasi_m.dart';
+import 'package:ttrana_pos/pages/admin/animasi/animasi_m.dart';
 import 'package:ttrana_pos/responsive.dart';
 import 'package:ttrana_pos/widget/abil_icon_icons.dart';
-import 'package:ttrana_pos/pages/sidebar/animasi/animasi_T.dart';
+import 'package:ttrana_pos/pages/admin/animasi/animasi_T.dart';
 
 class Sidebar extends StatefulWidget {
   final String? username;
