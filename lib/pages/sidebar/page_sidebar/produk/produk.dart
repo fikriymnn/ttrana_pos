@@ -88,7 +88,9 @@ class _ProdukState extends State<Produk> {
                 height: size.height * 0.06,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.2),
+                padding: EdgeInsets.symmetric(
+                  horizontal: size.width * 0.2,
+                ),
                 child: const TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -98,6 +100,7 @@ class _ProdukState extends State<Produk> {
                   ),
                 ),
               ),
+
               Stack(
                 children: [
                   Row(
@@ -198,6 +201,9 @@ class _ProdukState extends State<Produk> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      SizedBox(
+                        height: 50,
+                      ),
                       Container(
                         width: size.width * 0.233,
                         height: size.height * 0.05,
@@ -231,14 +237,14 @@ class _ProdukState extends State<Produk> {
                           },
                         ),
                       ),
-                    ],
+                    ], 
                   ),
                   AnimatedPositioned(
                     bottom: 0,
                     left: changePositionM(),
                     curve: Curves.fastEaseInToSlowEaseOut,
                     child: AnimatedContainer(
-                      duration:const Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       margin: const EdgeInsets.only(left: 10),
                       width: changeContainerWidthM(),
                       height: size.height * 0.006,

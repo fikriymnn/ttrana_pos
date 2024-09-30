@@ -11,6 +11,388 @@ class TambahProduk extends StatefulWidget {
 
 class _TambahProdukState extends State<TambahProduk> {
   String _produk = 'opsi 1';
+
+  //buat sub variasi
+  List<int> formSubFields = [];
+  int fieldSubId = 0;
+
+  //buat nama variasi
+  List<int> formFields = [];
+  int fieldId = 0;
+
+  // Method untuk menambahkan field baru
+  void _addFormSubField() {
+    setState(() {
+      formSubFields.add(fieldSubId++);
+    });
+  }
+
+  // Method untuk menghapus field tertentu
+  void _removeFormSubField(int id) {
+    setState(() {
+      formSubFields.remove(id);
+    });
+  }
+
+  // Method untuk menambahkan field baru
+  void _addFormField() {
+    setState(() {
+      formFields.add(fieldId++);
+    });
+  }
+
+  // Method untuk menghapus field tertentu
+  void _removeFormField(int id) {
+    setState(() {
+      formFields.remove(id);
+    });
+  }
+
+  // Membuat field form duplikasi dengan tombol hapus
+  Widget _buildFormSubField(int id) {
+    return Row(
+      children: [
+        SizedBox(width: MediaQuery.of(context).size.width * 0.050),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Nama Kategori",
+              style: GoogleFonts.josefinSans(color: const Color(0xFF3F9272)),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.10,
+              child: TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintStyle: GoogleFonts.josefinSans(
+                    fontWeight: FontWeight.w300,
+                    fontSize: MediaQuery.of(context).size.width * 0.015,
+                    color: const Color(0xff3F9272),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.009),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Usia",
+              style: GoogleFonts.josefinSans(color: const Color(0xFF3F9272)),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.09,
+              child: TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintStyle: GoogleFonts.josefinSans(
+                    fontWeight: FontWeight.w300,
+                    fontSize: MediaQuery.of(context).size.width * 0.015,
+                    color: const Color(0xff3F9272),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.009),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Stok",
+              style: GoogleFonts.josefinSans(color: const Color(0xFF3F9272)),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.05,
+              child: TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintStyle: GoogleFonts.josefinSans(
+                    fontWeight: FontWeight.w300,
+                    fontSize: MediaQuery.of(context).size.width * 0.015,
+                    color: const Color(0xff3F9272),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.009),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Harga",
+              style: GoogleFonts.josefinSans(color: const Color(0xFF3F9272)),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.09,
+              child: TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintStyle: GoogleFonts.josefinSans(
+                    fontWeight: FontWeight.w300,
+                    fontSize: MediaQuery.of(context).size.width * 0.015,
+                    color: const Color(0xff3F9272),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.009),
+        // Tombol hapus field
+        Container(
+          child: IconButton(
+            onPressed: () => _removeFormSubField(id),
+            icon: const Icon(
+              Icons.remove_circle_outline_outlined,
+              color: Color(0xFF3F9272),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFormField(int id) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              child: IconButton(
+                onPressed: () => _removeFormField(id),
+                icon: const Icon(
+                  Icons.remove_circle_outline_outlined,
+                  color: Color(0xFF3F9272),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.03,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.15,
+              child: Text(
+                "Nama Variasi",
+                style: GoogleFonts.josefinSans(color: Color(0xFF3F9272)),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.03,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.15,
+              child: TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white, // Warna latar belakang putih
+                  filled: true, // Mengaktifkan fillColor
+
+                  hintStyle: GoogleFonts.josefinSans(
+                    fontWeight: FontWeight.w300,
+                    fontSize: MediaQuery.of(context).size.width * 0.015,
+                    color: const Color(0xff3F9272),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.width * 0.01,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Row(
+          //////
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.02,
+            ),
+            Container(
+              child: IconButton(
+                onPressed: _addFormSubField,
+                icon: const Icon(
+                  Icons.add_circle_outline_outlined,
+                  color: Color(0xFF3F9272),
+                ),
+              ),
+            ),
+            Text(
+              "Sub Variasi",
+              style: GoogleFonts.josefinSans(color: Color(0xff3F9272)),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          children: [
+            SizedBox(width: MediaQuery.of(context).size.width * 0.050),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Nama Variasi",
+                  style:
+                      GoogleFonts.josefinSans(color: const Color(0xFF3F9272)),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.10,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintStyle: GoogleFonts.josefinSans(
+                        fontWeight: FontWeight.w300,
+                        fontSize: MediaQuery.of(context).size.width * 0.015,
+                        color: const Color(0xff3F9272),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.009),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Usia",
+                  style:
+                      GoogleFonts.josefinSans(color: const Color(0xFF3F9272)),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.09,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintStyle: GoogleFonts.josefinSans(
+                        fontWeight: FontWeight.w300,
+                        fontSize: MediaQuery.of(context).size.width * 0.015,
+                        color: const Color(0xff3F9272),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.009),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Stok",
+                  style:
+                      GoogleFonts.josefinSans(color: const Color(0xFF3F9272)),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.05,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintStyle: GoogleFonts.josefinSans(
+                        fontWeight: FontWeight.w300,
+                        fontSize: MediaQuery.of(context).size.width * 0.015,
+                        color: const Color(0xff3F9272),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.009),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Harga",
+                  style:
+                      GoogleFonts.josefinSans(color: const Color(0xFF3F9272)),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.09,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintStyle: GoogleFonts.josefinSans(
+                        fontWeight: FontWeight.w300,
+                        fontSize: MediaQuery.of(context).size.width * 0.015,
+                        color: const Color(0xff3F9272),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.width * 0.02,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -279,9 +661,9 @@ class _TambahProdukState extends State<TambahProduk> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            "Kategori",
+                            "Variasi",
                             style: GoogleFonts.josefinSans(
-                                color: Color(0xFF3F9272)),
+                                color: Color(0xFF3F9272), fontSize: 30),
                           ),
                         ],
                       ),
@@ -292,7 +674,7 @@ class _TambahProdukState extends State<TambahProduk> {
                         children: [
                           Container(
                             child: IconButton(
-                              onPressed: () {},
+                              onPressed: _addFormField,
                               icon: Icon(
                                 Icons.add_box_outlined,
                                 color: Color(0xFF3F9272),
@@ -300,7 +682,7 @@ class _TambahProdukState extends State<TambahProduk> {
                             ),
                           ),
                           Text(
-                            "Nama Kategori",
+                            "Nama Variasi",
                             style: GoogleFonts.josefinSans(
                                 color: Color(0xFF3F9272)),
                           ),
@@ -336,26 +718,30 @@ class _TambahProdukState extends State<TambahProduk> {
                           ),
                         ],
                       ),
+                      SizedBox(
+                        height: size.width * 0.01,
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
                       Row(
+                        //////
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: size.width * 0.06,
+                            width: size.width * 0.02,
                           ),
                           Container(
                             child: IconButton(
-                              onPressed: () {},
-                              icon:const Icon(
-                                Icons.add_box_outlined,
+                              onPressed: _addFormSubField,
+                              icon: const Icon(
+                                Icons.add_circle_outline_outlined,
                                 color: Color(0xFF3F9272),
                               ),
                             ),
                           ),
                           Text(
-                            "Sub Kategori",
+                            "Sub Variasi",
                             style: GoogleFonts.josefinSans(
                                 color: Color(0xff3F9272)),
                           ),
@@ -366,26 +752,27 @@ class _TambahProdukState extends State<TambahProduk> {
                       ),
                       Row(
                         children: [
-                          SizedBox(width: size.width * 0.099),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.050),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Nama Kategori",
+                                "Nama Variasi",
                                 style: GoogleFonts.josefinSans(
-                                    color:const Color(0xFF3F9272)),
+                                    color: const Color(0xFF3F9272)),
                               ),
                               Container(
-                                width: size.width * 0.15,
+                                width: MediaQuery.of(context).size.width * 0.10,
                                 child: TextField(
                                   decoration: InputDecoration(
-                                    fillColor: Colors
-                                        .white,
-                                    filled: true, 
-
+                                    fillColor: Colors.white,
+                                    filled: true,
                                     hintStyle: GoogleFonts.josefinSans(
                                       fontWeight: FontWeight.w300,
-                                      fontSize: size.width * 0.015,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.015,
                                       color: const Color(0xff3F9272),
                                     ),
                                     border: OutlineInputBorder(
@@ -398,64 +785,26 @@ class _TambahProdukState extends State<TambahProduk> {
                             ],
                           ),
                           SizedBox(
-                            width: size.width * 0.05,
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                "Stok",
-                                style: GoogleFonts.josefinSans(
-                                    color: Color(0xFF3F9272)),
-                              ),
-                              Container(
-                                width: size.width * 0.05,
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    fillColor: Colors
-                                        .white, // Warna latar belakang putih
-                                    filled: true, // Mengaktifkan fillColor
-
-                                    hintStyle: GoogleFonts.josefinSans(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: size.width * 0.015,
-                                      color: const Color(0xff3F9272),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ), //
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(width: size.width * 0.099),
+                              width: MediaQuery.of(context).size.width * 0.009),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Nama Kategori",
+                                "Usia",
                                 style: GoogleFonts.josefinSans(
-                                    color: Color(0xFF3F9272)),
+                                    color: const Color(0xFF3F9272)),
                               ),
                               Container(
-                                width: size.width * 0.15,
+                                width: MediaQuery.of(context).size.width * 0.09,
                                 child: TextField(
                                   decoration: InputDecoration(
-                                    fillColor: Colors
-                                        .white, // Warna latar belakang putih
-                                    filled: true, // Mengaktifkan fillColor
-
+                                    fillColor: Colors.white,
+                                    filled: true,
                                     hintStyle: GoogleFonts.josefinSans(
                                       fontWeight: FontWeight.w300,
-                                      fontSize: size.width * 0.015,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.015,
                                       color: const Color(0xff3F9272),
                                     ),
                                     border: OutlineInputBorder(
@@ -468,9 +817,9 @@ class _TambahProdukState extends State<TambahProduk> {
                             ],
                           ),
                           SizedBox(
-                            width: size.width * 0.05,
-                          ),
+                              width: MediaQuery.of(context).size.width * 0.009),
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Stok",
@@ -478,54 +827,16 @@ class _TambahProdukState extends State<TambahProduk> {
                                     color: const Color(0xFF3F9272)),
                               ),
                               Container(
-                                width: size.width * 0.05,
+                                width: MediaQuery.of(context).size.width * 0.05,
                                 child: TextField(
                                   decoration: InputDecoration(
-                                    fillColor: Colors
-                                        .white, // Warna latar belakang putih
-                                    filled: true, // Mengaktifkan fillColor
-
+                                    fillColor: Colors.white,
+                                    filled: true,
                                     hintStyle: GoogleFonts.josefinSans(
                                       fontWeight: FontWeight.w300,
-                                      fontSize: size.width * 0.015,
-                                      color: const Color(0xff3F9272),
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ), //
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(width: size.width * 0.099),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Nama Kategori",
-                                style: GoogleFonts.josefinSans(
-                                    color: const Color(0xFF3F9272)),
-                              ),
-                              Container(
-                                width: size.width * 0.15,
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    fillColor: Colors
-                                        .white, // Warna latar belakang putih
-                                    filled: true, // Mengaktifkan fillColor
-
-                                    hintStyle: GoogleFonts.josefinSans(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: size.width * 0.015,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.015,
                                       color: const Color(0xff3F9272),
                                     ),
                                     border: OutlineInputBorder(
@@ -538,26 +849,26 @@ class _TambahProdukState extends State<TambahProduk> {
                             ],
                           ),
                           SizedBox(
-                            width: size.width * 0.05,
-                          ),
+                              width: MediaQuery.of(context).size.width * 0.009),
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Stok",
+                                "Harga",
                                 style: GoogleFonts.josefinSans(
-                                    color: Color(0xFF3F9272)),
+                                    color: const Color(0xFF3F9272)),
                               ),
                               Container(
-                                width: size.width * 0.05,
+                                width: MediaQuery.of(context).size.width * 0.09,
                                 child: TextField(
                                   decoration: InputDecoration(
-                                    fillColor: Colors
-                                        .white, // Warna latar belakang putih
-                                    filled: true, // Mengaktifkan fillColor
-
+                                    fillColor: Colors.white,
+                                    filled: true,
                                     hintStyle: GoogleFonts.josefinSans(
                                       fontWeight: FontWeight.w300,
-                                      fontSize: size.width * 0.015,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.015,
                                       color: const Color(0xff3F9272),
                                     ),
                                     border: OutlineInputBorder(
@@ -570,7 +881,21 @@ class _TambahProdukState extends State<TambahProduk> {
                             ],
                           ),
                         ],
-                      ), //
+                      ),
+                      Column(
+                        //memanggil textfield sub kategori
+                        children: formSubFields
+                            .map((id) => _buildFormSubField(id as int))
+                            .toList(),
+                      ),
+                      SizedBox(
+                        height: size.width * 0.02,
+                      ),
+                      Column(
+                        children: formFields
+                            .map((id) => _buildFormField(id as int))
+                            .toList(),
+                      ),
                       SizedBox(
                         height: 15,
                       ),
