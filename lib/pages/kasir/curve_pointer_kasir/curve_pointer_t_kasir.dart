@@ -17,18 +17,18 @@ class CurvePointerTKasir extends CustomPainter {
     Path path = Path();
     Paint paint = Paint();
 
-    path.moveTo(300, 5);
-    path.quadraticBezierTo(300, 5, animValue3, 5);
+    path.moveTo(295, 5);
+    path.quadraticBezierTo(295, 5, animValue3, 5);
     path.lineTo(animValue1, 5);
     path.quadraticBezierTo(animValue2, 5, animValue2, 40);
-    path.lineTo(300, 40);
+    path.lineTo(295, 40);
     path.close();
 
-    path.moveTo(300, 70);
-    path.quadraticBezierTo(300, 70, animValue3, 70);
+    path.moveTo(295, 70);
+    path.quadraticBezierTo(295, 70, animValue3, 70);
     path.lineTo(animValue1, 70);
     path.quadraticBezierTo(animValue2, 70, animValue2, 40);
-    path.lineTo(300, 40);
+    path.lineTo(295, 40);
     path.close();
 
     paint.color = Colors.white; // Warna untuk kurva

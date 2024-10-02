@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/printer_struck.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/produk/produk.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/profile.dart';
-import 'package:ttrana_pos/pages/admin/sidebar.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/printer_struck_kasir.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk_kasir.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/produk_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/profile_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/sidebar_kasir.dart';
 
@@ -18,7 +14,6 @@ class MainPageKasir extends StatefulWidget {
 
 class _MainPageKasirState extends State<MainPageKasir> {
   int _selectedIndex = 0; // Indeks untuk menyimpan halaman yang dipilih
-  bool _isManagementExpanded = false; // Status apakah dropdown terbuka
 
   // Fungsi untuk meng-handle perubahan item yang dipilih
   void _onItemSelected(int index) {
@@ -37,21 +32,16 @@ class _MainPageKasirState extends State<MainPageKasir> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
         children: [
-          SidebarKasir(
-            onItemSelected: _onItemSelected,
-            isManagementExpanded: _isManagementExpanded,
-            onManagementExpandToggle: (value) {
-              setState(() {
-                _isManagementExpanded = value;
-              });
-            },
-            username: widget.username ?? 'Guest',
-          ), // Sidebar
           Expanded(
             child:
                 _pages[_selectedIndex], // Tampilkan halaman berdasarkan pilihan
+          ),
+          SidebarKasir(
+            onItemSelected: _onItemSelected,
+            username: widget.username ?? 'Guest',
           ),
         ],
       ),
