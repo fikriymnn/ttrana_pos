@@ -75,7 +75,6 @@ class _AnimasiMState extends State<AnimasiM> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    // Animasi sekarang responsif terhadap ukuran layar
     _anim1 = Tween(begin: size.width * 0.1, end: size.width * 0.05)
         .animate(_controller1);
     _anim2 = Tween(begin: size.width * 0.1, end: size.width * 0.02)
@@ -93,17 +92,17 @@ class _AnimasiMState extends State<AnimasiM> with TickerProviderStateMixin {
       child: MouseRegion(
         onEnter: (value) {
           setState(() {
-            hovered = true; // Status hover true ketika mouse masuk
+            hovered = true; // Status hover true kalau mouse masuk
           });
         },
         onExit: (value) {
           setState(() {
-            hovered = false; // Status hover false ketika mouse keluar
+            hovered = false; // Status hover false kalau mouse keluar
           });
         },
         child: Stack(
           children: [
-            if (widget.selected) // Hanya menampilkan CustomPaint jika selected
+            if (widget.selected) // buat menampilkan CustomPaint kalau selected
               CustomPaint(
                 painter: CurvePainterM(
                   animValue3: _anim3.value,

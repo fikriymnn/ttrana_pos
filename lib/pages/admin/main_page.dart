@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/barang.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/management/barang/barang.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/database.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/kategori.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/management/kategori.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/keuangan/keuangan.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/metode_bayar.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/printer_struck.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/produk/produk.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/profile.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/rating_aplikasi.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/stok.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_produk.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_staff.dart';
 import 'package:ttrana_pos/pages/admin/sidebar.dart';
@@ -38,7 +37,6 @@ class _MainPageState extends State<MainPage> {
     const Keuangan(),
     const Barang(),
     const Kategori(),
-    const Stok(),
     const TambahProduk(),
     const Profile(),
     const Database(),
@@ -51,6 +49,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Row(
         children: [
           Sidebar(
