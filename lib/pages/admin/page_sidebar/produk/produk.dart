@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/produk/burung.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/produk/ikan.dart';
-import 'package:ttrana_pos/pages/sidebar/page_sidebar/produk/tanaman.dart';
+import 'package:flutter/services.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/produk/burung.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/produk/ikan.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/produk/tanaman.dart';
 import 'package:ttrana_pos/responsive.dart';
 
 class Produk extends StatefulWidget {
@@ -17,7 +18,6 @@ class _ProdukState extends State<Produk> {
     "Ikan",
     "Burung",
   ];
-
   double changePositionM() {
     switch (current) {
       case 0:
@@ -80,6 +80,7 @@ class _ProdukState extends State<Produk> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Responsive(
         mobile: SingleChildScrollView(
           child: Column(
@@ -162,17 +163,12 @@ class _ProdukState extends State<Produk> {
               ),
               // Halaman konten yang berbeda sesuai tab
               SizedBox(height: size.height * 0.03),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              IndexedStack(
+                index: current,
                 children: [
-                  IndexedStack(
-                    index: current,
-                    children: [
-                      Tanaman(),
-                      Ikan(),
-                      Burung(),
-                    ],
-                  ),
+                  Tanaman(),
+                  Ikan(),
+                  Burung(),
                 ],
               ),
             ],
@@ -187,8 +183,12 @@ class _ProdukState extends State<Produk> {
                   left: size.width * 0.25,
                   top: size.height * 0.05,
                 ),
-                child: const TextField(
+                child: TextField(
                   decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: size.height * 0.009,
+                      horizontal: size.width * 0.02,
+                    ),
                     border: OutlineInputBorder(),
                     suffixIcon: Icon(
                       Icons.search,
@@ -259,17 +259,12 @@ class _ProdukState extends State<Produk> {
               ),
               // Halaman konten yang berbeda sesuai tab
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              IndexedStack(
+                index: current,
                 children: [
-                  IndexedStack(
-                    index: current,
-                    children: [
-                      Tanaman(),
-                      Ikan(),
-                      Burung(),
-                    ],
-                  ),
+                  Tanaman(),
+                  Ikan(),
+                  Burung(),
                 ],
               ),
             ],

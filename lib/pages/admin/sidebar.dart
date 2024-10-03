@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:ttrana_pos/pages/sidebar/animasi/animasi_m.dart';
+import 'package:ttrana_pos/pages/admin/animasi/animasi_m.dart';
 import 'package:ttrana_pos/responsive.dart';
 import 'package:ttrana_pos/widget/abil_icon_icons.dart';
-import 'package:ttrana_pos/pages/sidebar/animasi/animasi_T.dart';
+import 'package:ttrana_pos/pages/admin/animasi/animasi_T.dart';
 
 class Sidebar extends StatefulWidget {
   final String? username;
@@ -37,8 +37,6 @@ class _SidebarState extends State<Sidebar> {
     false,
     false,
     false,
-    false,
-    false,
   ]; // Status terpilih
   bool subMenu1 = false;
   bool subMenu2 = false;
@@ -58,13 +56,11 @@ class _SidebarState extends State<Sidebar> {
         false,
         false,
         false,
-        false,
-        false,
-      ]; // Reset pilihan
+      ];
       _selected[index] = true; // Set item yang dipilih
     });
 
-    widget.onItemSelected(index); // Panggil fungsi parent untuk update halaman
+    widget.onItemSelected(index); // buat update halaman
   }
 
   @override
@@ -194,22 +190,14 @@ class _SidebarState extends State<Sidebar> {
                               _onItemTapped(3);
                             },
                           ),
-                          AnimasiM(
-                            icon: MdiIcons.basketCheckOutline,
-                            text: 'Stok',
-                            selected: _selected[4],
-                            onTap: () {
-                              _onItemTapped(4);
-                            },
-                          ),
                         ],
                       ),
                     ),
                   AnimasiM(
                     icon: AbilIcon.add_to_queue,
                     text: "Tambah Produk",
-                    selected: _selected[5],
-                    onTap: () => _onItemTapped(5),
+                    selected: _selected[4],
+                    onTap: () => _onItemTapped(4),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -267,49 +255,49 @@ class _SidebarState extends State<Sidebar> {
                           AnimasiM(
                             icon: Icons.person_2_outlined,
                             text: 'Profile',
+                            selected: _selected[5],
+                            onTap: () {
+                              _onItemTapped(5);
+                            },
+                          ),
+                          AnimasiM(
+                            icon: Icons.document_scanner,
+                            text: 'Database',
                             selected: _selected[6],
                             onTap: () {
                               _onItemTapped(6);
                             },
                           ),
                           AnimasiM(
-                            icon: Icons.document_scanner,
-                            text: 'Database',
+                            icon: Icons.local_print_shop_outlined,
+                            text: 'Print & Struck',
                             selected: _selected[7],
                             onTap: () {
                               _onItemTapped(7);
                             },
                           ),
                           AnimasiM(
-                            icon: Icons.local_print_shop_outlined,
-                            text: 'Print & Struck',
+                            icon: Icons.person,
+                            text: 'Tambah Staff',
                             selected: _selected[8],
                             onTap: () {
                               _onItemTapped(8);
                             },
                           ),
                           AnimasiM(
-                            icon: Icons.person,
-                            text: 'Tambah Staff',
+                            icon: Icons.money_sharp,
+                            text: 'Metode Bayar',
                             selected: _selected[9],
                             onTap: () {
                               _onItemTapped(9);
                             },
                           ),
                           AnimasiM(
-                            icon: Icons.money_sharp,
-                            text: 'Metode Bayar',
+                            icon: Icons.star_outline_sharp,
+                            text: 'Rating Aplikasi',
                             selected: _selected[10],
                             onTap: () {
                               _onItemTapped(10);
-                            },
-                          ),
-                          AnimasiM(
-                            icon: Icons.star_outline_sharp,
-                            text: 'Rating Aplikasi',
-                            selected: _selected[11],
-                            onTap: () {
-                              _onItemTapped(11);
                             },
                           ),
                         ],
@@ -333,7 +321,7 @@ class _SidebarState extends State<Sidebar> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
-        ), // Warna sidebar
+        ),
         child: Column(
           children: [
             Row(
@@ -445,22 +433,14 @@ class _SidebarState extends State<Sidebar> {
                               _onItemTapped(3);
                             },
                           ),
-                          AnimasiT(
-                            icon: MdiIcons.basketCheckOutline,
-                            text: 'Stok',
-                            selected: _selected[4],
-                            onTap: () {
-                              _onItemTapped(4);
-                            },
-                          ),
                         ],
                       ),
                     ),
                   AnimasiT(
                     icon: AbilIcon.add_to_queue,
                     text: "Tambah Produk",
-                    selected: _selected[5],
-                    onTap: () => _onItemTapped(5),
+                    selected: _selected[4],
+                    onTap: () => _onItemTapped(4),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -520,49 +500,49 @@ class _SidebarState extends State<Sidebar> {
                           AnimasiT(
                             icon: Icons.person_2_outlined,
                             text: 'Profile',
+                            selected: _selected[5],
+                            onTap: () {
+                              _onItemTapped(5);
+                            },
+                          ),
+                          AnimasiT(
+                            icon: Icons.document_scanner,
+                            text: 'Database',
                             selected: _selected[6],
                             onTap: () {
                               _onItemTapped(6);
                             },
                           ),
                           AnimasiT(
-                            icon: Icons.document_scanner,
-                            text: 'Database',
+                            icon: Icons.local_print_shop_outlined,
+                            text: 'Print & Struck',
                             selected: _selected[7],
                             onTap: () {
                               _onItemTapped(7);
                             },
                           ),
                           AnimasiT(
-                            icon: Icons.local_print_shop_outlined,
-                            text: 'Print & Struck',
+                            icon: Icons.person,
+                            text: 'Tambah Staff',
                             selected: _selected[8],
                             onTap: () {
                               _onItemTapped(8);
                             },
                           ),
                           AnimasiT(
-                            icon: Icons.person,
-                            text: 'Tambah Staff',
+                            icon: Icons.money_sharp,
+                            text: 'Metode Bayar',
                             selected: _selected[9],
                             onTap: () {
                               _onItemTapped(9);
                             },
                           ),
                           AnimasiT(
-                            icon: Icons.money_sharp,
-                            text: 'Metode Bayar',
+                            icon: Icons.star_outline_sharp,
+                            text: 'Rating Aplikasi',
                             selected: _selected[10],
                             onTap: () {
                               _onItemTapped(10);
-                            },
-                          ),
-                          AnimasiT(
-                            icon: Icons.star_outline_sharp,
-                            text: 'Rating Aplikasi',
-                            selected: _selected[11],
-                            onTap: () {
-                              _onItemTapped(11);
                             },
                           ),
                         ],
