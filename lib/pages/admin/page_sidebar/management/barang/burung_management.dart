@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ManagementPage extends StatelessWidget {
-  const ManagementPage({super.key});
+class BurungManagement extends StatelessWidget {
+  const BurungManagement({super.key});
 
   @override
   Widget build(BuildContext context) {

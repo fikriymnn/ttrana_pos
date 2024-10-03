@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ttrana_pos/pages/sidebar/curve_pointer/curve_pointer_t.dart';
+import 'package:ttrana_pos/pages/kasir/curve_pointer_kasir/curve_pointer_m_kasir.dart';
 
-class AnimasiT extends StatefulWidget {
+class AnimasiMKasir extends StatefulWidget {
   final String text;
   final IconData icon;
   final Function onTap;
   final bool selected;
   final GoogleFonts? googleFonts;
 
-  const AnimasiT({
+  const AnimasiMKasir({
     super.key,
     required this.text,
     required this.onTap,
@@ -19,10 +19,10 @@ class AnimasiT extends StatefulWidget {
   });
 
   @override
-  State<AnimasiT> createState() => _AnimasiTState();
+  State<AnimasiMKasir> createState() => _AnimasiMKasirState();
 }
 
-class _AnimasiTState extends State<AnimasiT> with TickerProviderStateMixin {
+class _AnimasiMKasirState extends State<AnimasiMKasir> with TickerProviderStateMixin {
   late AnimationController _controller1;
   late AnimationController _controller2;
   late Animation<double> _anim1;
@@ -59,7 +59,7 @@ class _AnimasiTState extends State<AnimasiT> with TickerProviderStateMixin {
   }
 
   @override
-  void didUpdateWidget(AnimasiT oldWidget) {
+  void didUpdateWidget(AnimasiMKasir oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (!widget.selected) {
@@ -105,14 +105,14 @@ class _AnimasiTState extends State<AnimasiT> with TickerProviderStateMixin {
           children: [
             if (widget.selected) // Hanya menampilkan CustomPaint jika selected
               CustomPaint(
-                painter: CurvePainterT(
+                painter: CurvePointerMKasir(
                   animValue3: _anim3.value,
                   animValue2: _anim2.value,
                   animValue1: _anim1.value,
                 ),
               ),
             Container(
-              height: size.height * 0.1,
+              height: size.height * 0.12,
               width: size.width,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -123,14 +123,17 @@ class _AnimasiTState extends State<AnimasiT> with TickerProviderStateMixin {
                   Icon(
                     widget.icon,
                     color: _color.value,
+                    size: size.width * 0.023,
                   ),
                   SizedBox(width: size.width * 0.014),
-                  Text(widget.text,
-                      style: GoogleFonts.josefinSans(
-                        color: _color.value,
-                        fontSize: size.width * 0.015,
-                        fontWeight: FontWeight.bold,
-                      )),
+                  Text(
+                    widget.text,
+                    style: GoogleFonts.josefinSans(
+                      color: _color.value,
+                      fontSize: size.width * 0.015,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),
