@@ -41,24 +41,24 @@ class _KeuanganState extends State<Keuangan> {
     }
   }
 
-  double changePositionT() {
+  double changePositionT(Size size) {
     switch (current) {
       case 0:
-        return 196;
+        return size.width * 0.153;
       case 1:
-        return 483;
+        return size.width * 0.377;
 
       default:
         return 0;
     }
   }
 
-  double changeContainerWidthT() {
+  double changeContainerWidthT(Size size) {
     switch (current) {
       case 0:
-        return 290;
+        return size.width * 0.225;
       case 1:
-        return 287;
+        return size.width * 0.225;
 
       default:
         return 0;
@@ -199,12 +199,12 @@ class _KeuanganState extends State<Keuangan> {
                 children: [
                   AnimatedPositioned(
                     // bottom: 0,
-                    left: changePositionT(),
+                    left: changePositionT(size),
                     curve: Curves.easeInOutBack,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
                       margin: const EdgeInsets.only(left: 10),
-                      width: changeContainerWidthT(),
+                      width: changeContainerWidthT(size),
                       height: size.height * 0.054,
                       decoration: BoxDecoration(
                         color: Color.fromARGB(255, 34, 160, 129),

@@ -119,9 +119,9 @@ class _BarangState extends State<Barang> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
+                        SizedBox(
                           width: size.width * 0.233,
-                          height: size.height * 0.05,
+                          height: size.height * 0.052,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: tabs.length,
@@ -138,7 +138,7 @@ class _BarangState extends State<Barang> {
                                   child: Text(
                                     tabs[index],
                                     style: TextStyle(
-                                      fontSize: 25,
+                                      fontSize: size.width * 0.02,
                                       fontWeight: current == index
                                           ? FontWeight.bold
                                           : FontWeight.normal,
@@ -173,7 +173,7 @@ class _BarangState extends State<Barang> {
                 ),
               ),
               // Halaman konten yang berbeda sesuai tab
-              const SizedBox(height: 20),
+              SizedBox(height: size.width * 0.02),
               IndexedStack(
                 index: current,
                 children: const [

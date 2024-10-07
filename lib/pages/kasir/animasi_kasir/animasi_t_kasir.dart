@@ -8,6 +8,7 @@ class AnimasiTKasir extends StatefulWidget {
   final Function onTap;
   final bool selected;
   final GoogleFonts? googleFonts;
+  
 
   const AnimasiTKasir({
     super.key,
@@ -22,7 +23,8 @@ class AnimasiTKasir extends StatefulWidget {
   State<AnimasiTKasir> createState() => _AnimasiTKasirState();
 }
 
-class _AnimasiTKasirState extends State<AnimasiTKasir> with TickerProviderStateMixin {
+class _AnimasiTKasirState extends State<AnimasiTKasir>
+    with TickerProviderStateMixin {
   late AnimationController _controller1;
   late AnimationController _controller2;
   late Animation<double> _anim1;

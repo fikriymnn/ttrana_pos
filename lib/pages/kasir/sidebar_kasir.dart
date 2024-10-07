@@ -21,7 +21,7 @@ class SidebarKasir extends StatefulWidget {
 
 class _SidebarKasirState extends State<SidebarKasir> {
   List<bool> _selected = [true, false, false];
-  bool _hideBar = true;
+  bool hideBar = true;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -57,12 +57,12 @@ class _SidebarKasirState extends State<SidebarKasir> {
             ),
             child: IconButton(
               icon: Icon(
-                _hideBar ? Icons.arrow_back_ios : Icons.arrow_forward_ios,
+                hideBar ? Icons.arrow_back_ios : Icons.arrow_forward_ios,
                 size: size.width * 0.02,
               ),
               onPressed: () {
                 setState(() {
-                  _hideBar = !_hideBar;
+                  hideBar = !hideBar;
                 });
               },
               color: Colors.white,
@@ -70,7 +70,7 @@ class _SidebarKasirState extends State<SidebarKasir> {
           ),
           // untuk hidebar
           Visibility(
-            visible: _hideBar,
+            visible: hideBar,
             child: Container(
               width: size.width * 0.23,
               decoration: const BoxDecoration(
@@ -168,10 +168,10 @@ class _SidebarKasirState extends State<SidebarKasir> {
             ),
             child: IconButton(
               icon: Icon(
-                  _hideBar ? Icons.arrow_back_ios : Icons.arrow_forward_ios),
+                  hideBar ? Icons.arrow_back_ios : Icons.arrow_forward_ios),
               onPressed: () {
                 setState(() {
-                  _hideBar = !_hideBar;
+                  hideBar = !hideBar;
                 });
               },
               color: Colors.white,
@@ -179,7 +179,7 @@ class _SidebarKasirState extends State<SidebarKasir> {
           ),
           // Menggunakan Visibility untuk hide/show sidebar
           Visibility(
-            visible: _hideBar,
+            visible: hideBar,
             child: Container(
               width: size.width * 0.23,
               decoration: const BoxDecoration(

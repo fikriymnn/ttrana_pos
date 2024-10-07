@@ -49,28 +49,28 @@ class _ProdukKasirState extends State<ProdukKasir> {
     }
   }
 
-  double changePositionT() {
+  double changePositionT(Size size) {
     switch (current) {
       case 0:
-        return 296;
+        return size.width * 0.237;
       case 1:
-        return 443;
+        return size.width * 0.353;
       case 2:
-        return 538;
+        return size.width * 0.425;
 
       default:
         return 0;
     }
   }
 
-  double changeContainerWidthT() {
+  double changeContainerWidthT(Size size) {
     switch (current) {
       case 0:
-        return 108;
+        return size.width * 0.086;
       case 1:
-        return 53;
+        return size.width * 0.042;
       case 2:
-        return 86;
+        return size.width * 0.069;
 
       default:
         return 0;
@@ -519,12 +519,14 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                     },
                                     child: Padding(
                                       padding: EdgeInsets.only(
-                                        left: index == 0 ? 20 : 45,
+                                        left: index == 0
+                                            ? size.width * 0.016
+                                            : size.width * 0.034,
                                       ),
                                       child: Text(
                                         tabs[index],
                                         style: GoogleFonts.josefinSans(
-                                          fontSize: 25,
+                                          fontSize: size.width * 0.0196,
                                           fontWeight: current == index
                                               ? FontWeight.bold
                                               : FontWeight.normal,
@@ -542,12 +544,11 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         ),
                         AnimatedPositioned(
                           bottom: 0,
-                          left: changePositionT(),
+                          left: changePositionT(size),
                           curve: Curves.fastEaseInToSlowEaseOut,
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 500),
-                            margin: const EdgeInsets.only(left: 10),
-                            width: changeContainerWidthT(),
+                            width: changeContainerWidthT(size),
                             height: size.height * 0.006,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
