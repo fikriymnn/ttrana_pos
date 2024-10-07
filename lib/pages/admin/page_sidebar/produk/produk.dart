@@ -88,8 +88,9 @@ class _ProdukState extends State<Produk> {
               SizedBox(
                 height: size.height * 0.06,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.2),
+              SizedBox(
+                height: size.height * 0.09,
+                width: size.width * 0.32,
                 child: const TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -99,6 +100,7 @@ class _ProdukState extends State<Produk> {
                   ),
                 ),
               ),
+
               Stack(
                 children: [
                   Row(
@@ -198,6 +200,9 @@ class _ProdukState extends State<Produk> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      SizedBox(
+                        height: 50,
+                      ),
                       Container(
                         width: size.width * 0.233,
                         height: size.height * 0.05,

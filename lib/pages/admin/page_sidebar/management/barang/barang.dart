@@ -40,9 +40,9 @@ class _BarangState extends State<Barang> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          width: size.width * 0.233,
-                          height: size.height * 0.05,
+                        SizedBox(
+                          width: size.width * 0.234,
+                          height: size.height * 0.06,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: tabs.length,
@@ -55,7 +55,10 @@ class _BarangState extends State<Barang> {
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.only(
-                                      left: index == 0 ? 10 : 23),
+                                    left: index == 0
+                                        ? size.width * 0.006
+                                        : size.width * 0.03,
+                                  ),
                                   child: Text(
                                     tabs[index],
                                     style: TextStyle(

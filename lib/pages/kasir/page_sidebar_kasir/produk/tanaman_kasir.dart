@@ -12,15 +12,20 @@ class _TanamanKasirState extends State<TanamanKasir> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height,
-      color: Colors.black,
-      child: Center(
-        child: Text(
-          "Nabil",
-          style: GoogleFonts.josefinSans(color: Colors.white),
+
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          child: SizedBox(
+            width: size.width,
+            height: size.height * 0.9,
+            // color: const Color.fromARGB(255, 161, 143, 143),
+            child: Center(
+              child: Text("Tanaman"),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }

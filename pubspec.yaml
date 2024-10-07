@@ -39,6 +39,7 @@ dependencies:
   material_design_icons_flutter: ^7.0.7296
   dotted_border: ^2.0.0
   google_fonts: ^6.2.1
+  ionicons: ^0.2.2
 
 dev_dependencies:
   flutter_test:

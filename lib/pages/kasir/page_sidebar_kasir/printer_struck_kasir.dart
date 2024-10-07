@@ -5,8 +5,14 @@ class PrinterStruckKasir extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("Printer & struck"),
+    var size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height,
+      width: size.width,
+      color: Colors.white,
+      child: Center(
+        child: Text("Struck & print"),
+      ),
     );
   }
 }
