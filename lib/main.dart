@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ttrana_pos/pages/admin/main_page.dart';
 import 'package:ttrana_pos/pages/kasir/main_page_kasir.dart';
+import 'package:ttrana_pos/pages/login_register.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Aplikasi POS',
-      home: MainPageKasir(),
+      home: LoginRegister(),
     );
   }
 }
