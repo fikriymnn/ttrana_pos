@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/management/barang/barang.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/database.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/management/kategori.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/keuangan/keuangan.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/metode_bayar.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/printer_struck.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/keuangan/modal.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/produk/produk.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/profile.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/rating_aplikasi.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_produk.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_staff.dart';
 import 'package:ttrana_pos/pages/admin/sidebar.dart';
 
 class MainPage extends StatefulWidget {
@@ -34,21 +27,14 @@ class _MainPageState extends State<MainPage> {
   // Daftar halaman berdasarkan item sidebar yang dipilih
   final List<Widget> _pages = [
     const Produk(),
-    const Keuangan(),
-    const Barang(),
-    const Kategori(),
+    const Modal(),
     const TambahProduk(),
     const Profile(),
-    const Database(),
-    const PrinterStruck(),
-    const TambahStaff(),
-    const MetodeBayar(),
-    const RatingAplikasi(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       resizeToAvoidBottomInset: false,
       body: Row(
         children: [

@@ -4,6 +4,7 @@ import 'package:ttrana_pos/pages/admin/page_sidebar/produk/burung.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/produk/ikan.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/produk/tanaman.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/Tanaman_kasir.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/bayar_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/burung_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/ikan_kasir.dart';
 import 'package:ttrana_pos/responsive.dart';
@@ -559,7 +560,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: size.width * 0.015),
                     Stack(
                       children: [
                         IndexedStack(
@@ -587,7 +588,12 @@ class _ProdukKasirState extends State<ProdukKasir> {
                   height: size.height * 0.1,
                   // color: Colors.black,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BayarKasir()));
+                    },
                     child: Center(
                       child: Container(
                         width: size.width * 0.12,
