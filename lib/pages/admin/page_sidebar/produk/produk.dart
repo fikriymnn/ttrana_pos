@@ -46,28 +46,28 @@ class _ProdukState extends State<Produk> {
     }
   }
 
-  double changePositionT() {
+  double changePositionT(Size size) {
     switch (current) {
       case 0:
-        return 196;
+        return size.width * 0.27;
       case 1:
-        return 290;
+        return size.width * 0.368;
       case 2:
-        return 347;
+        return size.width * 0.423;
 
       default:
         return 0;
     }
   }
 
-  double changeContainerWidthT() {
+  double changeContainerWidthT(Size size) {
     switch (current) {
       case 0:
-        return 75;
+        return size.width * 0.081;
       case 1:
-        return 38;
+        return size.width * 0.039;
       case 2:
-        return 58;
+        return size.width * 0.067;
 
       default:
         return 0;
@@ -88,10 +88,9 @@ class _ProdukState extends State<Produk> {
               SizedBox(
                 height: size.height * 0.06,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: size.width * 0.2,
-                ),
+              SizedBox(
+                height: size.height * 0.09,
+                width: size.width * 0.32,
                 child: const TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -145,12 +144,12 @@ class _ProdukState extends State<Produk> {
                   ),
                   AnimatedPositioned(
                     bottom: 0,
-                    left: changePositionT(),
+                    left: changePositionM(),
                     curve: Curves.fastEaseInToSlowEaseOut,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
                       margin: const EdgeInsets.only(left: 10),
-                      width: changeContainerWidthT(),
+                      width: changeContainerWidthM(),
                       height: size.height * 0.006,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -237,16 +236,16 @@ class _ProdukState extends State<Produk> {
                           },
                         ),
                       ),
-                    ], 
+                    ],
                   ),
                   AnimatedPositioned(
                     bottom: 0,
-                    left: changePositionM(),
+                    left: changePositionT(size),
                     curve: Curves.fastEaseInToSlowEaseOut,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
                       margin: const EdgeInsets.only(left: 10),
-                      width: changeContainerWidthM(),
+                      width: changeContainerWidthT(size),
                       height: size.height * 0.006,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),

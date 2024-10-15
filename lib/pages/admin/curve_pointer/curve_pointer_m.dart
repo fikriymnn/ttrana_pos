@@ -24,11 +24,11 @@ class CurvePainterM extends CustomPainter {
     path.lineTo(200, 30);
     path.close();
 
-    path.moveTo(300, 50);
-    path.quadraticBezierTo(300, 50, animValue3, 50);
+    path.moveTo(200, 50);
+    path.quadraticBezierTo(200, 50, animValue3, 50);
     path.lineTo(animValue1, 50);
     path.quadraticBezierTo(animValue2, 50, animValue2, 30);
-    path.lineTo(300, 30);
+    path.lineTo(200, 30);
     path.close();
 
     paint.color = Colors.white;

@@ -122,7 +122,7 @@ class _SidebarState extends State<Sidebar> {
                   Padding(
                     padding: EdgeInsets.only(
                       left: size.width * 0.032,
-                      top: size.width * 0.002,
+                      top: size.width * 0.014,
                       bottom: size.width * 0.01,
                     ),
                     child: SizedBox(
@@ -201,8 +201,8 @@ class _SidebarState extends State<Sidebar> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      left: size.width * 0.034,
-                      top: size.width * 0.002,
+                      left: size.width * 0.033,
+                      top: size.width * 0.014,
                       bottom: size.width * 0.01,
                     ),
                     child: SizedBox(
@@ -249,7 +249,7 @@ class _SidebarState extends State<Sidebar> {
                   ),
                   if (subMenu2)
                     Padding(
-                      padding: EdgeInsets.only(left: size.width * 0.05),
+                      padding: EdgeInsets.only(left: size.width * 0.04),
                       child: Column(
                         children: [
                           AnimasiM(
@@ -341,8 +341,17 @@ class _SidebarState extends State<Sidebar> {
             ),
             ListTile(
               leading: const CircleAvatar(),
-              title: Text(widget.username ?? 'Guest'),
-              subtitle: const Text("Admin"),
+              title: Text(
+                widget.username ?? 'Guest',
+                style: GoogleFonts.josefinSans(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                "Admin",
+                style: GoogleFonts.josefinSans(color: Colors.white),
+              ),
             ),
             SizedBox(height: size.width * 0.005),
             Expanded(

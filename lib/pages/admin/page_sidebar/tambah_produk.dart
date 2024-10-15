@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:dotted_border/dotted_border.dart'; // Import package dotted_border
+import 'package:dotted_border/dotted_border.dart'; // Import package dotted_border untuk garis putus - putus di outline container Upload foto
 
 class TambahProduk extends StatefulWidget {
   const TambahProduk({super.key});
@@ -13,24 +13,42 @@ class _TambahProdukState extends State<TambahProduk> {
   String _produk = 'opsi 1';
 
   //buat sub variasi
-  List<int> formSubFields = [];
-  int fieldSubId = 0;
+  List<int> formSubOriginal = [];
+  int fieldSubOriginalId = 0;
+
+  //buat sub2 variasi
+  List<int> formSub2Fields = [];
+  int fieldSub2Id = 0;
 
   //buat nama variasi
   List<int> formFields = [];
   int fieldId = 0;
 
   // Method untuk menambahkan field baru
-  void _addFormSubField() {
+  void _addFormSubOriginalField() {
     setState(() {
-      formSubFields.add(fieldSubId++);
+      formSubOriginal.add(fieldSubOriginalId++);
     });
   }
 
   // Method untuk menghapus field tertentu
-  void _removeFormSubField(int id) {
+  void _removeFormSubOriginalField(int id) {
     setState(() {
-      formSubFields.remove(id);
+      formSubOriginal.remove(id);
+    });
+  }
+
+  // Method untuk menambahkan field baru
+  void _addFormSub2Field() {
+    setState(() {
+      formSub2Fields.add(fieldSub2Id++);
+    });
+  }
+
+  // Method untuk menghapus field tertentu
+  void _removeFormSub2Field(int id) {
+    setState(() {
+      formSub2Fields.remove(id);
     });
   }
 
@@ -49,7 +67,8 @@ class _TambahProdukState extends State<TambahProduk> {
   }
 
   // Membuat field form duplikasi dengan tombol hapus
-  Widget _buildFormSubField(int id) {
+  Widget _buildFormSubOriginalField(int id) {
+    // widget yang akan di tambah/duplikat jika tombol di klik (widget yang sub variasi textfield)
     return Row(
       children: [
         SizedBox(width: MediaQuery.of(context).size.width * 0.050),
@@ -166,13 +185,11 @@ class _TambahProdukState extends State<TambahProduk> {
         ),
         SizedBox(width: MediaQuery.of(context).size.width * 0.009),
         // Tombol hapus field
-        Container(
-          child: IconButton(
-            onPressed: () => _removeFormSubField(id),
-            icon: const Icon(
-              Icons.remove_circle_outline_outlined,
-              color: Color(0xFF3F9272),
-            ),
+        IconButton(
+          onPressed: () => _removeFormSubOriginalField(id),
+          icon: const Icon(
+            Icons.remove_circle_outline_outlined,
+            color: Color(0xFF3F9272),
           ),
         ),
       ],
@@ -180,6 +197,7 @@ class _TambahProdukState extends State<TambahProduk> {
   }
 
   Widget _buildFormField(int id) {
+    // widget yang akan di tambah/duplikat jika tombol di klik (widget yang full textfield)
     return Column(
       children: [
         Row(
@@ -250,7 +268,7 @@ class _TambahProdukState extends State<TambahProduk> {
             ),
             Container(
               child: IconButton(
-                onPressed: _addFormSubField,
+                onPressed: _addFormSub2Field,
                 icon: const Icon(
                   Icons.add_circle_outline_outlined,
                   color: Color(0xFF3F9272),
@@ -382,12 +400,150 @@ class _TambahProdukState extends State<TambahProduk> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.width * 0.02,
-                ),
               ],
             ),
           ],
+        ),
+        Column(
+          //memanggil textfield sub kategori
+          children: formSub2Fields
+              .map((id) => _buildFormSub2Field(id as int))
+              .toList(),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.width * 0.02,
+        ),
+      ],
+    );
+  }
+
+  // Membuat field form duplikasi dengan tombol hapus
+  Widget _buildFormSub2Field(int id) {
+    // widget yang akan di tambah/duplikat jika tombol di klik (widget yang sub variasi textfield)
+    return Row(
+      children: [
+        SizedBox(width: MediaQuery.of(context).size.width * 0.050),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Nama Kategori",
+              style: GoogleFonts.josefinSans(color: const Color(0xFF3F9272)),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.10,
+              child: TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintStyle: GoogleFonts.josefinSans(
+                    fontWeight: FontWeight.w300,
+                    fontSize: MediaQuery.of(context).size.width * 0.015,
+                    color: const Color(0xff3F9272),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.009),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Usia",
+              style: GoogleFonts.josefinSans(color: const Color(0xFF3F9272)),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.09,
+              child: TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintStyle: GoogleFonts.josefinSans(
+                    fontWeight: FontWeight.w300,
+                    fontSize: MediaQuery.of(context).size.width * 0.015,
+                    color: const Color(0xff3F9272),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.009),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Stok",
+              style: GoogleFonts.josefinSans(color: const Color(0xFF3F9272)),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.05,
+              child: TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintStyle: GoogleFonts.josefinSans(
+                    fontWeight: FontWeight.w300,
+                    fontSize: MediaQuery.of(context).size.width * 0.015,
+                    color: const Color(0xff3F9272),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.009),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Harga",
+              style: GoogleFonts.josefinSans(color: const Color(0xFF3F9272)),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.09,
+              child: TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintStyle: GoogleFonts.josefinSans(
+                    fontWeight: FontWeight.w300,
+                    fontSize: MediaQuery.of(context).size.width * 0.015,
+                    color: const Color(0xff3F9272),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width * 0.009),
+        // Tombol hapus field
+        Container(
+          child: IconButton(
+            onPressed: () => _removeFormSub2Field(id),
+            icon: const Icon(
+              Icons.remove_circle_outline_outlined,
+              color: Color(0xFF3F9272),
+            ),
+          ),
         ),
       ],
     );
@@ -676,7 +832,7 @@ class _TambahProdukState extends State<TambahProduk> {
                             child: IconButton(
                               onPressed: _addFormField,
                               icon: Icon(
-                                Icons.add_box_outlined,
+                                Icons.add_circle_outline_outlined,
                                 color: Color(0xFF3F9272),
                               ),
                             ),
@@ -733,7 +889,7 @@ class _TambahProdukState extends State<TambahProduk> {
                           ),
                           Container(
                             child: IconButton(
-                              onPressed: _addFormSubField,
+                              onPressed: _addFormSubOriginalField,
                               icon: const Icon(
                                 Icons.add_circle_outline_outlined,
                                 color: Color(0xFF3F9272),
@@ -884,8 +1040,8 @@ class _TambahProdukState extends State<TambahProduk> {
                       ),
                       Column(
                         //memanggil textfield sub kategori
-                        children: formSubFields
-                            .map((id) => _buildFormSubField(id as int))
+                        children: formSubOriginal
+                            .map((id) => _buildFormSubOriginalField(id as int))
                             .toList(),
                       ),
                       SizedBox(

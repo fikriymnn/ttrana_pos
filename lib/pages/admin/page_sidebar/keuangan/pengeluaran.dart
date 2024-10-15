@@ -272,7 +272,7 @@ class _PengeluaranState extends State<Pengeluaran> {
                         ),
                         child: Center(
                           child: Text(
-                            "Simpan",
+                            "Cari",
                             style: GoogleFonts.josefinSans(
                               color: Colors.white,
                               fontSize: size.width * 0.02,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/produk/burung.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/produk/ikan.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/produk/tanaman.dart';
+import 'package:provider/provider.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/Tanaman/tanaman_kasir.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/burung_kasir.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/cart.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/ikan_kasir.dart';
 import 'package:ttrana_pos/responsive.dart';
 
 class ProdukKasir extends StatefulWidget {
@@ -18,56 +20,56 @@ class _ProdukKasirState extends State<ProdukKasir> {
     "Ikan",
     "Burung",
   ];
-  double changePositionM() {
+  double changePositionM(Size size) {
     switch (current) {
       case 0:
-        return 346;
+        return size.width * 0.225;
       case 1:
-        return 470;
+        return size.width * 0.358;
       case 2:
-        return 543;
+        return size.width * 0.448;
 
       default:
         return 0;
     }
   }
 
-  double changeContainerWidthM() {
+  double changeContainerWidthM(Size size) {
     switch (current) {
       case 0:
-        return 105;
+        return size.width * 0.091;
       case 1:
-        return 54;
+        return size.width * 0.046;
       case 2:
-        return 83;
+        return size.width * 0.072;
 
       default:
         return 0;
     }
   }
 
-  double changePositionT() {
+  double changePositionT(Size size) {
     switch (current) {
       case 0:
-        return 490;
+        return size.width * 0.237;
       case 1:
-        return 620;
+        return size.width * 0.353;
       case 2:
-        return 690;
+        return size.width * 0.425;
 
       default:
         return 0;
     }
   }
 
-  double changeContainerWidthT() {
+  double changeContainerWidthT(Size size) {
     switch (current) {
       case 0:
-        return 108;
+        return size.width * 0.086;
       case 1:
-        return 50;
+        return size.width * 0.042;
       case 2:
-        return 85;
+        return size.width * 0.069;
 
       default:
         return 0;
@@ -78,317 +80,669 @@ class _ProdukKasirState extends State<ProdukKasir> {
 
   @override
   Widget build(BuildContext context) {
+    final produkTanaman =
+        context.watch<Cart>(); // Akses provider model ProdukTanaman
     var size = MediaQuery.of(context).size;
+    // Hitung total harga
+    final totalHarga =
+        produkTanaman.cart.fold(0, (previousValue, productEntry) {
+      final tanaman = productEntry.keys.first;
+      final quantity = productEntry[tanaman]!;
+      return previousValue + (tanaman.harga * quantity);
+    });
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color.fromARGB(255, 202, 231, 239),
       body: Responsive(
-        mobile: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: size.height * 0.06,
+        // Tampilan mobile
+        mobile: Stack(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: size.width * 0.03,
+                  ),
+                  child: Container(
+                    height: size.height,
+                    width: size.width * 0.23,
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: size.width,
+                          height: size.height * 0.1,
+                          color: Color.fromARGB(255, 73, 142, 125),
+                          child: Center(
+                            child: Text(
+                              "Produk",
+                              style: GoogleFonts.josefinSans(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: size.width * 0.016,
+                              ),
+                            ),
+                          ),
+                        ),
+                        // Menampilkan produk yang di input
+                        Expanded(
+                          child: Container(
+                            child: produkTanaman.cart.isNotEmpty
+                                ? Expanded(
+                                    child: ListView.builder(
+                                      itemCount: produkTanaman.cart.length,
+                                      itemBuilder: (context, index) {
+                                        // Each cart entry is a Map<tanaman, int>
+                                        final productEntry =
+                                            produkTanaman.cart[index];
+                                        final tanaman = productEntry.keys.first;
+                                        final quantity = productEntry[tanaman]!;
+
+                                        return ListTile(
+                                          title: Text(tanaman.judulProduk),
+                                          subtitle: Text(
+                                            'Rp. ${tanaman.harga}',
+                                            style: GoogleFonts.josefinSans(
+                                              fontSize: 20,
+                                              color: Color(0xffFF0A0A),
+                                            ),
+                                          ),
+                                          trailing: Container(
+                                            width: 30,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(width: 1),
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                '${quantity}',
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          // trailing: Text(
+                                          //   'Total: Rp ${tanaman.harga * quantity}',
+                                          //   style: const TextStyle(
+                                          //     fontWeight: FontWeight.bold,
+                                          //     color: Colors.red,
+                                          //   ),
+                                          // ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                : const Center(
+                                    child: Text('Kosong'),
+                                  ),
+                          ),
+                        ),
+
+                        Container(
+                          child: Column(
+                            children: [
+                              const Divider(
+                                thickness: 1,
+                                color: Colors.black,
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(left: size.width * 0.01),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Total",
+                                          style: GoogleFonts.josefinSans(
+                                              fontSize: size.width * 0.016),
+                                        ),
+                                        SizedBox(
+                                          width: size.width * 0.073,
+                                        ),
+                                        Text(
+                                          "Rp. ${totalHarga}",
+                                          style: GoogleFonts.josefinSans(
+                                              fontSize: size.width * 0.016),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "PPN",
+                                          style: GoogleFonts.josefinSans(
+                                              fontSize: size.width * 0.016),
+                                        ),
+                                        SizedBox(
+                                          width: size.width * 0.077,
+                                        ),
+                                        Text(
+                                          "Rp 50.000",
+                                          style: GoogleFonts.josefinSans(
+                                              fontSize: size.width * 0.016),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Service",
+                                          style: GoogleFonts.josefinSans(
+                                              fontSize: size.width * 0.016),
+                                        ),
+                                        SizedBox(
+                                          width: size.width * 0.055,
+                                        ),
+                                        Text(
+                                          "Rp 50.000",
+                                          style: GoogleFonts.josefinSans(
+                                              fontSize: size.width * 0.016),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Divider(
+                                thickness: 1,
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(left: size.width * 0.01),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Sub Total",
+                                      style: GoogleFonts.josefinSans(
+                                          fontSize: size.width * 0.016),
+                                    ),
+                                    SizedBox(
+                                      width: size.width * 0.035,
+                                    ),
+                                    Text(
+                                      "Rp. ${totalHarga}",
+                                      style: GoogleFonts.josefinSans(
+                                          fontSize: size.width * 0.016),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: size.width * 0.26),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: size.height * 0.06,
+                    ),
+                    SizedBox(
+                      height: size.height * 0.08,
+                      width: size.width * 0.35,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          suffixIcon: Icon(
+                            Icons.search,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Stack(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: size.width * 0.32,
+                              height: size.height * 0.05,
+                              // color: Colors.black,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: tabs.length,
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        current = index;
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        left: index == 0
+                                            ? size.width * 0.014
+                                            : 40,
+                                      ),
+                                      child: Text(
+                                        tabs[index],
+                                        style: GoogleFonts.josefinSans(
+                                          fontSize: size.width * 0.02,
+                                          fontWeight: current == index
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                          color: current == index
+                                              ? Colors.green
+                                              : Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        AnimatedPositioned(
+                          bottom: 0,
+                          left: changePositionM(size),
+                          curve: Curves.fastEaseInToSlowEaseOut,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 500),
+                            width: changeContainerWidthM(size),
+                            height: size.height * 0.004,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.green,
+                            ),
+                          ),
+                          duration: const Duration(milliseconds: 500),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Stack(
+                      children: [
+                        IndexedStack(
+                          index: current,
+                          children: [
+                            TanamanKasir(),
+                            IkanKasir(),
+                            BurungKasir(),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.4),
-                child: const TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    suffixIcon: Icon(
-                      Icons.search,
+            ),
+            Positioned(
+              bottom: 0,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: size.width * 0.26,
+                ),
+                child: Container(
+                  width: size.width * 0.739,
+                  height: size.height * 0.1,
+                  // color: Colors.black,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Center(
+                      child: Container(
+                        width: size.width * 0.12,
+                        height: size.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 73, 142, 125),
+                          borderRadius:
+                              BorderRadius.circular(size.width * 0.006),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Bayar",
+                            style: GoogleFonts.josefinSans(
+                              color: Colors.white,
+                              fontSize: size.width * 0.016,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-              Stack(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: size.width * 0.282,
-                        height: size.height * 0.054,
-                        // color: Colors.black,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: tabs.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  current = index;
-                                });
-                              },
-                              child: Padding(
-                                padding:
-                                    EdgeInsets.only(left: index == 0 ? 10 : 23),
-                                child: Text(
-                                  tabs[index],
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: current == index
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color: current == index
-                                        ? Colors.green
-                                        : Colors.grey,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  AnimatedPositioned(
-                    bottom: 0,
-                    left: changePositionM(),
-                    curve: Curves.fastEaseInToSlowEaseOut,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 500),
-                      margin: const EdgeInsets.only(left: 10),
-                      width: changeContainerWidthM(),
-                      height: size.height * 0.006,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.green,
-                      ),
-                    ),
-                    duration: const Duration(milliseconds: 500),
-                  ),
-                ],
-              ),
-              // Halaman konten yang berbeda sesuai tab
-              SizedBox(height: size.height * 0.03),
-              IndexedStack(
-                index: current,
-                children: [
-                  Tanaman(),
-                  Ikan(),
-                  Burung(),
-                ],
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-        tablet: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: size.width * 0.03,
-                    ),
-                    child: Container(
-                      height: size.height,
-                      width: size.width * 0.23,
-                      color: Colors.white,
-                      child: Column(
-                        children: [
-                          Container(
-                            width: size.width,
-                            height: size.height * 0.1,
-                            color: Color.fromARGB(255, 73, 142, 125),
-                            child: Center(
-                              child: Text(
-                                "Produk",
-                                style: GoogleFonts.josefinSans(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: size.width * 0.02,
-                                ),
+        // Tampilan tablet
+        tablet: Stack(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: size.width * 0.03,
+                  ),
+                  child: Container(
+                    height: size.height,
+                    width: size.width * 0.23,
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: size.width,
+                          height: size.height * 0.1,
+                          color: Color.fromARGB(255, 73, 142, 125),
+                          child: Center(
+                            child: Text(
+                              "Produk",
+                              style: GoogleFonts.josefinSans(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: size.width * 0.02,
                               ),
                             ),
                           ),
-                          Container(
-                            height: size.height * 0.65,
-                            width: size.width,
-                            // color: Colors.black,
+                        ),
+                        // Menampilkan produk yang di input
+                        Expanded(
+                          child: Container(
+                            child: produkTanaman.cart.isNotEmpty
+                                ? Expanded(
+                                    child: ListView.builder(
+                                      itemCount: produkTanaman.cart.length,
+                                      itemBuilder: (context, index) {
+                                        // Each cart entry is a Map<tanaman, int>
+                                        final productEntry =
+                                            produkTanaman.cart[index];
+                                        final tanaman = productEntry.keys.first;
+                                        final quantity = productEntry[tanaman]!;
+
+                                        return ListTile(
+                                          title: Text(tanaman.judulProduk),
+                                          subtitle: Text(
+                                            'Rp. ${tanaman.harga}',
+                                            style: GoogleFonts.josefinSans(
+                                              fontSize: 20,
+                                              color: Color(0xffFF0A0A),
+                                            ),
+                                          ),
+                                          trailing: Container(
+                                            width: 30,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(width: 1),
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                '${quantity}',
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          // trailing: Text(
+                                          //   'Total: Rp ${tanaman.harga * quantity}',
+                                          //   style: const TextStyle(
+                                          //     fontWeight: FontWeight.bold,
+                                          //     color: Colors.red,
+                                          //   ),
+                                          // ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                : const Center(
+                                    child: Text('Kosong'),
+                                  ),
                           ),
-                          Divider(
-                            thickness: 2,
-                            color: Colors.black,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: size.width * 0.01),
-                            child: Column(
-                              children: [
-                                Row(
+                        ),
+                        Container(
+                          child: Column(
+                            children: [
+                              Divider(
+                                thickness: 2,
+                                color: Colors.black,
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(left: size.width * 0.01),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Total",
+                                          style: GoogleFonts.josefinSans(
+                                              fontSize: size.width * 0.018),
+                                        ),
+                                        SizedBox(
+                                          width: size.width * 0.073,
+                                        ),
+                                        Text(
+                                          "Rp. ${totalHarga}",
+                                          style: GoogleFonts.josefinSans(
+                                              fontSize: size.width * 0.018),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "PPN",
+                                          style: GoogleFonts.josefinSans(
+                                              fontSize: size.width * 0.018),
+                                        ),
+                                        SizedBox(
+                                          width: size.width * 0.077,
+                                        ),
+                                        Text(
+                                          "Rp. 50.000",
+                                          style: GoogleFonts.josefinSans(
+                                              fontSize: size.width * 0.018),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Service",
+                                          style: GoogleFonts.josefinSans(
+                                              fontSize: size.width * 0.018),
+                                        ),
+                                        SizedBox(
+                                          width: size.width * 0.055,
+                                        ),
+                                        Text(
+                                          "Rp. 50.000",
+                                          style: GoogleFonts.josefinSans(
+                                              fontSize: size.width * 0.018),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(
+                                thickness: 3,
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(left: size.width * 0.01),
+                                child: Row(
                                   children: [
                                     Text(
-                                      "Total",
+                                      "Sub Total",
                                       style: GoogleFonts.josefinSans(
                                           fontSize: size.width * 0.018),
                                     ),
                                     SizedBox(
-                                      width: size.width * 0.073,
+                                      width: size.width * 0.035,
                                     ),
                                     Text(
-                                      "Rp 1.150.000",
+                                      "Rp. ${totalHarga}",
                                       style: GoogleFonts.josefinSans(
                                           fontSize: size.width * 0.018),
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "PPN",
-                                      style: GoogleFonts.josefinSans(
-                                          fontSize: size.width * 0.018),
-                                    ),
-                                    SizedBox(
-                                      width: size.width * 0.077,
-                                    ),
-                                    Text(
-                                      "Rp 50.000",
-                                      style: GoogleFonts.josefinSans(
-                                          fontSize: size.width * 0.018),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Service",
-                                      style: GoogleFonts.josefinSans(
-                                          fontSize: size.width * 0.018),
-                                    ),
-                                    SizedBox(
-                                      width: size.width * 0.055,
-                                    ),
-                                    Text(
-                                      "Rp 50.000",
-                                      style: GoogleFonts.josefinSans(
-                                          fontSize: size.width * 0.018),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                          Divider(
-                            thickness: 3,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: size.width * 0.01),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Sub Total",
-                                  style: GoogleFonts.josefinSans(
-                                      fontSize: size.width * 0.018),
-                                ),
-                                SizedBox(
-                                  width: size.width * 0.035,
-                                ),
-                                Text(
-                                  "Rp 20.000",
-                                  style: GoogleFonts.josefinSans(
-                                      fontSize: size.width * 0.018),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      right: size.width * 0.30,
-                      left: size.width * 0.30,
-                      top: size.height * 0.05,
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: size.height * 0.009,
-                          horizontal: size.width * 0.02,
-                        ),
-                        border: OutlineInputBorder(),
-                        suffixIcon: Icon(
-                          Icons.search,
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: size.width * 0.26),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        right: size.width * 0.20,
+                        left: size.width * 0.20,
+                        top: size.height * 0.05,
+                      ),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: size.height * 0.009,
+                            horizontal: size.width * 0.02,
+                          ),
+                          border: OutlineInputBorder(),
+                          suffixIcon: Icon(
+                            Icons.search,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Stack(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: size.width * 0.233,
-                            height: size.height * 0.05,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: tabs.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      current = index;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: index == 0 ? 10 : 23),
-                                    child: Text(
-                                      tabs[index],
-                                      style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: current == index
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
-                                        color: current == index
-                                            ? Colors.green
-                                            : Colors.grey,
+                    Stack(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: size.width * 0.3,
+                              height: size.height * 0.05,
+                              // color: Colors.black,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: tabs.length,
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        current = index;
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        left: index == 0
+                                            ? size.width * 0.016
+                                            : size.width * 0.034,
+                                      ),
+                                      child: Text(
+                                        tabs[index],
+                                        style: GoogleFonts.josefinSans(
+                                          fontSize: size.width * 0.0196,
+                                          fontWeight: current == index
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                          color: current == index
+                                              ? Colors.green
+                                              : Colors.grey,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        AnimatedPositioned(
+                          bottom: 0,
+                          left: changePositionT(size),
+                          curve: Curves.fastEaseInToSlowEaseOut,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 500),
+                            width: changeContainerWidthT(size),
+                            height: size.height * 0.006,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.green,
                             ),
                           ),
-                        ],
-                      ),
-                      AnimatedPositioned(
-                        bottom: 0,
-                        left: changePositionT(),
-                        curve: Curves.fastEaseInToSlowEaseOut,
-                        child: AnimatedContainer(
                           duration: const Duration(milliseconds: 500),
-                          margin: const EdgeInsets.only(left: 10),
-                          width: changeContainerWidthT(),
-                          height: size.height * 0.006,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.green,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Stack(
+                      children: [
+                        IndexedStack(
+                          index: current,
+                          children: [
+                            TanamanKasir(),
+                            IkanKasir(),
+                            BurungKasir(),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: size.width * 0.26,
+                ),
+                child: Container(
+                  width: size.width * 0.739,
+                  height: size.height * 0.1,
+                  // color: Colors.black,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Center(
+                      child: Container(
+                        width: size.width * 0.12,
+                        height: size.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 73, 142, 125),
+                          borderRadius:
+                              BorderRadius.circular(size.width * 0.006),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Bayar",
+                            style: GoogleFonts.josefinSans(
+                              color: Colors.white,
+                              fontSize: size.width * 0.016,
+                            ),
                           ),
                         ),
-                        duration: const Duration(milliseconds: 500),
                       ),
-                    ],
+                    ),
                   ),
-                  // Halaman konten yang berbeda sesuai tab
-                  const SizedBox(height: 20),
-                  Container(
-                    height: size.height * 0.7,
-                    width: size.height * 0.7,
-                    color: Colors.white,
-                  ),
-                ],
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
