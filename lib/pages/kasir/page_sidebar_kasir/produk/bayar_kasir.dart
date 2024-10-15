@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/produk_kasir.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/bayar_berhasil_kasir.dart';
 import 'package:ttrana_pos/responsive.dart';
 
 class BayarKasir extends StatefulWidget {
@@ -15,6 +15,7 @@ class _BayarKasirState extends State<BayarKasir> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Responsive(
         mobile: Expanded(
           child: Row(
@@ -343,7 +344,7 @@ class _BayarKasirState extends State<BayarKasir> {
                           top: size.height * 0.02,
                           left: size.width * 0.035,
                           right: size.width * 0.035,
-                          bottom: size.height * 0.01),
+                          bottom: size.height * 0.02),
                       child: Divider(
                         thickness: 2,
                       ),
@@ -364,49 +365,132 @@ class _BayarKasirState extends State<BayarKasir> {
                           width: size.width * 0.17,
                         ),
                         Container(
-                          width: size.width * 0.1,
                           height: size.height * 0.07,
+                          width: size.width * 0.17,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 73, 142, 125),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(size.width * 0.005),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Uang Pas",
-                              style: GoogleFonts.josefinSans(
-                                color: Colors.white,
-                                fontSize: size.width * 0.015,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: size.width * 0.04,
-                        ),
-                        Container(
-                          height: size.height * 0.07,
-                          width: size.width * 0.1,
-                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 169, 240, 210),
                             borderRadius: BorderRadius.all(
                               Radius.circular(size.width * 0.003),
                             ),
                             border: Border.all(
                               width: size.width * 0.001,
+                              color: Color.fromARGB(255, 73, 142, 125),
                             ),
                           ),
-                          child: Center(
-                            child: Text(
-                              "Custom",
-                              style: GoogleFonts.josefinSans(
-                                color: Colors.black,
-                                fontSize: size.width * 0.015,
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                top: size.height * 0.002,
+                                left: size.width * 0.005,
                               ),
+                              hintText: "Masukan Nominal",
+                              hintStyle: GoogleFonts.josefinSans(
+                                color: Color.fromARGB(255, 73, 142, 125),
+                                fontSize: size.width * 0.019,
+                              ),
+                              border: InputBorder.none,
                             ),
                           ),
                         ),
                       ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: size.height * 0.05,
+                        bottom: size.height * 0.08,
+                        left: size.width * 0.035,
+                        right: size.width * 0.035,
+                      ),
+                      child: Divider(
+                        thickness: 2,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.035,
+                        ),
+                        Text(
+                          "Transfer",
+                          style: GoogleFonts.josefinSans(
+                            fontSize: size.width * 0.02,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.14,
+                        ),
+                        Container(
+                          width: size.width * 0.35,
+                          height: size.height * 0.07,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 2,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.wallet_outlined,
+                                size: size.width * 0.03,
+                                color: Colors.grey,
+                              ),
+                              SizedBox(
+                                width: size.width * 0.019,
+                              ),
+                              Text(
+                                "Belum Ada Rekening Transfer",
+                                style: GoogleFonts.josefinSans(
+                                  color: Colors.grey,
+                                  fontSize: size.width * 0.017,
+                                ),
+                              ),
+                              SizedBox(
+                                width: size.width * 0.025,
+                              ),
+                              Text(
+                                "Pilih",
+                                style: GoogleFonts.josefinSans(
+                                  color: Colors.grey,
+                                  fontSize: size.width * 0.017,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: size.height * 0.39,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BayarBerhasilKasir()));
+                      },
+                      child: Container(
+                        width: size.width * 0.12,
+                        height: size.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 73, 142, 125),
+                          borderRadius:
+                              BorderRadius.circular(size.width * 0.006),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Bayar",
+                            style: GoogleFonts.josefinSans(
+                              color: Colors.white,
+                              fontSize: size.width * 0.016,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
