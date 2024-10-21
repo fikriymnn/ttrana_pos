@@ -17,18 +17,18 @@ class CurvePointerMKasir extends CustomPainter {
     Path path = Path();
     Paint paint = Paint();
 
-    path.moveTo(186, 10);
-    path.quadraticBezierTo(186, 10, animValue3, 10);
-    path.lineTo(animValue1, 10);
-    path.quadraticBezierTo(animValue2, 10, animValue2, 30);
-    path.lineTo(186, 30);
+    path.moveTo(189, 5);
+    path.quadraticBezierTo(189, 5, animValue3, 5);
+    path.lineTo(animValue1, 5);
+    path.quadraticBezierTo(animValue2, 5, animValue2, 25);
+    path.lineTo(189, 25);
     path.close();
 
-    path.moveTo(186, 50);
-    path.quadraticBezierTo(186, 50, animValue3, 50);
-    path.lineTo(animValue1, 50);
-    path.quadraticBezierTo(animValue2, 50, animValue2, 30);
-    path.lineTo(186, 30);
+    path.moveTo(189, 40);
+    path.quadraticBezierTo(189, 40, animValue3, 40);
+    path.lineTo(animValue1, 40);
+    path.quadraticBezierTo(animValue2, 40, animValue2, 25);
+    path.lineTo(189, 25);
     path.close();
 
     paint.color = Colors.white;
