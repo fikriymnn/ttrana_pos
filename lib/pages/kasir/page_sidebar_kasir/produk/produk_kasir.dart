@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/Tanaman/tanaman_kasir.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/bayar_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/burung_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/cart.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/ikan_kasir.dart';
@@ -88,7 +89,16 @@ class _ProdukKasirState extends State<ProdukKasir> {
         produkTanaman.cart.fold(0, (previousValue, productEntry) {
       final tanaman = productEntry.keys.first;
       final quantity = productEntry[tanaman]!;
+
       return previousValue + (tanaman.harga * quantity);
+    });
+    // Hitung Subtotal harga
+    final subTotal = produkTanaman.cart.fold(0, (previousValue, productEntry) {
+      final tanaman = productEntry.keys.first;
+      final quantity = productEntry[tanaman]!;
+      final ppn = totalHarga * 0.02; //Hitung ppn
+
+      return previousValue + (tanaman.harga * quantity + ppn.toInt() + 2500);
     });
 
     return Scaffold(
@@ -463,6 +473,8 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         final tanaman = productEntry.keys.first;
                                         final quantity = productEntry[tanaman]!;
 
+                                        // final ppn = tanaman.harga * 0.02;
+
                                         return ListTile(
                                           title: Text(tanaman.judulProduk),
                                           subtitle: Text(
@@ -545,7 +557,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                           width: size.width * 0.077,
                                         ),
                                         Text(
-                                          "Rp. 50.000",
+                                          "2%",
                                           style: GoogleFonts.josefinSans(
                                               fontSize: size.width * 0.018),
                                         ),
@@ -562,7 +574,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                           width: size.width * 0.055,
                                         ),
                                         Text(
-                                          "Rp. 50.000",
+                                          "Rp. 2.500",
                                           style: GoogleFonts.josefinSans(
                                               fontSize: size.width * 0.018),
                                         ),
@@ -588,7 +600,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                       width: size.width * 0.035,
                                     ),
                                     Text(
-                                      "Rp. ${totalHarga}",
+                                      "Rp. ${subTotal}",
                                       style: GoogleFonts.josefinSans(
                                           fontSize: size.width * 0.018),
                                     ),
@@ -689,7 +701,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: size.width * 0.015),
                     Stack(
                       children: [
                         IndexedStack(
@@ -717,7 +729,12 @@ class _ProdukKasirState extends State<ProdukKasir> {
                   height: size.height * 0.1,
                   // color: Colors.black,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BayarKasir()));
+                    },
                     child: Center(
                       child: Container(
                         width: size.width * 0.12,

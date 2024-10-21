@@ -187,7 +187,7 @@ class _TambahProdukState extends State<TambahProduk> {
         // Tombol hapus field
         IconButton(
           onPressed: () => _removeFormSubOriginalField(id),
-          icon: const Icon(
+          icon: Icon(
             Icons.remove_circle_outline_outlined,
             color: Color(0xFF3F9272),
           ),
