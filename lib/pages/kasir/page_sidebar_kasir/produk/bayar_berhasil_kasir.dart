@@ -71,7 +71,7 @@ class BayarBerhasilKasir extends StatelessWidget {
                             builder: (context) => MainPageKasir()));
                   },
                   child: Container(
-                    height: size.height * 0.056,
+                    height: size.height * 0.06,
                     width: size.width * 0.37,
                     decoration: BoxDecoration(
                       color: Color.fromARGB(255, 73, 142, 125),
@@ -92,7 +92,7 @@ class BayarBerhasilKasir extends StatelessWidget {
                   height: size.height * 0.01,
                 ),
                 Container(
-                  height: size.height * 0.056,
+                  height: size.height * 0.06,
                   width: size.width * 0.37,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(size.width * 0.004),

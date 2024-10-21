@@ -24,11 +24,11 @@ class _ProdukKasirState extends State<ProdukKasir> {
   double changePositionM(Size size) {
     switch (current) {
       case 0:
-        return size.width * 0.225;
+        return size.width * 0.237;
       case 1:
-        return size.width * 0.358;
+        return size.width * 0.354;
       case 2:
-        return size.width * 0.448;
+        return size.width * 0.428;
 
       default:
         return 0;
@@ -38,11 +38,11 @@ class _ProdukKasirState extends State<ProdukKasir> {
   double changeContainerWidthM(Size size) {
     switch (current) {
       case 0:
-        return size.width * 0.091;
+        return size.width * 0.087;
       case 1:
-        return size.width * 0.046;
+        return size.width * 0.041;
       case 2:
-        return size.width * 0.072;
+        return size.width * 0.067;
 
       default:
         return 0;
@@ -122,7 +122,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                               style: GoogleFonts.josefinSans(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: size.width * 0.016,
+                                fontSize: size.width * 0.02,
                               ),
                             ),
                           ),
@@ -183,12 +183,11 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                   ),
                           ),
                         ),
-
                         Container(
                           child: Column(
                             children: [
-                              const Divider(
-                                thickness: 1,
+                              Divider(
+                                thickness: 2,
                                 color: Colors.black,
                               ),
                               Padding(
@@ -201,7 +200,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         Text(
                                           "Total",
                                           style: GoogleFonts.josefinSans(
-                                              fontSize: size.width * 0.016),
+                                              fontSize: size.width * 0.018),
                                         ),
                                         SizedBox(
                                           width: size.width * 0.073,
@@ -209,7 +208,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         Text(
                                           "Rp. ${totalHarga}",
                                           style: GoogleFonts.josefinSans(
-                                              fontSize: size.width * 0.016),
+                                              fontSize: size.width * 0.018),
                                         ),
                                       ],
                                     ),
@@ -218,15 +217,15 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         Text(
                                           "PPN",
                                           style: GoogleFonts.josefinSans(
-                                              fontSize: size.width * 0.016),
+                                              fontSize: size.width * 0.018),
                                         ),
                                         SizedBox(
                                           width: size.width * 0.077,
                                         ),
                                         Text(
-                                          "Rp 50.000",
+                                          "Rp. 50.000",
                                           style: GoogleFonts.josefinSans(
-                                              fontSize: size.width * 0.016),
+                                              fontSize: size.width * 0.018),
                                         ),
                                       ],
                                     ),
@@ -235,23 +234,23 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         Text(
                                           "Service",
                                           style: GoogleFonts.josefinSans(
-                                              fontSize: size.width * 0.016),
+                                              fontSize: size.width * 0.018),
                                         ),
                                         SizedBox(
                                           width: size.width * 0.055,
                                         ),
                                         Text(
-                                          "Rp 50.000",
+                                          "Rp. 50.000",
                                           style: GoogleFonts.josefinSans(
-                                              fontSize: size.width * 0.016),
+                                              fontSize: size.width * 0.018),
                                         ),
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
-                              const Divider(
-                                thickness: 1,
+                              Divider(
+                                thickness: 3,
                               ),
                               Padding(
                                 padding:
@@ -261,7 +260,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                     Text(
                                       "Sub Total",
                                       style: GoogleFonts.josefinSans(
-                                          fontSize: size.width * 0.016),
+                                          fontSize: size.width * 0.018),
                                     ),
                                     SizedBox(
                                       width: size.width * 0.035,
@@ -269,7 +268,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                     Text(
                                       "Rp. ${totalHarga}",
                                       style: GoogleFonts.josefinSans(
-                                          fontSize: size.width * 0.016),
+                                          fontSize: size.width * 0.018),
                                     ),
                                   ],
                                 ),
@@ -288,14 +287,18 @@ class _ProdukKasirState extends State<ProdukKasir> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: size.height * 0.06,
-                    ),
-                    SizedBox(
-                      height: size.height * 0.08,
-                      width: size.width * 0.35,
+                    Padding(
+                      padding: EdgeInsets.only(
+                        right: size.width * 0.20,
+                        left: size.width * 0.20,
+                        top: size.height * 0.05,
+                      ),
                       child: TextField(
                         decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: size.height * 0.009,
+                            horizontal: size.width * 0.02,
+                          ),
                           border: OutlineInputBorder(),
                           suffixIcon: Icon(
                             Icons.search,
@@ -309,8 +312,8 @@ class _ProdukKasirState extends State<ProdukKasir> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              width: size.width * 0.32,
-                              height: size.height * 0.05,
+                              width: size.width * 0.3,
+                              height: size.height * 0.055,
                               // color: Colors.black,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
@@ -325,13 +328,13 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                     child: Padding(
                                       padding: EdgeInsets.only(
                                         left: index == 0
-                                            ? size.width * 0.014
-                                            : 40,
+                                            ? size.width * 0.016
+                                            : size.width * 0.034,
                                       ),
                                       child: Text(
                                         tabs[index],
                                         style: GoogleFonts.josefinSans(
-                                          fontSize: size.width * 0.02,
+                                          fontSize: size.width * 0.0196,
                                           fontWeight: current == index
                                               ? FontWeight.bold
                                               : FontWeight.normal,
@@ -354,7 +357,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 500),
                             width: changeContainerWidthM(size),
-                            height: size.height * 0.004,
+                            height: size.height * 0.006,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.green,
@@ -364,7 +367,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: size.width * 0.015),
                     Stack(
                       children: [
                         IndexedStack(
@@ -392,7 +395,12 @@ class _ProdukKasirState extends State<ProdukKasir> {
                   height: size.height * 0.1,
                   // color: Colors.black,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BayarKasir()));
+                    },
                     child: Center(
                       child: Container(
                         width: size.width * 0.12,

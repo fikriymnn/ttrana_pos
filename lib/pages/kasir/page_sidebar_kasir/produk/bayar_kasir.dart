@@ -22,13 +22,13 @@ class _BayarKasirState extends State<BayarKasir> {
             children: [
               Container(
                 height: size.height,
-                width: size.width * 0.25,
+                width: size.width * 0.27,
                 color: Colors.white,
                 child: Column(
                   children: [
                     Container(
                       width: size.width,
-                      height: size.height * 0.1,
+                      height: size.height * 0.14,
                       color: Color.fromARGB(255, 73, 142, 125),
                       child: Center(
                         child: Text(
@@ -42,9 +42,10 @@ class _BayarKasirState extends State<BayarKasir> {
                       ),
                     ),
                     Container(
-                      height: size.height * 0.65,
+                      height: size.height * 0.55,
                       width: size.width,
                       // color: Colors.black,
+                      //ini container buat masukin product
                     ),
                     Divider(
                       thickness: 2,
@@ -59,7 +60,8 @@ class _BayarKasirState extends State<BayarKasir> {
                               Text(
                                 "Total",
                                 style: GoogleFonts.josefinSans(
-                                    fontSize: size.width * 0.018),
+                                  fontSize: size.width * 0.018,
+                                ),
                               ),
                               SizedBox(
                                 width: size.width * 0.073,
@@ -136,7 +138,7 @@ class _BayarKasirState extends State<BayarKasir> {
               ),
               Container(
                 height: size.height,
-                width: size.width * 0.75,
+                width: size.width * 0.73,
                 color: const Color.fromARGB(255, 202, 231, 239),
                 child: Column(
                   children: [
@@ -144,7 +146,8 @@ class _BayarKasirState extends State<BayarKasir> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
-                              top: size.height * 0.02, left: size.width * 0.01),
+                              top: size.height * 0.026,
+                              left: size.width * 0.026),
                           child: GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
@@ -171,6 +174,164 @@ class _BayarKasirState extends State<BayarKasir> {
                           ),
                         ),
                       ],
+                    ),
+                    Text(
+                      "Rp 114.500",
+                      style:
+                          GoogleFonts.josefinSans(fontSize: size.width * 0.037),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: size.height * 0.02,
+                          left: size.width * 0.035,
+                          right: size.width * 0.035,
+                          bottom: size.height * 0.02),
+                      child: Divider(
+                        thickness: 2,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.035,
+                        ),
+                        Text(
+                          "Tunai",
+                          style: GoogleFonts.josefinSans(
+                            fontWeight: FontWeight.bold,
+                            fontSize: size.width * 0.02,
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.17,
+                        ),
+                        Container(
+                          height: size.height * 0.07,
+                          width: size.width * 0.17,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 169, 240, 210),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 0.003),
+                            ),
+                            border: Border.all(
+                              width: size.width * 0.001,
+                              color: Color.fromARGB(255, 73, 142, 125),
+                            ),
+                          ),
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                bottom: size.height * 0.025,
+                                left: size.width * 0.004,
+                              ),
+                              hintText: "Masukan Nominal",
+                              hintStyle: GoogleFonts.josefinSans(
+                                color: Color.fromARGB(255, 73, 142, 125),
+                                fontSize: size.width * 0.019,
+                              ),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: size.height * 0.05,
+                        bottom: size.height * 0.08,
+                        left: size.width * 0.035,
+                        right: size.width * 0.035,
+                      ),
+                      child: Divider(
+                        thickness: 2,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.035,
+                        ),
+                        Text(
+                          "Transfer",
+                          style: GoogleFonts.josefinSans(
+                            fontSize: size.width * 0.02,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.14,
+                        ),
+                        Container(
+                          width: size.width * 0.35,
+                          height: size.height * 0.07,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 2,
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.wallet_outlined,
+                                size: size.width * 0.03,
+                                color: Colors.grey,
+                              ),
+                              SizedBox(
+                                width: size.width * 0.019,
+                              ),
+                              Text(
+                                "Belum Ada Rekening Transfer",
+                                style: GoogleFonts.josefinSans(
+                                  color: Colors.grey,
+                                  fontSize: size.width * 0.017,
+                                ),
+                              ),
+                              SizedBox(
+                                width: size.width * 0.025,
+                              ),
+                              Text(
+                                "Pilih",
+                                style: GoogleFonts.josefinSans(
+                                  color: Colors.grey,
+                                  fontSize: size.width * 0.017,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: size.height * 0.33,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BayarBerhasilKasir()));
+                      },
+                      child: Container(
+                        width: size.width * 0.12,
+                        height: size.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 73, 142, 125),
+                          borderRadius:
+                              BorderRadius.circular(size.width * 0.006),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Bayar",
+                            style: GoogleFonts.josefinSans(
+                              color: Colors.white,
+                              fontSize: size.width * 0.016,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
