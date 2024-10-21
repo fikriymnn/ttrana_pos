@@ -26,60 +26,190 @@ class _TanamanKasirState extends State<TanamanKasir> {
 
   // Pop up input jumlah
   void _showQuantityDialog(BuildContext context, ProdukTanaman product) {
+    final size = MediaQuery.of(context).size;
+    int _selected = -1;
+    int _selectedUsia = -1;
+
+    final List<String> category = [
+      'Putih',
+      'Merah',
+      'Kuning',
+      'pink',
+      'ungu',
+    ];
+    final List<String> categoryUsia = [
+      '2 Bulan',
+      '3 Bulan',
+      '4 Bulan',
+      '5 Bulan',
+      '6 Bulan',
+      '1 Tahun',
+    ];
     final produkTanaman = context.read<Cart>();
     showDialog(
       context: context,
       builder: (BuildContext context) {
         int quantity = 1; // Jumlah default
-        return AlertDialog(
-          title: Text('Masukkan Kuantitas'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Produk: ${product.judulProduk}'),
-              Text('Harga: Rp. ${product.harga}'),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        if (quantity > 1) {
-                          quantity--;
-                        }
-                      });
-                    },
-                    icon: Icon(Icons.remove),
-                  ),
-                  Text('$quantity'),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        quantity++;
-                      });
-                    },
-                    icon: Icon(Icons.add),
-                  ),
-                ],
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(
+                'Masukkan Detail Produk',
               ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Batal'),
-            ),
-            TextButton(
-              onPressed: () {
-                produkTanaman.addToCart(product, quantity);
-                Navigator.pop(context);
-              },
-              child: Text('Tambah'),
-            ),
-          ],
+              content: Container(
+                height: 350,
+                width: 400,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Produk: ${product.judulProduk}'),
+                    Text('Harga: Rp. ${product.harga}'),
+                   
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("Warna"),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Wrap(
+                      spacing: 10, // Jarak horizontal antar item
+                      runSpacing: 10.0, // Jarak vertikal antar baris
+                      children: List.generate(category.length, (index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selected = index;
+                            });
+                          },
+                          child: AnimatedContainer(
+                            duration: Duration(
+                                milliseconds: 300), // Animasi perubahan warna
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: _selected == index
+                                  ? const Color(0xFF28DFB1)
+                                  : Colors.transparent,
+                              border: Border.all(
+                                color: _selected == index
+                                    ? const Color(0xFF28DFB1)
+                                    : Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              category[index],
+                              style: TextStyle(
+                                color: _selected == index
+                                    ? Colors.white
+                                    : Colors.grey,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("Usia"),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Wrap(
+                      spacing: 10, // Jarak horizontal antar item
+                      runSpacing: 10.0, // Jarak vertikal antar baris
+                      children: List.generate(categoryUsia.length, (index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedUsia = index;
+                            });
+                          },
+                          child: AnimatedContainer(
+                            duration: Duration(
+                                milliseconds: 300), // Animasi perubahan warna
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: _selectedUsia == index
+                                  ? const Color(0xFF28DFB1)
+                                  : Colors.transparent,
+                              border: Border.all(
+                                color: _selectedUsia == index
+                                    ? const Color(0xFF28DFB1)
+                                    : Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              categoryUsia[index],
+                              style: TextStyle(
+                                color: _selectedUsia == index
+                                    ? Colors.white
+                                    : Colors.grey,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (quantity > 1) {
+                                quantity--;
+                              }
+                            });
+                          },
+                          icon: Icon(Icons.remove),
+                        ),
+                        Text('$quantity'),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              quantity++;
+                            });
+                          },
+                          icon: Icon(Icons.add),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Batal'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    produkTanaman.addToCart(product, quantity);
+                    Navigator.pop(context);
+                  },
+                  
+                  child: Text('Tambah'),
+                ),
+              ],
+            );
+          },
         );
       },
     );
@@ -104,6 +234,7 @@ class _TanamanKasirState extends State<TanamanKasir> {
                   children: [
                     Expanded(
                       child: FutureBuilder<List<ProdukTanaman>>(
+                        
                         future: _produkTanaman,
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
@@ -139,7 +270,10 @@ class _TanamanKasirState extends State<TanamanKasir> {
                                   elevation: 2,
                                   child: Padding(
                                     padding: const EdgeInsets.only(
-                                        right: 18, left: 18, top: 15),
+                                      right: 18,
+                                      left: 18,
+                                      top: 15,
+                                    ),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
