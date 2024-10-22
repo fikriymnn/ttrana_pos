@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/Tanaman/tanaman_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/bayar_kasir.dart';
@@ -101,6 +102,13 @@ class _ProdukKasirState extends State<ProdukKasir> {
       return previousValue + (tanaman.harga * quantity + ppn.toInt() + 2500);
     });
 
+    // Rupiah
+    String formatAngka(double angka) {
+      final formatter = NumberFormat(
+          '#,##0', 'id_ID'); // Menggunakan locale Indonesia dengan format titik
+      return formatter.format(angka); // Hasilnya akan seperti 1.000.000
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color.fromARGB(255, 202, 231, 239),
@@ -131,7 +139,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                               style: GoogleFonts.josefinSans(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: size.width * 0.016,
+                                fontSize: size.width * 0.02,
                               ),
                             ),
                           ),
@@ -150,18 +158,24 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         final tanaman = productEntry.keys.first;
                                         final quantity = productEntry[tanaman]!;
 
+                                        // final ppn = tanaman.harga * 0.02;
+
                                         return ListTile(
-                                          title: Text(tanaman.judulProduk),
-                                          subtitle: Text(
-                                            'Rp. ${tanaman.harga}',
+                                          title: Text(
+                                            tanaman.judulProduk,
                                             style: GoogleFonts.josefinSans(
-                                              fontSize: 20,
+                                                fontSize: 15),
+                                          ),
+                                          subtitle: Text(
+                                            "Rp. ${formatAngka(tanaman.harga.toDouble())}",
+                                            style: GoogleFonts.josefinSans(
+                                              fontSize: 14,
                                               color: Color(0xffFF0A0A),
                                             ),
                                           ),
                                           trailing: Container(
-                                            width: 30,
-                                            height: 30,
+                                            width: 18,
+                                            height: 18,
                                             decoration: BoxDecoration(
                                               border: Border.all(width: 1),
                                               shape: BoxShape.circle,
@@ -171,7 +185,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                                 '${quantity}',
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
+                                                  fontSize: 9,
                                                 ),
                                               ),
                                             ),
@@ -192,12 +206,11 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                   ),
                           ),
                         ),
-
                         Container(
                           child: Column(
                             children: [
-                              const Divider(
-                                thickness: 1,
+                              Divider(
+                                thickness: 2,
                                 color: Colors.black,
                               ),
                               Padding(
@@ -210,15 +223,15 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         Text(
                                           "Total",
                                           style: GoogleFonts.josefinSans(
-                                              fontSize: size.width * 0.016),
+                                              fontSize: size.width * 0.018),
                                         ),
                                         SizedBox(
                                           width: size.width * 0.073,
                                         ),
                                         Text(
-                                          "Rp. ${totalHarga}",
+                                          "Rp. ${formatAngka(totalHarga.toDouble())}",
                                           style: GoogleFonts.josefinSans(
-                                              fontSize: size.width * 0.016),
+                                              fontSize: size.width * 0.018),
                                         ),
                                       ],
                                     ),
@@ -227,15 +240,15 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         Text(
                                           "PPN",
                                           style: GoogleFonts.josefinSans(
-                                              fontSize: size.width * 0.016),
+                                              fontSize: size.width * 0.018),
                                         ),
                                         SizedBox(
                                           width: size.width * 0.077,
                                         ),
                                         Text(
-                                          "Rp 50.000",
+                                          "2%",
                                           style: GoogleFonts.josefinSans(
-                                              fontSize: size.width * 0.016),
+                                              fontSize: size.width * 0.018),
                                         ),
                                       ],
                                     ),
@@ -244,23 +257,23 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         Text(
                                           "Service",
                                           style: GoogleFonts.josefinSans(
-                                              fontSize: size.width * 0.016),
+                                              fontSize: size.width * 0.018),
                                         ),
                                         SizedBox(
                                           width: size.width * 0.055,
                                         ),
                                         Text(
-                                          "Rp 50.000",
+                                          "Rp. 2.500",
                                           style: GoogleFonts.josefinSans(
-                                              fontSize: size.width * 0.016),
+                                              fontSize: size.width * 0.018),
                                         ),
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
-                              const Divider(
-                                thickness: 1,
+                              Divider(
+                                thickness: 3,
                               ),
                               Padding(
                                 padding:
@@ -270,15 +283,15 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                     Text(
                                       "Sub Total",
                                       style: GoogleFonts.josefinSans(
-                                          fontSize: size.width * 0.016),
+                                          fontSize: size.width * 0.018),
                                     ),
                                     SizedBox(
                                       width: size.width * 0.035,
                                     ),
                                     Text(
-                                      "Rp. ${totalHarga}",
+                                      "Rp. ${formatAngka(subTotal.toDouble())}",
                                       style: GoogleFonts.josefinSans(
-                                          fontSize: size.width * 0.016),
+                                          fontSize: size.width * 0.018),
                                     ),
                                   ],
                                 ),
@@ -297,14 +310,18 @@ class _ProdukKasirState extends State<ProdukKasir> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: size.height * 0.06,
-                    ),
-                    SizedBox(
-                      height: size.height * 0.08,
-                      width: size.width * 0.35,
+                    Padding(
+                      padding: EdgeInsets.only(
+                        right: size.width * 0.20,
+                        left: size.width * 0.20,
+                        top: size.height * 0.05,
+                      ),
                       child: TextField(
                         decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: size.height * 0.009,
+                            horizontal: size.width * 0.02,
+                          ),
                           border: OutlineInputBorder(),
                           suffixIcon: Icon(
                             Icons.search,
@@ -318,7 +335,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              width: size.width * 0.32,
+                              width: size.width * 0.3,
                               height: size.height * 0.05,
                               // color: Colors.black,
                               child: ListView.builder(
@@ -334,13 +351,13 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                     child: Padding(
                                       padding: EdgeInsets.only(
                                         left: index == 0
-                                            ? size.width * 0.014
-                                            : 40,
+                                            ? size.width * 0.016
+                                            : size.width * 0.034,
                                       ),
                                       child: Text(
                                         tabs[index],
                                         style: GoogleFonts.josefinSans(
-                                          fontSize: size.width * 0.02,
+                                          fontSize: size.width * 0.0196,
                                           fontWeight: current == index
                                               ? FontWeight.bold
                                               : FontWeight.normal,
@@ -358,12 +375,12 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         ),
                         AnimatedPositioned(
                           bottom: 0,
-                          left: changePositionM(size),
+                          left: changePositionT(size),
                           curve: Curves.fastEaseInToSlowEaseOut,
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 500),
-                            width: changeContainerWidthM(size),
-                            height: size.height * 0.004,
+                            width: changeContainerWidthT(size),
+                            height: size.height * 0.006,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.green,
@@ -373,7 +390,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: size.width * 0.015),
                     Stack(
                       children: [
                         IndexedStack(
@@ -401,7 +418,12 @@ class _ProdukKasirState extends State<ProdukKasir> {
                   height: size.height * 0.1,
                   // color: Colors.black,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BayarKasir()));
+                    },
                     child: Center(
                       child: Container(
                         width: size.width * 0.12,
@@ -478,7 +500,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         return ListTile(
                                           title: Text(tanaman.judulProduk),
                                           subtitle: Text(
-                                            'Rp. ${tanaman.harga}',
+                                            "Rp. ${formatAngka(tanaman.harga.toDouble())}",
                                             style: GoogleFonts.josefinSans(
                                               fontSize: 20,
                                               color: Color(0xffFF0A0A),
@@ -540,7 +562,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                           width: size.width * 0.073,
                                         ),
                                         Text(
-                                          "Rp. ${totalHarga}",
+                                          "Rp. ${formatAngka(totalHarga.toDouble())}",
                                           style: GoogleFonts.josefinSans(
                                               fontSize: size.width * 0.018),
                                         ),
@@ -600,7 +622,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                       width: size.width * 0.035,
                                     ),
                                     Text(
-                                      "Rp. ${subTotal}",
+                                      "Rp. ${formatAngka(subTotal.toDouble())}",
                                       style: GoogleFonts.josefinSans(
                                           fontSize: size.width * 0.018),
                                     ),

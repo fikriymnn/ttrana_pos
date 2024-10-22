@@ -6,6 +6,7 @@ import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/Tanaman/api_ser
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/Tanaman/model_tanaman.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/cart.dart';
 import 'package:ttrana_pos/responsive.dart';
+import 'package:intl/intl.dart';
 
 class TanamanKasir extends StatefulWidget {
   const TanamanKasir({super.key});
@@ -26,63 +27,198 @@ class _TanamanKasirState extends State<TanamanKasir> {
 
   // Pop up input jumlah
   void _showQuantityDialog(BuildContext context, ProdukTanaman product) {
+    final size = MediaQuery.of(context).size;
+    int _selected = -1;
+    int _selectedUsia = -1;
+
+    final List<String> category = [
+      'Putih',
+      'Merah',
+      'Kuning',
+      'pink',
+      'ungu',
+    ];
+    final List<String> categoryUsia = [
+      '2 Bulan',
+      '3 Bulan',
+      '4 Bulan',
+      '5 Bulan',
+      '6 Bulan',
+      '1 Tahun',
+    ];
     final produkTanaman = context.read<Cart>();
     showDialog(
       context: context,
       builder: (BuildContext context) {
         int quantity = 1; // Jumlah default
-        return AlertDialog(
-          title: Text('Masukkan Kuantitas'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Produk: ${product.judulProduk}'),
-              Text('Harga: Rp. ${product.harga}'),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        if (quantity > 1) {
-                          quantity--;
-                        }
-                      });
-                    },
-                    icon: Icon(Icons.remove),
-                  ),
-                  Text('$quantity'),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        quantity++;
-                      });
-                    },
-                    icon: Icon(Icons.add),
-                  ),
-                ],
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(
+                'Masukkan Detail Produk',
               ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Batal'),
-            ),
-            TextButton(
-              onPressed: () {
-                produkTanaman.addToCart(product, quantity);
-                Navigator.pop(context);
-              },
-              child: Text('Tambah'),
-            ),
-          ],
+              content: Container(
+                height: 350,
+                width: 400,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Produk: ${product.judulProduk}'),
+                    Text('Harga: Rp. ${product.harga}'),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("Warna"),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Wrap(
+                      spacing: 10, // Jarak horizontal antar item
+                      runSpacing: 10.0, // Jarak vertikal antar baris
+                      children: List.generate(category.length, (index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selected = index;
+                            });
+                          },
+                          child: AnimatedContainer(
+                            duration: Duration(
+                                milliseconds: 300), // Animasi perubahan warna
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: _selected == index
+                                  ? const Color(0xFF28DFB1)
+                                  : Colors.transparent,
+                              border: Border.all(
+                                color: _selected == index
+                                    ? const Color(0xFF28DFB1)
+                                    : Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              category[index],
+                              style: TextStyle(
+                                color: _selected == index
+                                    ? Colors.white
+                                    : Colors.grey,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("Usia"),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Wrap(
+                      spacing: 10, // Jarak horizontal antar item
+                      runSpacing: 10.0, // Jarak vertikal antar baris
+                      children: List.generate(categoryUsia.length, (index) {
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedUsia = index;
+                            });
+                          },
+                          child: AnimatedContainer(
+                            duration: Duration(
+                                milliseconds: 300), // Animasi perubahan warna
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: _selectedUsia == index
+                                  ? const Color(0xFF28DFB1)
+                                  : Colors.transparent,
+                              border: Border.all(
+                                color: _selectedUsia == index
+                                    ? const Color(0xFF28DFB1)
+                                    : Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              categoryUsia[index],
+                              style: TextStyle(
+                                color: _selectedUsia == index
+                                    ? Colors.white
+                                    : Colors.grey,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (quantity > 1) {
+                                quantity--;
+                              }
+                            });
+                          },
+                          icon: Icon(Icons.remove),
+                        ),
+                        Text('$quantity'),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              quantity++;
+                            });
+                          },
+                          icon: Icon(Icons.add),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Batal'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    produkTanaman.addToCart(product, quantity);
+                    Navigator.pop(context);
+                  },
+                  child: Text('Tambah'),
+                ),
+              ],
+            );
+          },
         );
       },
     );
+  }
+
+// Rupiah
+  String formatAngka(double angka) {
+    final formatter = NumberFormat(
+        '#,##0', 'id_ID'); // Menggunakan locale Indonesia dengan format titik
+    return formatter.format(angka); // Hasilnya akan seperti 1.000.000
   }
 
   @override
@@ -94,7 +230,10 @@ class _TanamanKasirState extends State<TanamanKasir> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.symmetric(
+              horizontal: size.width * 0.02,
+              vertical: size.height * 0.02,
+            ),
             child: Container(
               height: size.height, // Menggunakan ukuran lebar untuk tinggi
               width: size.width * 0.65,
@@ -127,7 +266,10 @@ class _TanamanKasirState extends State<TanamanKasir> {
                               mainAxisSpacing: 10,
                               childAspectRatio: 0.7,
                             ),
-                            padding: const EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: size.width * 0.01,
+                              vertical: size.height * 0.01,
+                            ),
                             itemCount: tanaman.length,
                             itemBuilder: (context, index) {
                               final product = tanaman[index];
@@ -138,8 +280,10 @@ class _TanamanKasirState extends State<TanamanKasir> {
                                 child: Card(
                                   elevation: 2,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 18, left: 18, top: 15),
+                                    padding: EdgeInsets.only(
+                                        right: size.width * 0.01,
+                                        left: size.width * 0.01,
+                                        top: size.height * 0.01),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -158,7 +302,10 @@ class _TanamanKasirState extends State<TanamanKasir> {
                                                 ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: size.width * 0.008,
+                                            vertical: size.height * 0.008,
+                                          ),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -173,7 +320,7 @@ class _TanamanKasirState extends State<TanamanKasir> {
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                               Text(
-                                                'Rp. ${product.harga}',
+                                                "Rp. ${formatAngka(product.harga.toDouble())}",
                                                 style: GoogleFonts.josefinSans(
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w500,
@@ -205,7 +352,10 @@ class _TanamanKasirState extends State<TanamanKasir> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.symmetric(
+              horizontal: size.width * 0.02,
+              vertical: size.height * 0.02,
+            ),
             child: Container(
               height: size.height, // Menggunakan ukuran lebar untuk tinggi
               width: size.width * 0.65,
@@ -238,7 +388,10 @@ class _TanamanKasirState extends State<TanamanKasir> {
                               mainAxisSpacing: 10,
                               childAspectRatio: 0.7,
                             ),
-                            padding: const EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: size.width * 0.01,
+                              vertical: size.height * 0.01,
+                            ),
                             itemCount: tanaman.length,
                             itemBuilder: (context, index) {
                               final product = tanaman[index];
@@ -249,8 +402,10 @@ class _TanamanKasirState extends State<TanamanKasir> {
                                 child: Card(
                                   elevation: 2,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 18, left: 18, top: 15),
+                                    padding: EdgeInsets.only(
+                                        right: size.width * 0.01,
+                                        left: size.width * 0.01,
+                                        top: size.height * 0.01),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -269,7 +424,10 @@ class _TanamanKasirState extends State<TanamanKasir> {
                                                 ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: size.width * 0.008,
+                                            vertical: size.height * 0.008,
+                                          ),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -284,7 +442,7 @@ class _TanamanKasirState extends State<TanamanKasir> {
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                               Text(
-                                                'Rp. ${product.harga}',
+                                                "Rp. ${formatAngka(product.harga.toDouble())}",
                                                 style: GoogleFonts.josefinSans(
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w500,
