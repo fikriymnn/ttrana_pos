@@ -236,76 +236,8 @@ class _BayarKasirState extends State<BayarKasir> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: size.height * 0.05,
-                        bottom: size.height * 0.08,
-                        left: size.width * 0.035,
-                        right: size.width * 0.035,
-                      ),
-                      child: Divider(
-                        thickness: 2,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.035,
-                        ),
-                        Text(
-                          "Transfer",
-                          style: GoogleFonts.josefinSans(
-                            fontSize: size.width * 0.02,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          width: size.width * 0.14,
-                        ),
-                        Container(
-                          width: size.width * 0.35,
-                          height: size.height * 0.07,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              color: Colors.grey,
-                              width: 2,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.wallet_outlined,
-                                size: size.width * 0.03,
-                                color: Colors.grey,
-                              ),
-                              SizedBox(
-                                width: size.width * 0.019,
-                              ),
-                              Text(
-                                "Belum Ada Rekening Transfer",
-                                style: GoogleFonts.josefinSans(
-                                  color: Colors.grey,
-                                  fontSize: size.width * 0.017,
-                                ),
-                              ),
-                              SizedBox(
-                                width: size.width * 0.025,
-                              ),
-                              Text(
-                                "Pilih",
-                                style: GoogleFonts.josefinSans(
-                                  color: Colors.grey,
-                                  fontSize: size.width * 0.017,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
                     SizedBox(
-                      height: size.height * 0.33,
+                      height: size.height * 0.55,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -523,7 +455,7 @@ class _BayarKasirState extends State<BayarKasir> {
                           ),
                         ),
                         SizedBox(
-                          width: size.width * 0.17,
+                          width: size.width * 0.07,
                         ),
                         Container(
                           height: size.height * 0.07,
@@ -556,76 +488,8 @@ class _BayarKasirState extends State<BayarKasir> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: size.height * 0.05,
-                        bottom: size.height * 0.08,
-                        left: size.width * 0.035,
-                        right: size.width * 0.035,
-                      ),
-                      child: Divider(
-                        thickness: 2,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.035,
-                        ),
-                        Text(
-                          "Transfer",
-                          style: GoogleFonts.josefinSans(
-                            fontSize: size.width * 0.02,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          width: size.width * 0.14,
-                        ),
-                        Container(
-                          width: size.width * 0.35,
-                          height: size.height * 0.07,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              color: Colors.grey,
-                              width: 2,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.wallet_outlined,
-                                size: size.width * 0.03,
-                                color: Colors.grey,
-                              ),
-                              SizedBox(
-                                width: size.width * 0.019,
-                              ),
-                              Text(
-                                "Belum Ada Rekening Transfer",
-                                style: GoogleFonts.josefinSans(
-                                  color: Colors.grey,
-                                  fontSize: size.width * 0.017,
-                                ),
-                              ),
-                              SizedBox(
-                                width: size.width * 0.025,
-                              ),
-                              Text(
-                                "Pilih",
-                                style: GoogleFonts.josefinSans(
-                                  color: Colors.grey,
-                                  fontSize: size.width * 0.017,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
                     SizedBox(
-                      height: size.height * 0.39,
+                      height: size.height * 0.61,
                     ),
                     GestureDetector(
                       onTap: () {

@@ -52,7 +52,7 @@ flutter_launcher_icons:
   ios: true
   image_path: "assets/images/iconApk.jpg"
   adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/images/ikan.png"
+  adaptive_icon_foreground: "assets/images/iconApk.jpg"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
