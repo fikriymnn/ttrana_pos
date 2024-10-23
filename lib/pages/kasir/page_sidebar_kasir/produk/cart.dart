@@ -27,6 +27,10 @@ class Cart extends ChangeNotifier {
     _cart.add({tanaman: quantity});
     notifyListeners();
   }
+  void removeFromCart(ProdukTanaman tanaman) {
+    _cart.removeWhere((item) => item.containsKey(tanaman));
+    notifyListeners();
+  }
 
   List<Map<ProdukTanaman, int>> get cart => _cart;
 }

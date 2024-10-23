@@ -27,7 +27,7 @@ class _TanamanKasirState extends State<TanamanKasir> {
 
   // Pop up input jumlah
   void _showQuantityDialog(BuildContext context, ProdukTanaman product) {
-    final size = MediaQuery.of(context).size;
+   
     int _selected = -1;
     int _selectedUsia = -1;
 
