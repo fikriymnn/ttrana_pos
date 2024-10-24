@@ -1,4 +1,4 @@
-class ProdukTanaman {
+class Product {
   final int id;
   final String judulProduk;
   final String deskripsiProduk;
@@ -7,7 +7,7 @@ class ProdukTanaman {
   final int jumlah;
   final String kategoriProduk;
 
-  ProdukTanaman({
+  Product({
     required this.id,
     required this.judulProduk,
     required this.deskripsiProduk,
@@ -17,8 +17,8 @@ class ProdukTanaman {
     required this.kategoriProduk,
   });
 
-  factory ProdukTanaman.fromJson(Map<String, dynamic> json) {
-    return ProdukTanaman(
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
       id: json['id'],
       judulProduk: json['judul_produk'],
       deskripsiProduk: json['deskripsi_produk'],

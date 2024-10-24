@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/Tanaman/tanaman_kasir.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/tanaman_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/bayar_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/burung_kasir.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/cart.dart';
+import 'package:ttrana_pos/pages/kasir/models/cart.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/ikan_kasir.dart';
 import 'package:ttrana_pos/responsive.dart';
 
@@ -25,11 +25,11 @@ class _ProdukKasirState extends State<ProdukKasir> {
   double changePositionM(Size size) {
     switch (current) {
       case 0:
-        return size.width * 0.225;
+        return size.width * 0.237;
       case 1:
-        return size.width * 0.358;
+        return size.width * 0.354;
       case 2:
-        return size.width * 0.448;
+        return size.width * 0.428;
 
       default:
         return 0;
@@ -39,11 +39,11 @@ class _ProdukKasirState extends State<ProdukKasir> {
   double changeContainerWidthM(Size size) {
     switch (current) {
       case 0:
-        return size.width * 0.091;
+        return size.width * 0.087;
       case 1:
-        return size.width * 0.046;
+        return size.width * 0.041;
       case 2:
-        return size.width * 0.072;
+        return size.width * 0.067;
 
       default:
         return 0;
@@ -82,19 +82,19 @@ class _ProdukKasirState extends State<ProdukKasir> {
 
   @override
   Widget build(BuildContext context) {
-    final produkTanaman =
-        context.watch<Cart>(); // Akses provider model ProdukTanaman
+    final produk =
+        context.watch<Cart>(); // Akses provider model produk
     var size = MediaQuery.of(context).size;
     // Hitung total harga
     final totalHarga =
-        produkTanaman.cart.fold(0, (previousValue, productEntry) {
+        produk.cart.fold(0, (previousValue, productEntry) {
       final tanaman = productEntry.keys.first;
       final quantity = productEntry[tanaman]!;
 
       return previousValue + (tanaman.harga * quantity);
     });
     // Hitung Subtotal harga
-    final subTotal = produkTanaman.cart.fold(0, (previousValue, productEntry) {
+    final subTotal = produk.cart.fold(0, (previousValue, productEntry) {
       final tanaman = productEntry.keys.first;
       final quantity = productEntry[tanaman]!;
       final ppn = totalHarga * 0.02; //Hitung ppn
@@ -147,35 +147,31 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         // Menampilkan produk yang di input
                         Expanded(
                           child: Container(
-                            child: produkTanaman.cart.isNotEmpty
+                            child: produk.cart.isNotEmpty
                                 ? Expanded(
                                     child: ListView.builder(
-                                      itemCount: produkTanaman.cart.length,
+                                      itemCount: produk.cart.length,
                                       itemBuilder: (context, index) {
                                         // Each cart entry is a Map<tanaman, int>
                                         final productEntry =
-                                            produkTanaman.cart[index];
+                                            produk.cart[index];
                                         final tanaman = productEntry.keys.first;
                                         final quantity = productEntry[tanaman]!;
 
                                         // final ppn = tanaman.harga * 0.02;
 
                                         return ListTile(
-                                          title: Text(
-                                            tanaman.judulProduk,
-                                            style: GoogleFonts.josefinSans(
-                                                fontSize: 15),
-                                          ),
+                                          title: Text(tanaman.judulProduk),
                                           subtitle: Text(
                                             "Rp. ${formatAngka(tanaman.harga.toDouble())}",
                                             style: GoogleFonts.josefinSans(
-                                              fontSize: 14,
+                                              fontSize: 20,
                                               color: Color(0xffFF0A0A),
                                             ),
                                           ),
                                           trailing: Container(
-                                            width: 18,
-                                            height: 18,
+                                            width: 30,
+                                            height: 30,
                                             decoration: BoxDecoration(
                                               border: Border.all(width: 1),
                                               shape: BoxShape.circle,
@@ -185,7 +181,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                                 '${quantity}',
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 9,
+                                                  fontSize: 15,
                                                 ),
                                               ),
                                             ),
@@ -484,14 +480,14 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         // Menampilkan produk yang di input
                         Expanded(
                           child: Container(
-                            child: produkTanaman.cart.isNotEmpty
+                            child: produk.cart.isNotEmpty
                                 ? Expanded(
                                     child: ListView.builder(
-                                      itemCount: produkTanaman.cart.length,
+                                      itemCount: produk.cart.length,
                                       itemBuilder: (context, index) {
                                         // Each cart entry is a Map<tanaman, int>
                                         final productEntry =
-                                            produkTanaman.cart[index];
+                                            produk.cart[index];
                                         final tanaman = productEntry.keys.first;
                                         final quantity = productEntry[tanaman]!;
 

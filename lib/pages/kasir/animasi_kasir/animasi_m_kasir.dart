@@ -22,7 +22,8 @@ class AnimasiMKasir extends StatefulWidget {
   State<AnimasiMKasir> createState() => _AnimasiMKasirState();
 }
 
-class _AnimasiMKasirState extends State<AnimasiMKasir> with TickerProviderStateMixin {
+class _AnimasiMKasirState extends State<AnimasiMKasir>
+    with TickerProviderStateMixin {
   late AnimationController _controller1;
   late AnimationController _controller2;
   late Animation<double> _anim1;
@@ -114,11 +115,12 @@ class _AnimasiMKasirState extends State<AnimasiMKasir> with TickerProviderStateM
             Container(
               height: size.height * 0.12,
               width: size.width,
+              // color: Colors.red,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: size.width * 0.033,
+                    width: size.width * 0.03,
                   ),
                   Icon(
                     widget.icon,

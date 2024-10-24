@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/bayar_berhasil_kasir.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/cart.dart';
+import 'package:ttrana_pos/pages/kasir/models/cart.dart';
 import 'package:ttrana_pos/responsive.dart';
 
 class BayarKasir extends StatefulWidget {
@@ -87,21 +87,17 @@ class _BayarKasirState extends State<BayarKasir> {
                                     // final ppn = tanaman.harga * 0.02;
 
                                     return ListTile(
-                                      title: Text(
-                                        tanaman.judulProduk,
-                                        style: GoogleFonts.josefinSans(
-                                            fontSize: 15),
-                                      ),
+                                      title: Text(tanaman.judulProduk),
                                       subtitle: Text(
                                         "Rp. ${formatAngka(tanaman.harga.toDouble())}",
                                         style: GoogleFonts.josefinSans(
-                                          fontSize: 14,
+                                          fontSize: 20,
                                           color: Color(0xffFF0A0A),
                                         ),
                                       ),
                                       trailing: Container(
-                                        width: 18,
-                                        height: 18,
+                                        width: 30,
+                                        height: 30,
                                         decoration: BoxDecoration(
                                           border: Border.all(width: 1),
                                           shape: BoxShape.circle,
@@ -111,7 +107,7 @@ class _BayarKasirState extends State<BayarKasir> {
                                             '${quantity}',
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 9,
+                                              fontSize: 15,
                                             ),
                                           ),
                                         ),
@@ -296,8 +292,8 @@ class _BayarKasirState extends State<BayarKasir> {
                           width: size.width * 0.17,
                         ),
                         Container(
-                          height: size.height * 0.1,
-                          width: size.width * 0.2,
+                          height: size.height * 0.07,
+                          width: size.width * 0.17,
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(255, 169, 240, 210),
                             borderRadius: BorderRadius.all(
@@ -312,8 +308,8 @@ class _BayarKasirState extends State<BayarKasir> {
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.only(
-                                top: size.height * 0.01,
-                                left: size.width * 0.02,
+                                top: size.height * 0.002,
+                                left: size.width * 0.005,
                               ),
                               hintText: "Masukan Nominal",
                               hintStyle: GoogleFonts.josefinSans(
@@ -380,7 +376,7 @@ class _BayarKasirState extends State<BayarKasir> {
                                 ),
                               ),
                               SizedBox(
-                                width: size.width * 0.02,
+                                width: size.width * 0.025,
                               ),
                               Text(
                                 "Pilih",
@@ -395,7 +391,7 @@ class _BayarKasirState extends State<BayarKasir> {
                       ],
                     ),
                     SizedBox(
-                      height: size.height * 0.2,
+                      height: size.height * 0.39,
                     ),
                     GestureDetector(
                       onTap: () {
