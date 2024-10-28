@@ -367,7 +367,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         ),
                       ],
                     ),
-                    SizedBox(height: size.width * 0.015),
+                    SizedBox(height: size.width * 0.001),
                     Stack(
                       children: [
                         IndexedStack(

@@ -151,8 +151,8 @@ class _SidebarState extends State<Sidebar> {
                       child: Column(
                         children: [
                           AnimasiM(
-                            icon: Icons.person_2_outlined,
-                            text: 'Profile',
+                            icon: Icons.attach_money_sharp,
+                            text: 'Modal',
                             selected: _selected[1],
                             onTap: () {
                               _onItemTapped(1);
@@ -162,16 +162,18 @@ class _SidebarState extends State<Sidebar> {
                       ),
                     ),
                   AnimasiM(
-                    icon: AbilIcon.keuangan,
-                    text: "Keuangan",
+                    icon: AbilIcon.add_to_queue,
+                    text: "Tambah Produk",
                     selected: _selected[2],
                     onTap: () => _onItemTapped(2),
                   ),
                   AnimasiM(
-                    icon: AbilIcon.add_to_queue,
-                    text: "Tambah Produk",
+                    icon: Icons.person_2_outlined,
+                    text: 'Profile',
                     selected: _selected[3],
-                    onTap: () => _onItemTapped(3),
+                    onTap: () {
+                      _onItemTapped(3);
+                    },
                   ),
                 ],
               ),

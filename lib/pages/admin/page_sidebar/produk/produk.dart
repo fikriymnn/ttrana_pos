@@ -17,28 +17,28 @@ class _ProdukState extends State<Produk> {
     "Ikan",
     "Burung",
   ];
-  double changePositionM() {
+  double changePositionM(Size size) {
     switch (current) {
       case 0:
-        return 346;
+        return size.width * 0.245;
       case 1:
-        return 470;
+        return size.width * 0.36;
       case 2:
-        return 543;
+        return size.width * 0.428;
 
       default:
         return 0;
     }
   }
 
-  double changeContainerWidthM() {
+  double changeContainerWidthM(Size size) {
     switch (current) {
       case 0:
-        return 105;
+        return size.width * 0.087;
       case 1:
-        return 54;
+        return size.width * 0.042;
       case 2:
-        return 83;
+        return size.width * 0.069;
 
       default:
         return 0;
@@ -90,9 +90,13 @@ class _ProdukState extends State<Produk> {
               SizedBox(
                 height: size.height * 0.09,
                 width: size.width * 0.32,
-                child: const TextField(
+                child: TextField(
+                  
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
+                    contentPadding: EdgeInsets.only(
+                      bottom: size.height * 0.001,
+                    ),
                     suffixIcon: Icon(
                       Icons.search,
                     ),
@@ -107,7 +111,7 @@ class _ProdukState extends State<Produk> {
                     children: [
                       Container(
                         width: size.width * 0.282,
-                        height: size.height * 0.054,
+                        height: size.height * 0.059,
                         // color: Colors.black,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
@@ -143,12 +147,12 @@ class _ProdukState extends State<Produk> {
                   ),
                   AnimatedPositioned(
                     bottom: 0,
-                    left: changePositionM(),
+                    left: changePositionM(size),
                     curve: Curves.fastEaseInToSlowEaseOut,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
                       margin: const EdgeInsets.only(left: 10),
-                      width: changeContainerWidthM(),
+                      width: changeContainerWidthM(size),
                       height: size.height * 0.006,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),

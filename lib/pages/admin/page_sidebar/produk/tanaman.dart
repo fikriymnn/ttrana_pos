@@ -181,8 +181,8 @@ class Tanaman extends StatelessWidget {
                                   'https://74gslzvj-8000.asse.devtunnels.ms/uploads/${product['foto_produk']}',
                                   errorBuilder: (context, error, stackTrace) =>
                                       const Icon(Icons.error),
-                                  height: 150,
-                                  width: 150,
+                                  height: 120,
+                                  width: 120,
                                   fit: BoxFit.cover,
                                 ),
                                 const SizedBox(height: 10),

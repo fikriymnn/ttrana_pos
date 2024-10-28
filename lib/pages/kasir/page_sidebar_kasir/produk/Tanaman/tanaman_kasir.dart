@@ -457,8 +457,9 @@ class _TanamanKasirState extends State<TanamanKasir> {
                                                 )
                                               : Container(
                                                   color: Colors.grey[200],
-                                                  child: Icon(Icons
-                                                      .image_not_supported),
+                                                  child: Icon(
+                                                    Icons.image_not_supported,
+                                                  ),
                                                 ),
                                         ),
                                         Padding(
