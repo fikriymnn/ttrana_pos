@@ -6,7 +6,12 @@ import 'package:ttrana_pos/pages/kasir/sidebar_kasir.dart';
 
 class MainPageKasir extends StatefulWidget {
   final String? username;
-  const MainPageKasir({super.key, this.username});
+  final bool? pageSize;
+  const MainPageKasir({
+    super.key,
+    this.pageSize,
+    this.username,
+  });
 
   @override
   _MainPageKasirState createState() => _MainPageKasirState();

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:ttrana_pos/pages/admin/main_page.dart';
 import 'package:ttrana_pos/pages/kasir/main_page_kasir.dart';
-import 'package:ttrana_pos/pages/login_register.dart';
+import 'package:ttrana_pos/pages/kasir/models/cart.dart';
+import 'package:ttrana_pos/pages/login.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,7 +12,10 @@ void main() {
     DeviceOrientation.landscapeRight,
     DeviceOrientation.landscapeLeft,
   ]).then((_) {
-    runApp(const MyApp());
+    runApp(ChangeNotifierProvider(
+      create: (context) => Cart(),
+      child: const MyApp(),
+    ));
   });
 }
 
@@ -22,7 +27,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Aplikasi POS',
-      home: LoginRegister(),
+      home: MainPageKasir(),
     );
   }
 }
