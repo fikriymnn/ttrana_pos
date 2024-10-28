@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:ttrana_pos/pages/admin/main_page.dart';
 import 'package:ttrana_pos/pages/kasir/main_page_kasir.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/cart.dart';
+import 'package:ttrana_pos/pages/kasir/models/cart.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

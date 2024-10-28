@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/Tanaman/api_services.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/Tanaman/model_tanaman.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/cart.dart';
+import 'package:ttrana_pos/pages/kasir/services/api_services.dart';
+import 'package:ttrana_pos/pages/kasir/models/produk.dart';
+import 'package:ttrana_pos/pages/kasir/models/cart.dart';
 import 'package:ttrana_pos/responsive.dart';
+import 'package:intl/intl.dart';
 
 class TanamanKasir extends StatefulWidget {
   const TanamanKasir({super.key});
@@ -16,12 +17,12 @@ class TanamanKasir extends StatefulWidget {
 
 class _TanamanKasirState extends State<TanamanKasir> {
   // Model produk dan pemanggilan API
-  late Future<List<ProdukTanaman>> _produkTanaman;
+  late Future<List<Product>> _product;
 
   @override
   void initState() {
     super.initState();
-    _produkTanaman = ApiService().getProducts();
+    _product = ApiService().getProductsTanaman();
   }
 
   int _selected = -1;
@@ -45,9 +46,9 @@ class _TanamanKasirState extends State<TanamanKasir> {
   ];
 
   // Pop up input jumlah untuk tablet
-  void _showQuantityDialogTablet(BuildContext context, ProdukTanaman product) {
+  void _showQuantityDialogTablet(BuildContext context, Product product) {
     final size = MediaQuery.of(context).size;
-    final produkTanaman = context.read<Cart>();
+    final Product = context.read<Cart>();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -202,7 +203,7 @@ class _TanamanKasirState extends State<TanamanKasir> {
                 ),
                 TextButton(
                   onPressed: () {
-                    produkTanaman.addToCart(product, quantity);
+                    Product.addToCart(product, quantity);
                     Navigator.pop(context);
                   },
                   child: Text('Tambah'),
@@ -216,9 +217,9 @@ class _TanamanKasirState extends State<TanamanKasir> {
   }
 
   // Pop up input jumlah untuk Mobile
-  void _showQuantityDialogMobile(BuildContext context, ProdukTanaman product) {
+  void _showQuantityDialogMobile(BuildContext context, Product product) {
     final size = MediaQuery.of(context).size;
-    final produkTanaman = context.read<Cart>();
+    final Product = context.read<Cart>();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -373,7 +374,7 @@ class _TanamanKasirState extends State<TanamanKasir> {
                 ),
                 TextButton(
                   onPressed: () {
-                    produkTanaman.addToCart(product, quantity);
+                    Product.addToCart(product, quantity);
                     Navigator.pop(context);
                   },
                   child: Text('Tambah'),
@@ -386,6 +387,13 @@ class _TanamanKasirState extends State<TanamanKasir> {
     );
   }
 
+// Rupiah
+  String formatAngka(double angka) {
+    final formatter = NumberFormat(
+        '#,##0', 'id_ID'); // Menggunakan locale Indonesia dengan format titik
+    return formatter.format(angka); // Hasilnya akan seperti 1.000.000
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -395,17 +403,20 @@ class _TanamanKasirState extends State<TanamanKasir> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.symmetric(
+              horizontal: size.width * 0.02,
+              vertical: size.height * 0.02,
+            ),
             child: Container(
               height: size.height, // Menggunakan ukuran lebar untuk tinggi
               width: size.width * 0.65,
-              color: Colors.black,
+              color: Colors.white,
               child: Center(
                 child: Column(
                   children: [
                     Expanded(
-                      child: FutureBuilder<List<ProdukTanaman>>(
-                        future: _produkTanaman,
+                      child: FutureBuilder<List<Product>>(
+                        future: _product,
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -428,42 +439,56 @@ class _TanamanKasirState extends State<TanamanKasir> {
                               mainAxisSpacing: 10,
                               childAspectRatio: 0.7,
                             ),
-                            padding: const EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: size.width * 0.01,
+                              vertical: size.height * 0.01,
+                            ),
                             itemCount: tanaman.length,
                             itemBuilder: (context, index) {
                               final product = tanaman[index];
                               return GestureDetector(
                                 onTap: () {
-                                  _showQuantityDialogMobile(context, product);
+                                  _showQuantityDialogTablet(context, product);
                                 },
                                 child: Card(
                                   elevation: 2,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      right: 18,
-                                      left: 18,
-                                      top: 15,
+                                    padding: EdgeInsets.only(
+                                      right: size.width * 0.01,
+                                      left: size.width * 0.01,
+                                      top: size.height * 0.1,
                                     ),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Expanded(
-                                          child: product.fotoProduk != null
+                                          child: product.fotoProduk != null &&
+                                                  product.fotoProduk!.isNotEmpty
                                               ? Image.network(
                                                   'https://74gslzvj-8000.asse.devtunnels.ms${product.fotoProduk}',
                                                   fit: BoxFit.cover,
                                                   width: double.infinity,
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return Container(
+                                                      color: Colors.grey[200],
+                                                      child: Icon(Icons
+                                                          .image_not_supported),
+                                                    );
+                                                  },
                                                 )
                                               : Container(
                                                   color: Colors.grey[200],
-                                                  child: Icon(
-                                                    Icons.image_not_supported,
-                                                  ),
+                                                  child: Icon(Icons
+                                                      .image_not_supported),
                                                 ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: size.width * 0.008,
+                                            vertical: size.height * 0.008,
+                                          ),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -471,18 +496,18 @@ class _TanamanKasirState extends State<TanamanKasir> {
                                               Text(
                                                 product.judulProduk,
                                                 style: GoogleFonts.josefinSans(
-                                                  fontSize: 10,
+                                                  fontSize: 15,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                               Text(
-                                                'Rp. ${product.harga}',
+                                                "Rp. ${formatAngka(product.harga.toDouble())}",
                                                 style: GoogleFonts.josefinSans(
-                                                  fontSize: 10,
+                                                  fontSize: 13,
                                                   fontWeight: FontWeight.w500,
-                                                  color: Color(0xffFF0A0A),
+                                                  color: Colors.red,
                                                 ),
                                               ),
                                             ],
@@ -510,7 +535,10 @@ class _TanamanKasirState extends State<TanamanKasir> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.symmetric(
+              horizontal: size.width * 0.02,
+              vertical: size.height * 0.02,
+            ),
             child: Container(
               height: size.height, // Menggunakan ukuran lebar untuk tinggi
               width: size.width * 0.65,
@@ -519,8 +547,8 @@ class _TanamanKasirState extends State<TanamanKasir> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: FutureBuilder<List<ProdukTanaman>>(
-                        future: _produkTanaman,
+                      child: FutureBuilder<List<Product>>(
+                        future: _product,
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -543,7 +571,10 @@ class _TanamanKasirState extends State<TanamanKasir> {
                               mainAxisSpacing: 10,
                               childAspectRatio: 0.7,
                             ),
-                            padding: const EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: size.width * 0.01,
+                              vertical: size.height * 0.01,
+                            ),
                             itemCount: tanaman.length,
                             itemBuilder: (context, index) {
                               final product = tanaman[index];
@@ -554,21 +585,30 @@ class _TanamanKasirState extends State<TanamanKasir> {
                                 child: Card(
                                   elevation: 2,
                                   child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      right: 18,
-                                      left: 18,
-                                      top: 15,
+                                    padding: EdgeInsets.only(
+                                      right: size.width * 0.01,
+                                      left: size.width * 0.01,
+                                      top: size.height * 0.1,
                                     ),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Expanded(
-                                          child: product.fotoProduk != null
+                                          child: product.fotoProduk != null &&
+                                                  product.fotoProduk!.isNotEmpty
                                               ? Image.network(
                                                   'https://74gslzvj-8000.asse.devtunnels.ms${product.fotoProduk}',
                                                   fit: BoxFit.cover,
                                                   width: double.infinity,
+                                                  errorBuilder: (context, error,
+                                                      stackTrace) {
+                                                    return Container(
+                                                      color: Colors.grey[200],
+                                                      child: Icon(Icons
+                                                          .image_not_supported),
+                                                    );
+                                                  },
                                                 )
                                               : Container(
                                                   color: Colors.grey[200],
@@ -577,7 +617,10 @@ class _TanamanKasirState extends State<TanamanKasir> {
                                                 ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: size.width * 0.008,
+                                            vertical: size.height * 0.008,
+                                          ),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -592,7 +635,7 @@ class _TanamanKasirState extends State<TanamanKasir> {
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                               Text(
-                                                'Rp. ${product.harga}',
+                                                "Rp. ${formatAngka(product.harga.toDouble())}",
                                                 style: GoogleFonts.josefinSans(
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w500,

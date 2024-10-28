@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/Tanaman/tanaman_kasir.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/tanaman_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/bayar_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/burung_kasir.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/cart.dart';
+import 'package:ttrana_pos/pages/kasir/models/cart.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/ikan_kasir.dart';
 import 'package:ttrana_pos/responsive.dart';
 
@@ -81,16 +82,32 @@ class _ProdukKasirState extends State<ProdukKasir> {
 
   @override
   Widget build(BuildContext context) {
-    final produkTanaman =
-        context.watch<Cart>(); // Akses provider model ProdukTanaman
+    final produk =
+        context.watch<Cart>(); // Akses provider model produk
     var size = MediaQuery.of(context).size;
     // Hitung total harga
     final totalHarga =
-        produkTanaman.cart.fold(0, (previousValue, productEntry) {
+        produk.cart.fold(0, (previousValue, productEntry) {
       final tanaman = productEntry.keys.first;
       final quantity = productEntry[tanaman]!;
+
       return previousValue + (tanaman.harga * quantity);
     });
+    // Hitung Subtotal harga
+    final subTotal = produk.cart.fold(0, (previousValue, productEntry) {
+      final tanaman = productEntry.keys.first;
+      final quantity = productEntry[tanaman]!;
+      final ppn = totalHarga * 0.02; //Hitung ppn
+
+      return previousValue + (tanaman.harga * quantity + ppn.toInt() + 2500);
+    });
+
+    // Rupiah
+    String formatAngka(double angka) {
+      final formatter = NumberFormat(
+          '#,##0', 'id_ID'); // Menggunakan locale Indonesia dengan format titik
+      return formatter.format(angka); // Hasilnya akan seperti 1.000.000
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -130,21 +147,23 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         // Menampilkan produk yang di input
                         Expanded(
                           child: Container(
-                            child: produkTanaman.cart.isNotEmpty
+                            child: produk.cart.isNotEmpty
                                 ? Expanded(
                                     child: ListView.builder(
-                                      itemCount: produkTanaman.cart.length,
+                                      itemCount: produk.cart.length,
                                       itemBuilder: (context, index) {
                                         // Each cart entry is a Map<tanaman, int>
                                         final productEntry =
-                                            produkTanaman.cart[index];
+                                            produk.cart[index];
                                         final tanaman = productEntry.keys.first;
                                         final quantity = productEntry[tanaman]!;
+
+                                        // final ppn = tanaman.harga * 0.02;
 
                                         return ListTile(
                                           title: Text(tanaman.judulProduk),
                                           subtitle: Text(
-                                            'Rp. ${tanaman.harga}',
+                                            "Rp. ${formatAngka(tanaman.harga.toDouble())}",
                                             style: GoogleFonts.josefinSans(
                                               fontSize: 20,
                                               color: Color(0xffFF0A0A),
@@ -206,7 +225,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                           width: size.width * 0.073,
                                         ),
                                         Text(
-                                          "Rp. ${totalHarga}",
+                                          "Rp. ${formatAngka(totalHarga.toDouble())}",
                                           style: GoogleFonts.josefinSans(
                                               fontSize: size.width * 0.018),
                                         ),
@@ -223,7 +242,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                           width: size.width * 0.077,
                                         ),
                                         Text(
-                                          "Rp. 50.000",
+                                          "2%",
                                           style: GoogleFonts.josefinSans(
                                               fontSize: size.width * 0.018),
                                         ),
@@ -240,7 +259,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                           width: size.width * 0.055,
                                         ),
                                         Text(
-                                          "Rp. 50.000",
+                                          "Rp. 2.500",
                                           style: GoogleFonts.josefinSans(
                                               fontSize: size.width * 0.018),
                                         ),
@@ -266,7 +285,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                       width: size.width * 0.035,
                                     ),
                                     Text(
-                                      "Rp. ${totalHarga}",
+                                      "Rp. ${formatAngka(subTotal.toDouble())}",
                                       style: GoogleFonts.josefinSans(
                                           fontSize: size.width * 0.018),
                                     ),
@@ -313,7 +332,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                           children: [
                             Container(
                               width: size.width * 0.3,
-                              height: size.height * 0.055,
+                              height: size.height * 0.05,
                               // color: Colors.black,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
@@ -352,11 +371,11 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         ),
                         AnimatedPositioned(
                           bottom: 0,
-                          left: changePositionM(size),
+                          left: changePositionT(size),
                           curve: Curves.fastEaseInToSlowEaseOut,
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 500),
-                            width: changeContainerWidthM(size),
+                            width: changeContainerWidthT(size),
                             height: size.height * 0.006,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -367,7 +386,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         ),
                       ],
                     ),
-                    SizedBox(height: size.width * 0.001),
+                    SizedBox(height: size.width * 0.015),
                     Stack(
                       children: [
                         IndexedStack(
@@ -461,21 +480,23 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         // Menampilkan produk yang di input
                         Expanded(
                           child: Container(
-                            child: produkTanaman.cart.isNotEmpty
+                            child: produk.cart.isNotEmpty
                                 ? Expanded(
                                     child: ListView.builder(
-                                      itemCount: produkTanaman.cart.length,
+                                      itemCount: produk.cart.length,
                                       itemBuilder: (context, index) {
                                         // Each cart entry is a Map<tanaman, int>
                                         final productEntry =
-                                            produkTanaman.cart[index];
+                                            produk.cart[index];
                                         final tanaman = productEntry.keys.first;
                                         final quantity = productEntry[tanaman]!;
+
+                                        // final ppn = tanaman.harga * 0.02;
 
                                         return ListTile(
                                           title: Text(tanaman.judulProduk),
                                           subtitle: Text(
-                                            'Rp. ${tanaman.harga}',
+                                            "Rp. ${formatAngka(tanaman.harga.toDouble())}",
                                             style: GoogleFonts.josefinSans(
                                               fontSize: 20,
                                               color: Color(0xffFF0A0A),
@@ -537,7 +558,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                           width: size.width * 0.073,
                                         ),
                                         Text(
-                                          "Rp. ${totalHarga}",
+                                          "Rp. ${formatAngka(totalHarga.toDouble())}",
                                           style: GoogleFonts.josefinSans(
                                               fontSize: size.width * 0.018),
                                         ),
@@ -554,7 +575,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                           width: size.width * 0.077,
                                         ),
                                         Text(
-                                          "Rp. 50.000",
+                                          "2%",
                                           style: GoogleFonts.josefinSans(
                                               fontSize: size.width * 0.018),
                                         ),
@@ -571,7 +592,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                           width: size.width * 0.055,
                                         ),
                                         Text(
-                                          "Rp. 50.000",
+                                          "Rp. 2.500",
                                           style: GoogleFonts.josefinSans(
                                               fontSize: size.width * 0.018),
                                         ),
@@ -597,7 +618,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                       width: size.width * 0.035,
                                     ),
                                     Text(
-                                      "Rp. ${totalHarga}",
+                                      "Rp. ${formatAngka(subTotal.toDouble())}",
                                       style: GoogleFonts.josefinSans(
                                           fontSize: size.width * 0.018),
                                     ),
