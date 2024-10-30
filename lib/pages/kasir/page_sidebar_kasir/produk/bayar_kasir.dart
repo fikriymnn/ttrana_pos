@@ -708,7 +708,7 @@ class _BayarKasirState extends State<BayarKasir> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) => BayarBerhasilKasir(),
