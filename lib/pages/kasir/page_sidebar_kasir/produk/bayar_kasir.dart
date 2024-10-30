@@ -14,6 +14,7 @@ class BayarKasir extends StatefulWidget {
 }
 
 class _BayarKasirState extends State<BayarKasir> {
+  final TextEditingController _nominalController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final produkTanaman =
@@ -639,6 +640,98 @@ class _BayarKasirState extends State<BayarKasir> {
                           ),
                         ),
                       ],
+                    ),
+                    Text(
+                      "Rp. ${formatAngka(subTotal.toDouble())}",
+                      style:
+                          GoogleFonts.josefinSans(fontSize: size.width * 0.037),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: size.height * 0.02,
+                          left: size.width * 0.035,
+                          right: size.width * 0.035,
+                          bottom: size.height * 0.02),
+                      child: Divider(
+                        thickness: 2,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.035,
+                        ),
+                        Text(
+                          "Tunai",
+                          style: GoogleFonts.josefinSans(
+                            fontWeight: FontWeight.bold,
+                            fontSize: size.width * 0.02,
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.07,
+                        ),
+                        Container(
+                          height: size.height * 0.07,
+                          width: size.width * 0.17,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 169, 240, 210),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 0.003),
+                            ),
+                            border: Border.all(
+                              width: size.width * 0.001,
+                              color: Color.fromARGB(255, 73, 142, 125),
+                            ),
+                          ),
+                          child: TextField(
+                            controller: _nominalController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                top: size.height * 0.002,
+                                left: size.width * 0.005,
+                              ),
+                              hintText: "Masukan Nominal",
+                              hintStyle: GoogleFonts.josefinSans(
+                                color: Color.fromARGB(255, 73, 142, 125),
+                                fontSize: size.width * 0.019,
+                              ),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: size.height * 0.61,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BayarBerhasilKasir(),
+                            ));
+                      },
+                      child: Container(
+                        width: size.width * 0.12,
+                        height: size.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 73, 142, 125),
+                          borderRadius:
+                              BorderRadius.circular(size.width * 0.006),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Bayar",
+                            style: GoogleFonts.josefinSans(
+                              color: Colors.white,
+                              fontSize: size.width * 0.016,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),

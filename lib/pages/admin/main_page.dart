@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/keuangan/modal.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/produk/produk.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/profile.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_produk.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_produk/tambah_produk.dart';
 import 'package:ttrana_pos/pages/admin/sidebar.dart';
 
 class MainPage extends StatefulWidget {
@@ -34,7 +34,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Row(
         children: [

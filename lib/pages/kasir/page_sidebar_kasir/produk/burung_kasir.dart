@@ -399,7 +399,7 @@ class _BurungKasirState extends State<BurungKasir> {
     var size = MediaQuery.of(context).size;
     return Responsive(
       // Tampilan Mobile
-      mobile:Row(
+      mobile: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(

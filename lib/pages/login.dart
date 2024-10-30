@@ -4,13 +4,13 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ttrana_pos/pages/admin/main_page.dart';
 import 'package:ttrana_pos/pages/kasir/main_page_kasir.dart';
+import 'package:ttrana_pos/pages/model_login/model_login.dart';
 import 'package:ttrana_pos/responsive.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _LoginState createState() => _LoginState();
 }
 
@@ -18,41 +18,64 @@ class _LoginState extends State<Login> {
   bool _change = true;
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final Dio _dio = Dio(); //menggunakan plugin Dio untuk menghubungkan server
-  void _login() async {
-    //fungsi
+  final Dio _dio = Dio(); // Menggunakan plugin Dio untuk menghubungkan server
+
+  Future<User?> _login(String pusername, String ppassword) async {
+    // Fungsi login
     final username = usernameController.text;
     final password = passwordController.text;
 
+    // Validasi input
+    if (username.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Username atau Password tidak boleh kosong')),
+      );
+      return null;
+    }
+
     try {
       final response = await _dio.post(
-        'https://74gslzvj-8000.asse.devtunnels.ms/api/login', //menggunakan URL untuk menghubungkan API
+        'https://74gslzvj-8000.asse.devtunnels.ms/api/login', // URL API
         data: {
           'username': username,
           'password': password,
         },
       );
+
       if (response.statusCode == 200) {
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Login berhasil')), //notif jika login berhasil
-        );
-        Navigator.push(
-          // ignore: use_build_context_synchronously
-          context,
-          MaterialPageRoute(
-            builder: (context) => MainPage(
-                username:
-                    username), //jika berhasil maka akan langsung pindah page
-          ),
-        );
+        if (response.data['role'] != null) {
+          return User.fromjson(response.data);
+        } else {
+          print('role is null');
+        }
+      } else {
+        print('Login gagal: ${response.statusCode}');
+        return null;
       }
     } catch (e) {
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Login gagal')), //notif jika login gagal
-      );
+      print("error:$e");
+      return null;
+    }
+  }
+
+  void _kondisiLogin() async {
+    final user = await _login(usernameController.text, passwordController.text);
+
+    if (user != null && user.role != null) {
+      if (user.role == 'admin') {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MainPage(),
+            ));
+      } else if (user.role == 'kasir') {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MainPageKasir(),
+            ));
+      }
     }
   }
 
@@ -127,9 +150,7 @@ class _LoginState extends State<Login> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: size.height * 0.013,
-                      ),
+                      SizedBox(height: size.height * 0.013),
                       SingleChildScrollView(
                         child: Column(
                           children: [
@@ -166,9 +187,7 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: size.height * 0.06,
-                            ),
+                            SizedBox(height: size.height * 0.06),
                             SizedBox(
                               height: size.height * 0.1,
                               width: size.width * 0.3,
@@ -218,38 +237,9 @@ class _LoginState extends State<Login> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: size.height * 0.065,
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const MainPage()));
-                            },
-                            icon: const Icon(
-                              Icons.access_time_filled,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MainPageKasir()));
-                            },
-                            icon: const Icon(
-                              Icons.abc_outlined,
-                            ),
-                          ),
-                        ],
-                      ),
+                      SizedBox(height: size.height * 0.065),
                       GestureDetector(
-                        onTap: _login,
+                        onTap: _kondisiLogin,
                         child: Container(
                           width: size.width * 0.14,
                           height: size.height * 0.069,
@@ -319,8 +309,8 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
-                            height: size.height * 0.1,
-                            width: size.width * 0.1,
+                            height: size.height * 0.08,
+                            width: size.width * 0.08,
                             decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
@@ -339,9 +329,7 @@ class _LoginState extends State<Login> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: size.height * 0.013,
-                      ),
+                      SizedBox(height: size.height * 0.013),
                       SingleChildScrollView(
                         child: Column(
                           children: [
@@ -378,9 +366,7 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: size.height * 0.06,
-                            ),
+                            SizedBox(height: size.height * 0.06),
                             SizedBox(
                               height: size.height * 0.1,
                               width: size.width * 0.3,
@@ -430,11 +416,9 @@ class _LoginState extends State<Login> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: size.height * 0.065,
-                      ),
+                      SizedBox(height: size.height * 0.065),
                       GestureDetector(
-                        onTap: _login,
+                        onTap: _kondisiLogin,
                         child: Container(
                           width: size.width * 0.14,
                           height: size.height * 0.069,
