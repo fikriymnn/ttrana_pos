@@ -14,6 +14,8 @@ class BayarKasir extends StatefulWidget {
 }
 
 class _BayarKasirState extends State<BayarKasir> {
+  final List<String> _metodePembayaran = ['gopay', 'dana', 'Mbanking'];
+  String? selectedValue;
   final TextEditingController _nominalController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -669,7 +671,7 @@ class _BayarKasirState extends State<BayarKasir> {
                           ),
                         ),
                         SizedBox(
-                          width: size.width * 0.07,
+                          width: size.width * 0.139,
                         ),
                         Container(
                           height: size.height * 0.07,
@@ -703,8 +705,68 @@ class _BayarKasirState extends State<BayarKasir> {
                         ),
                       ],
                     ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.035,
+                        ),
+                        Text(
+                          "Metode\nPembayaran",
+                          style: GoogleFonts.josefinSans(
+                            fontWeight: FontWeight.bold,
+                            fontSize: size.width * 0.02,
+                          ),
+                        ),
+                        SizedBox(
+                          width: size.width * 0.07,
+                        ),
+                        Container(
+                          height: size.height * 0.07,
+                          width: size.width * 0.17,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 169, 240, 210),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 0.003),
+                            ),
+                            border: Border.all(
+                              width: size.width * 0.001,
+                              color: Color.fromARGB(255, 73, 142, 125),
+                            ),
+                          ),
+                          child: DropdownButton(
+                            isExpanded: true,
+                            padding: EdgeInsets.only(left: size.width * 0.006),
+                            hint: Text(
+                              'Bayar',
+                              style: GoogleFonts.josefinSans(
+                                color: Color.fromARGB(255, 73, 142, 125),
+                                fontSize: size.width * 0.019,
+                              ),
+                            ),
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 73, 142, 125),
+                              fontSize: size.width * 0.019,
+                            ),
+                            value: selectedValue,
+                            items: _metodePembayaran.map(
+                              (String value) {
+                                return DropdownMenuItem<String>(
+                                  child: Text(value),
+                                  value: value,
+                                );
+                              },
+                            ).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedValue = newValue;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                     SizedBox(
-                      height: size.height * 0.61,
+                      height: size.height * 0.31,
                     ),
                     GestureDetector(
                       onTap: () {
