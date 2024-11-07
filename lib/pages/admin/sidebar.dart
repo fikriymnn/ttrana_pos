@@ -29,7 +29,6 @@ class _SidebarState extends State<Sidebar> {
     true,
     false,
     false,
-    false,
   ]; // Status terpilih
   bool subMenu1 = false;
 
@@ -37,7 +36,6 @@ class _SidebarState extends State<Sidebar> {
   void _onItemTapped(int index) {
     setState(() {
       _selected = [
-        false,
         false,
         false,
         false,
@@ -97,82 +95,18 @@ class _SidebarState extends State<Sidebar> {
                     selected: _selected[0],
                     onTap: () => _onItemTapped(0),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: size.width * 0.033,
-                      top: size.width * 0.014,
-                      bottom: size.width * 0.01,
-                    ),
-                    child: SizedBox(
-                      height: size.width * 0.046,
-                      // color: Colors.black,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            subMenu1 = !subMenu1;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              AbilIcon.keuangan,
-                              size: size.width * 0.023,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: size.width * 0.016,
-                            ),
-                            Text(
-                              "Keuangan",
-                              style: GoogleFonts.josefinSans(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: size.width * 0.015,
-                              ),
-                            ),
-                            SizedBox(
-                              width: size.width * 0.023,
-                            ),
-                            Icon(
-                              subMenu1
-                                  ? Icons.keyboard_arrow_up
-                                  : Icons.keyboard_arrow_down,
-                              color: Colors.white,
-                              size: size.width * 0.027,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (subMenu1)
-                    Padding(
-                      padding: EdgeInsets.only(left: size.width * 0.04),
-                      child: Column(
-                        children: [
-                          AnimasiM(
-                            icon: Icons.attach_money_sharp,
-                            text: 'Modal',
-                            selected: _selected[1],
-                            onTap: () {
-                              _onItemTapped(1);
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
                   AnimasiM(
                     icon: AbilIcon.add_to_queue,
                     text: "Tambah Produk",
-                    selected: _selected[2],
-                    onTap: () => _onItemTapped(2),
+                    selected: _selected[1],
+                    onTap: () => _onItemTapped(1),
                   ),
                   AnimasiM(
                     icon: Icons.person_2_outlined,
                     text: 'Profile',
-                    selected: _selected[3],
+                    selected: _selected[2],
                     onTap: () {
-                      _onItemTapped(3);
+                      _onItemTapped(2);
                     },
                   ),
                 ],
@@ -232,87 +166,21 @@ class _SidebarState extends State<Sidebar> {
                 children: [
                   AnimasiT(
                     icon: AbilIcon.produk,
-                    text: "Produk",
+                    text: "Permintaan",
                     selected: _selected[0],
                     onTap: () => _onItemTapped(0),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: size.width * 0.02,
-                      top: size.width * 0.005,
-                      bottom: size.width * 0.005,
-                    ),
-                    child: SizedBox(
-                      height: size.width * 0.046,
-                      // color: Colors.black,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            subMenu1 = !subMenu1;
-                          });
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.only(left: size.width * 0.012),
-                          child: Row(
-                            children: [
-                              Icon(
-                                AbilIcon.keuangan,
-                                size: size.width * 0.02,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: size.width * 0.016,
-                              ),
-                              Text(
-                                "Keuangan",
-                                style: GoogleFonts.josefinSans(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: size.width * 0.015,
-                                ),
-                              ),
-                              SizedBox(
-                                width: size.width * 0.033,
-                              ),
-                              Icon(
-                                subMenu1
-                                    ? Icons.keyboard_arrow_up
-                                    : Icons.keyboard_arrow_down,
-                                color: Colors.white,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (subMenu1)
-                    Padding(
-                      padding: EdgeInsets.only(left: size.width * 0.05),
-                      child: Column(
-                        children: [
-                          AnimasiT(
-                            icon: Icons.money_sharp,
-                            text: 'Modal',
-                            selected: _selected[1],
-                            onTap: () {
-                              _onItemTapped(1);
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
                   AnimasiT(
                     icon: AbilIcon.add_to_queue,
-                    text: "Tambah Produk",
-                    selected: _selected[2],
-                    onTap: () => _onItemTapped(2),
+                    text: "Pembelian",
+                    selected: _selected[1],
+                    onTap: () => _onItemTapped(1),
                   ),
                   AnimasiT(
                     icon: Ionicons.person_circle_outline,
                     text: "Profil",
-                    selected: _selected[3],
-                    onTap: () => _onItemTapped(3),
+                    selected: _selected[2],
+                    onTap: () => _onItemTapped(2),
                   ),
                 ],
               ),
