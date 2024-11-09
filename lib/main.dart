@@ -5,6 +5,7 @@ import 'package:ttrana_pos/pages/admin/main_page.dart';
 import 'package:ttrana_pos/pages/kasir/main_page_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/models/cart.dart';
 import 'package:ttrana_pos/pages/login.dart';
+import 'package:ttrana_pos/pages/kasir/models/payment_model.dart'; // Impor PaymentModel
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,10 +13,16 @@ void main() {
     DeviceOrientation.landscapeRight,
     DeviceOrientation.landscapeLeft,
   ]).then((_) {
-    runApp(ChangeNotifierProvider(
-      create: (context) => Cart(),
-      child: const MyApp(),
-    ));
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => Cart()),
+          ChangeNotifierProvider(
+              create: (context) => PaymentModel()), // Tambahkan PaymentModel
+        ],
+        child: const MyApp(),
+      ),
+    );
   });
 }
 

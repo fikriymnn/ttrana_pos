@@ -219,13 +219,6 @@ class BayarBerhasilKasir extends StatelessWidget {
                   height: size.height * 0.01,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PrinterStruckKasir(),
-                        ));
-                  },
                   child: Container(
                     height: size.height * 0.06,
                     width: size.width * 0.37,
