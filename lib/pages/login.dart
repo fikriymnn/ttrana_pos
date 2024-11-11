@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ttrana_pos/pages/admin/main_page.dart';
 import 'package:ttrana_pos/pages/kasir/main_page_kasir.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/permintaan.dart';
 import 'package:ttrana_pos/pages/model_login/model_login.dart';
 import 'package:ttrana_pos/responsive.dart';
 
@@ -15,67 +17,85 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool _change = true;
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final Dio _dio = Dio(); // Menggunakan plugin Dio untuk menghubungkan server
+  final Dio _dio = Dio();
+  bool isLoading = false;
+  bool _change = true; // Flag untuk menyembunyikan password
 
-  Future<User?> _login(String pusername, String ppassword) async {
-    // Fungsi login
+  // Fungsi untuk melakukan login
+  Future<void> _login() async {
     final username = usernameController.text;
     final password = passwordController.text;
 
-    // Validasi input
     if (username.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Username atau Password tidak boleh kosong')),
+        const SnackBar(content: Text('Username dan password harus diisi')),
       );
-      return null;
+      return;
     }
+
+    setState(() {
+      isLoading = true;
+    });
 
     try {
       final response = await _dio.post(
-        'https://74gslzvj-8000.asse.devtunnels.ms/api/login', // URL API
+        'https://74gslzvj-8000.asse.devtunnels.ms/api/login',
         data: {
           'username': username,
           'password': password,
         },
       );
 
-      if (response.statusCode == 200) {
-        if (response.data['role'] != null) {
-          return User.fromjson(response.data);
+      // Log untuk memverifikasi respons
+      print("Response data: ${response.data}");
+
+      // Pastikan message dari server mengindikasikan login berhasil
+      if (response.statusCode == 200 &&
+          response.data['message'] == 'Login successful') {
+        final user = response.data['user'];
+        final token =
+            response.data['token']; // Cek apakah token ada dalam respons
+
+        if (token != null && token is String) {
+          // Simpan data user dan token ke SharedPreferences
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('username', user['username']);
+          await prefs.setString('role', user['role']);
+          await prefs.setString('token', token); // Simpan token
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Login berhasil')),
+          );
+
+          // Navigasi ke halaman MainPageKasir setelah login berhasil
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => MainPageKasir()),
+          );
         } else {
-          print('role is null');
+          // Jika token tidak ditemukan atau tidak valid
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Token tidak ditemukan!')),
+          );
         }
       } else {
-        print('Login gagal: ${response.statusCode}');
-        return null;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Login gagal: Username atau password salah')),
+        );
       }
     } catch (e) {
-      print("error:$e");
-      return null;
-    }
-  }
+      print("Error during login: $e");
 
-  void _kondisiLogin() async {
-    final user = await _login(usernameController.text, passwordController.text);
-
-    if (user != null && user.role != null) {
-      if (user.role == 'admin') {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MainPage(),
-            ));
-      } else if (user.role == 'kasir') {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MainPageKasir(),
-            ));
-      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Terjadi kesalahan. Coba lagi nanti')),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -239,7 +259,7 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(height: size.height * 0.065),
                       GestureDetector(
-                        onTap: _kondisiLogin,
+                        onTap: _login,
                         child: Container(
                           width: size.width * 0.14,
                           height: size.height * 0.069,
@@ -417,30 +437,12 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       SizedBox(height: size.height * 0.065),
-                      GestureDetector(
-                        onTap: _kondisiLogin,
-                        child: Container(
-                          width: size.width * 0.14,
-                          height: size.height * 0.069,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.horizontal(
-                              left: Radius.circular(size.width * 0.06),
-                              right: Radius.circular(size.width * 0.06),
+                      isLoading
+                          ? CircularProgressIndicator()
+                          : ElevatedButton(
+                              onPressed: _login,
+                              child: Text('Login'),
                             ),
-                            color: const Color(0xFF3F9272),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Login",
-                              style: GoogleFonts.josefinSans(
-                                fontSize: size.width * 0.016,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/printer_struck_kasir.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/InputNominal.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/bayar_berhasil_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/models/cart.dart';
 import 'package:ttrana_pos/responsive.dart';
@@ -17,6 +19,67 @@ class _BayarKasirState extends State<BayarKasir> {
   final List<String> _metodePembayaran = ['gopay', 'dana', 'Mbanking'];
   String? selectedValue;
   final TextEditingController _nominalController = TextEditingController();
+  final NumberFormat _numberFormat =
+      NumberFormat('#,##0', 'id_ID'); // Format untuk Indonesia
+
+  @override
+  void _onNominalChanged(String value) {
+    String rawValue = value
+        .replaceAll('Rp ', '')
+        .replaceAll('Rp.', '')
+        .replaceAll('.', '')
+        .trim();
+
+    if (rawValue.isNotEmpty) {
+      try {
+        int numberValue = int.parse(rawValue);
+        String formattedValue = NumberFormat.currency(
+                locale: "id_ID", symbol: "Rp ", decimalDigits: 0)
+            .format(numberValue);
+
+        _nominalController.value = TextEditingValue(
+          text: formattedValue,
+          selection: TextSelection.collapsed(
+              offset: formattedValue.length), // Memindahkan cursor ke akhir
+        );
+      } catch (e) {
+        print("Error: $e"); // Menangkap error parsing
+      }
+    } else {
+      _nominalController.value = TextEditingValue(text: '');
+    }
+  }
+
+  void _navigateToPrinterStruckKasir() {
+    String nominal = _nominalController.text
+        .replaceAll('Rp ', '')
+        .replaceAll('.', '')
+        .trim();
+
+    print("Nilai yang akan dikirim: $nominal"); // Contoh pengiriman
+
+    final double nominalDiberikan = double.tryParse(nominal) ?? 0.0;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            PrinterStruckKasir(nominalDiberikan: nominalDiberikan),
+      ),
+    );
+  }
+
+  // Fungsi untuk mendapatkan nilai mentah
+  String getRawValue() {
+    // Menghapus karakter non-digit dari input
+    return _nominalController.text.replaceAll(RegExp(r'[^0-9]'), '');
+  }
+
+  void dispose() {
+    _nominalController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final produkTanaman =
@@ -308,18 +371,10 @@ class _BayarKasirState extends State<BayarKasir> {
                             ),
                           ),
                           child: TextField(
+                            controller: _nominalController,
                             keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
-                                top: size.height * 0.002,
-                                left: size.width * 0.005,
-                              ),
-                              hintText: "Masukan Nominal",
-                              hintStyle: GoogleFonts.josefinSans(
-                                color: Color.fromARGB(255, 73, 142, 125),
-                                fontSize: size.width * 0.019,
-                              ),
-                              border: InputBorder.none,
+                            decoration: const InputDecoration(
+                              hintText: 'Masukan nominal',
                             ),
                           ),
                         ),
@@ -689,78 +744,18 @@ class _BayarKasirState extends State<BayarKasir> {
                           child: TextField(
                             controller: _nominalController,
                             keyboardType: TextInputType.number,
+                            onChanged:
+                                _onNominalChanged, // Panggil fungsi saat terjadi perubahan
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(
-                                top: size.height * 0.002,
-                                left: size.width * 0.005,
+                              hintText: 'Masukan nominal',
+                              hintStyle: TextStyle(
+                                color: Colors
+                                    .grey, // Anda bisa mengubah warna hintText jika perlu
                               ),
-                              hintText: "Masukan Nominal",
-                              hintStyle: GoogleFonts.josefinSans(
-                                color: Color.fromARGB(255, 73, 142, 125),
-                                fontSize: size.width * 0.019,
-                              ),
-                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: size.height * 0.02,
+                                  horizontal: size.width * 0.02),
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: size.width * 0.035,
-                        ),
-                        Text(
-                          "Metode\nPembayaran",
-                          style: GoogleFonts.josefinSans(
-                            fontWeight: FontWeight.bold,
-                            fontSize: size.width * 0.02,
-                          ),
-                        ),
-                        SizedBox(
-                          width: size.width * 0.07,
-                        ),
-                        Container(
-                          height: size.height * 0.07,
-                          width: size.width * 0.17,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 169, 240, 210),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(size.width * 0.003),
-                            ),
-                            border: Border.all(
-                              width: size.width * 0.001,
-                              color: Color.fromARGB(255, 73, 142, 125),
-                            ),
-                          ),
-                          child: DropdownButton(
-                            isExpanded: true,
-                            padding: EdgeInsets.only(left: size.width * 0.006),
-                            hint: Text(
-                              'Bayar',
-                              style: GoogleFonts.josefinSans(
-                                color: Color.fromARGB(255, 73, 142, 125),
-                                fontSize: size.width * 0.019,
-                              ),
-                            ),
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 73, 142, 125),
-                              fontSize: size.width * 0.019,
-                            ),
-                            value: selectedValue,
-                            items: _metodePembayaran.map(
-                              (String value) {
-                                return DropdownMenuItem<String>(
-                                  child: Text(value),
-                                  value: value,
-                                );
-                              },
-                            ).toList(),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedValue = newValue;
-                              });
-                            },
                           ),
                         ),
                       ],
@@ -768,30 +763,24 @@ class _BayarKasirState extends State<BayarKasir> {
                     SizedBox(
                       height: size.height * 0.31,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BayarBerhasilKasir(),
-                            ));
-                      },
-                      child: Container(
-                        width: size.width * 0.12,
-                        height: size.height * 0.06,
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 73, 142, 125),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 73, 142, 125),
+                        shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(size.width * 0.006),
                         ),
-                        child: Center(
-                          child: Text(
-                            "Bayar",
-                            style: GoogleFonts.josefinSans(
-                              color: Colors.white,
-                              fontSize: size.width * 0.016,
-                            ),
-                          ),
+                        padding: EdgeInsets.symmetric(
+                          vertical: size.height * 0.02,
+                          horizontal: size.width * 0.04,
+                        ),
+                      ),
+                      onPressed: _navigateToPrinterStruckKasir,
+                      child: Text(
+                        "Bayar",
+                        style: GoogleFonts.josefinSans(
+                          color: Colors.white,
+                          fontSize: size.width * 0.016,
                         ),
                       ),
                     ),

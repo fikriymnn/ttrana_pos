@@ -20,6 +20,7 @@ class ApiService {
       throw Exception('Failed to load products: $e');
     }
   }
+
   //API Ikan
   Future<List<Product>> getProductsIkan() async {
     const String url =
@@ -36,6 +37,7 @@ class ApiService {
       throw Exception('Failed to load products: $e');
     }
   }
+
   //API Burung
   Future<List<Product>> getProductsBurung() async {
     const String url =

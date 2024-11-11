@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/keuangan/modal.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/permintaan/terima_permintaan.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/produk/produk.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/profile.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_produk/tambah_produk.dart';
@@ -29,6 +29,7 @@ class _MainPageState extends State<MainPage> {
     const Produk(),
     const TambahProduk(),
     const Profile(),
+    AdminPermintaanPage(),
   ];
 
   @override
