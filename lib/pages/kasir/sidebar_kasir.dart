@@ -20,16 +20,12 @@ class SidebarKasir extends StatefulWidget {
 }
 
 class _SidebarKasirState extends State<SidebarKasir> {
-  List<bool> _selected = [true, false, false];
+  List<bool> _selected = [true, false, false, false];
   bool hideBar = true;
 
   void _onItemTapped(int index) {
     setState(() {
-      _selected = [
-        false,
-        false,
-        false,
-      ];
+      _selected = [false, false, false, false];
       _selected[index] = true;
     });
     widget.onItemSelected(index);
@@ -131,16 +127,22 @@ class _SidebarKasirState extends State<SidebarKasir> {
                           onTap: () => _onItemTapped(0),
                         ),
                         AnimasiMKasir(
-                          icon: Icons.print,
-                          text: "Print & Struk",
+                          icon: Icons.request_page,
+                          text: "Permintaan",
                           selected: _selected[1],
                           onTap: () => _onItemTapped(1),
                         ),
                         AnimasiMKasir(
-                          icon: Icons.person_2,
-                          text: "Profile",
+                          icon: Icons.request_page,
+                          text: "Status Permintaan",
                           selected: _selected[2],
                           onTap: () => _onItemTapped(2),
+                        ),
+                        AnimasiMKasir(
+                          icon: Icons.person_2,
+                          text: "Profile",
+                          selected: _selected[3],
+                          onTap: () => _onItemTapped(3),
                         ),
                       ],
                     ),
@@ -227,23 +229,29 @@ class _SidebarKasirState extends State<SidebarKasir> {
                     child: ListView(
                       padding: EdgeInsets.only(top: size.width * 0.03),
                       children: [
-                        AnimasiTKasir(
+                        AnimasiMKasir(
                           icon: AbilIcon.produk,
                           text: "Produk",
                           selected: _selected[0],
                           onTap: () => _onItemTapped(0),
                         ),
-                        AnimasiTKasir(
-                          icon: Icons.print,
-                          text: "Print & Struk",
+                        AnimasiMKasir(
+                          icon: Icons.request_page,
+                          text: "Permintaan",
                           selected: _selected[1],
                           onTap: () => _onItemTapped(1),
                         ),
-                        AnimasiTKasir(
-                          icon: Icons.person_2,
-                          text: "Profile",
+                        AnimasiMKasir(
+                          icon: Icons.request_page,
+                          text: "Status Permintaan",
                           selected: _selected[2],
                           onTap: () => _onItemTapped(2),
+                        ),
+                        AnimasiMKasir(
+                          icon: Icons.person_2,
+                          text: "Profile",
+                          selected: _selected[3],
+                          onTap: () => _onItemTapped(3),
                         ),
                       ],
                     ),

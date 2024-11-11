@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/printer_struck_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/produk_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/profile_kasir.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/test.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/permintaan.dart';
+import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/status_permintaan.dart';
 import 'package:ttrana_pos/pages/kasir/sidebar_kasir.dart';
 
 class MainPageKasir extends StatefulWidget {
@@ -31,7 +32,8 @@ class _MainPageKasirState extends State<MainPageKasir> {
   // Daftar halaman berdasarkan item sidebar yang dipilih
   final List<Widget> _pages = [
     const ProdukKasir(),
-    const Adul(),
+    PermintaanForm(),
+    StatusPermintaan(),
     const ProfileKasir(),
   ];
 

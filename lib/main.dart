@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Aplikasi POS',
-      home: MainPage(),
+      home: Login(),
     );
   }
 }
