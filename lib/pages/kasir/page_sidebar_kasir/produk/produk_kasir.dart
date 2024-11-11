@@ -82,12 +82,10 @@ class _ProdukKasirState extends State<ProdukKasir> {
 
   @override
   Widget build(BuildContext context) {
-    final produk =
-        context.watch<Cart>(); // Akses provider model produk
+    final produk = context.watch<Cart>(); // Akses provider model produk
     var size = MediaQuery.of(context).size;
     // Hitung total harga
-    final totalHarga =
-        produk.cart.fold(0, (previousValue, productEntry) {
+    final totalHarga = produk.cart.fold(0, (previousValue, productEntry) {
       final tanaman = productEntry.keys.first;
       final quantity = productEntry[tanaman]!;
 
@@ -153,8 +151,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                       itemCount: produk.cart.length,
                                       itemBuilder: (context, index) {
                                         // Each cart entry is a Map<tanaman, int>
-                                        final productEntry =
-                                            produk.cart[index];
+                                        final productEntry = produk.cart[index];
                                         final tanaman = productEntry.keys.first;
                                         final quantity = productEntry[tanaman]!;
 
@@ -486,8 +483,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                       itemCount: produk.cart.length,
                                       itemBuilder: (context, index) {
                                         // Each cart entry is a Map<tanaman, int>
-                                        final productEntry =
-                                            produk.cart[index];
+                                        final productEntry = produk.cart[index];
                                         final tanaman = productEntry.keys.first;
                                         final quantity = productEntry[tanaman]!;
 
@@ -665,7 +661,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                           children: [
                             Container(
                               width: size.width * 0.3,
-                              height: size.height * 0.05,
+                              height: size.height * 0.045,
                               // color: Colors.black,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
