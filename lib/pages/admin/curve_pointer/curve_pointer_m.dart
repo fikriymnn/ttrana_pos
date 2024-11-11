@@ -17,18 +17,18 @@ class CurvePainterM extends CustomPainter {
     Path path = Path();
     Paint paint = Paint();
 
-    path.moveTo(200, 10);
-    path.quadraticBezierTo(200, 10, animValue3, 10);
-    path.lineTo(animValue1, 10);
-    path.quadraticBezierTo(animValue2, 10, animValue2, 30);
-    path.lineTo(200, 30);
+    path.moveTo(200, 5);
+    path.quadraticBezierTo(200, 5, animValue3, 5);
+    path.lineTo(animValue1, 5);
+    path.quadraticBezierTo(animValue2, 5, animValue2, 25);
+    path.lineTo(200, 25);
     path.close();
 
-    path.moveTo(200, 50);
-    path.quadraticBezierTo(200, 50, animValue3, 50);
-    path.lineTo(animValue1, 50);
-    path.quadraticBezierTo(animValue2, 50, animValue2, 30);
-    path.lineTo(200, 30);
+    path.moveTo(200, 40);
+    path.quadraticBezierTo(200, 40, animValue3, 40);
+    path.lineTo(animValue1, 40);
+    path.quadraticBezierTo(animValue2, 40, animValue2, 25);
+    path.lineTo(200, 25);
     path.close();
 
     paint.color = Colors.white;

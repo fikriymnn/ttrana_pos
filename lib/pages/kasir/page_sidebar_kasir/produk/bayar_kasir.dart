@@ -16,6 +16,8 @@ class BayarKasir extends StatefulWidget {
 }
 
 class _BayarKasirState extends State<BayarKasir> {
+  final List<String> _metodePembayaran = ['gopay', 'dana', 'Mbanking'];
+  String? selectedValue;
   final TextEditingController _nominalController = TextEditingController();
   final NumberFormat _numberFormat =
       NumberFormat('#,##0', 'id_ID'); // Format untuk Indonesia
@@ -121,7 +123,7 @@ class _BayarKasirState extends State<BayarKasir> {
                   children: [
                     Container(
                       width: size.width,
-                      height: size.height * 0.1,
+                      height: size.height * 0.14,
                       color: Color.fromARGB(255, 73, 142, 125),
                       child: Center(
                         child: Text(
@@ -724,7 +726,7 @@ class _BayarKasirState extends State<BayarKasir> {
                           ),
                         ),
                         SizedBox(
-                          width: size.width * 0.07,
+                          width: size.width * 0.139,
                         ),
                         Container(
                           height: size.height * 0.07,
@@ -759,7 +761,7 @@ class _BayarKasirState extends State<BayarKasir> {
                       ],
                     ),
                     SizedBox(
-                      height: size.height * 0.61,
+                      height: size.height * 0.31,
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(

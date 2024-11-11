@@ -27,7 +27,6 @@ class _MainPageState extends State<MainPage> {
   // Daftar halaman berdasarkan item sidebar yang dipilih
   final List<Widget> _pages = [
     const Produk(),
-    const Modal(),
     const TambahProduk(),
     const Profile(),
   ];
