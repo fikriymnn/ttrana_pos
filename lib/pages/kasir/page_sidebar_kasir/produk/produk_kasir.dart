@@ -89,7 +89,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
       final tanaman = productEntry.keys.first;
       final quantity = productEntry[tanaman]!;
 
-      return previousValue + (tanaman.harga * quantity);
+      return previousValue + (tanaman.harga! * quantity);
     });
     // Hitung Subtotal harga
     final subTotal = produk.cart.fold(0, (previousValue, productEntry) {
@@ -97,7 +97,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
       final quantity = productEntry[tanaman]!;
       final ppn = totalHarga * 0.02; //Hitung ppn
 
-      return previousValue + (tanaman.harga * quantity + ppn.toInt() + 2500);
+      return previousValue + (tanaman.harga! * quantity + ppn.toInt() + 2500);
     });
 
     // Rupiah
@@ -160,7 +160,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         return ListTile(
                                           title: Text(tanaman.judulProduk),
                                           subtitle: Text(
-                                            "Rp. ${formatAngka(tanaman.harga.toDouble())}",
+                                            "Rp. ${tanaman.harga != null ? formatAngka(tanaman.harga!.toDouble()) : 'Tidak ada harga'}",
                                             style: GoogleFonts.josefinSans(
                                               fontSize: 20,
                                               color: Color(0xffFF0A0A),
@@ -492,7 +492,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         return ListTile(
                                           title: Text(tanaman.judulProduk),
                                           subtitle: Text(
-                                            "Rp. ${formatAngka(tanaman.harga.toDouble())}",
+                                            "Rp. ${tanaman.harga != null ? formatAngka(tanaman.harga!.toDouble()) : 'Tidak ada harga'}",
                                             style: GoogleFonts.josefinSans(
                                               fontSize: 20,
                                               color: Color(0xffFF0A0A),

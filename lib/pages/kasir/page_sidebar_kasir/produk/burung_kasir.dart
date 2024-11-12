@@ -503,7 +503,7 @@ class _BurungKasirState extends State<BurungKasir> {
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                               Text(
-                                                "Rp. ${formatAngka(product.harga.toDouble())}",
+                                                "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
                                                 style: GoogleFonts.josefinSans(
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w500,
@@ -635,7 +635,7 @@ class _BurungKasirState extends State<BurungKasir> {
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                               Text(
-                                                "Rp. ${formatAngka(product.harga.toDouble())}",
+                                                "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
                                                 style: GoogleFonts.josefinSans(
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w500,

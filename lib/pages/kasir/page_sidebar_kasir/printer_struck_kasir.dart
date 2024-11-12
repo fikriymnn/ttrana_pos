@@ -265,7 +265,7 @@ class _PrinterStruckKasirState extends State<PrinterStruckKasir> {
         if (productEntry is Map<Product, int>) {
           final tanaman = productEntry.keys.first;
           final quantity = productEntry[tanaman]!;
-          return previousValue + (tanaman.harga * quantity);
+          return previousValue + (tanaman.harga! * quantity);
         }
         return previousValue;
       });
