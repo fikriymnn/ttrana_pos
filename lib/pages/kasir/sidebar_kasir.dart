@@ -229,25 +229,25 @@ class _SidebarKasirState extends State<SidebarKasir> {
                     child: ListView(
                       padding: EdgeInsets.only(top: size.width * 0.03),
                       children: [
-                        AnimasiMKasir(
+                        AnimasiTKasir(
                           icon: AbilIcon.produk,
                           text: "Produk",
                           selected: _selected[0],
                           onTap: () => _onItemTapped(0),
                         ),
-                        AnimasiMKasir(
+                        AnimasiTKasir(
                           icon: Icons.request_page,
                           text: "Permintaan",
                           selected: _selected[1],
                           onTap: () => _onItemTapped(1),
                         ),
-                        AnimasiMKasir(
+                        AnimasiTKasir(
                           icon: Icons.request_page,
                           text: "Status Permintaan",
                           selected: _selected[2],
                           onTap: () => _onItemTapped(2),
                         ),
-                        AnimasiMKasir(
+                        AnimasiTKasir(
                           icon: Icons.person_2,
                           text: "Profile",
                           selected: _selected[3],

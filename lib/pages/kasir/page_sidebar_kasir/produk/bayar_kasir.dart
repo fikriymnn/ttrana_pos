@@ -16,8 +16,16 @@ class BayarKasir extends StatefulWidget {
 }
 
 class _BayarKasirState extends State<BayarKasir> {
-  final List<String> _metodePembayaran = ['gopay', 'dana', 'Mbanking'];
-  String? selectedValue;
+  //untuk pilihan metode pembayaran dropdownbutton
+  final List<String> _pembayaran = [
+    "dana",
+    "gopay",
+    "Mbanking",
+    "ovo",
+    "seaBank"
+  ];
+  //untuk menyimpan perubahan dropdownbutton untuk pembayaran
+  String? _selectedItem;
   final TextEditingController _nominalController = TextEditingController();
   final NumberFormat _numberFormat =
       NumberFormat('#,##0', 'id_ID'); // Format untuk Indonesia
@@ -661,7 +669,7 @@ class _BayarKasirState extends State<BayarKasir> {
               ),
               Container(
                 height: size.height,
-                width: size.width * 0.73,
+                width: size.width * 0.769,
                 color: const Color.fromARGB(255, 202, 231, 239),
                 child: Column(
                   children: [
@@ -749,13 +757,73 @@ class _BayarKasirState extends State<BayarKasir> {
                             decoration: InputDecoration(
                               hintText: 'Masukan nominal',
                               hintStyle: TextStyle(
-                                color: Colors
-                                    .grey, // Anda bisa mengubah warna hintText jika perlu
+                                color: Color.fromARGB(255, 73, 142, 125),
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: size.height * 0.02,
                                   horizontal: size.width * 0.02),
                             ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: size.height * 0.01,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.035,
+                        ),
+                        Text(
+                          "Metode\nPembayaran",
+                          style: GoogleFonts.josefinSans(
+                            fontWeight: FontWeight.bold,
+                            fontSize: size.width * 0.02,
+                          ),
+                        ),
+                        SizedBox(width: size.width * 0.07),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 169, 240, 210),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 0.003),
+                            ),
+                            border: Border.all(
+                              width: size.width * 0.001,
+                              color: Color.fromARGB(255, 73, 142, 125),
+                            ),
+                          ),
+                          child: DropdownButton<String>(
+                            underline: SizedBox(),
+                            style: GoogleFonts.josefinSans(
+                              color: Color.fromARGB(255, 73, 142, 125),
+                              fontWeight: FontWeight.bold,
+                              fontSize: size.width * 0.017,
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: size.width * 0.002),
+                            value: _selectedItem,
+                            dropdownColor:
+                                const Color.fromARGB(255, 169, 240, 210),
+                            hint: Text(
+                              "Pilih Pembayaran",
+                              style:
+                                  GoogleFonts.josefinSans(color: Colors.grey),
+                            ),
+                            items: _pembayaran.map(
+                              (String item) {
+                                return DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(item),
+                                );
+                              },
+                            ).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                _selectedItem = newValue;
+                              });
+                            },
                           ),
                         ),
                       ],

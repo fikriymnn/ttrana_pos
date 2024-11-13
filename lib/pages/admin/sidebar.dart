@@ -104,21 +104,22 @@ class _SidebarState extends State<Sidebar> {
                     onTap: () => _onItemTapped(1),
                   ),
                   AnimasiM(
-                    icon: Icons.person_2_outlined,
-                    text: 'Profile',
+                    icon: Icons.request_page,
+                    text: 'Permintaan Kasir',
                     selected: _selected[2],
                     onTap: () {
                       _onItemTapped(2);
                     },
                   ),
                   AnimasiM(
-                    icon: Icons.request_page,
-                    text: 'Permintaan Kasir',
+                    icon: Icons.person_2_outlined,
+                    text: 'Profile',
                     selected: _selected[3],
                     onTap: () {
                       _onItemTapped(3);
                     },
                   ),
+                  
                 ],
               ),
             ),
@@ -187,14 +188,14 @@ class _SidebarState extends State<Sidebar> {
                     onTap: () => _onItemTapped(1),
                   ),
                   AnimasiT(
-                    icon: Ionicons.person_circle_outline,
-                    text: "Profil",
+                    icon: Ionicons.git_pull_request_outline,
+                    text: "Permintaan Kasir",
                     selected: _selected[2],
                     onTap: () => _onItemTapped(2),
                   ),
                   AnimasiT(
-                    icon: Ionicons.git_pull_request_outline,
-                    text: "Permintaan Kasir",
+                    icon: Ionicons.person_circle_outline,
+                    text: "Profil",
                     selected: _selected[3],
                     onTap: () => _onItemTapped(3),
                   ),

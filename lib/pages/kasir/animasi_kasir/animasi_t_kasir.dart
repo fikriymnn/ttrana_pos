@@ -8,7 +8,6 @@ class AnimasiTKasir extends StatefulWidget {
   final Function onTap;
   final bool selected;
   final GoogleFonts? googleFonts;
-  
 
   const AnimasiTKasir({
     super.key,
@@ -85,7 +84,7 @@ class _AnimasiTKasirState extends State<AnimasiTKasir>
     _anim3 = Tween(begin: size.width * 0.1, end: size.width * 0.05)
         .animate(_controller2);
 
-    _color = ColorTween(end: Colors.green, begin: Colors.white)
+    _color = ColorTween(end: Color(0xFF167960), begin: Colors.white)
         .animate(_controller2);
 
     return GestureDetector(
@@ -106,12 +105,26 @@ class _AnimasiTKasirState extends State<AnimasiTKasir>
         child: Stack(
           children: [
             if (widget.selected) // Hanya menampilkan CustomPaint jika selected
-              CustomPaint(
-                painter: CurvePointerTKasir(
-                  animValue3: _anim3.value,
-                  animValue2: _anim2.value,
-                  animValue1: _anim1.value,
-                ),
+
+              Row(
+                children: [
+                  SizedBox(
+                    width: size.width * 0.016,
+                  ),
+                  AnimatedContainer(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        bottomLeft: Radius.circular(30),
+                      ),
+                    ),
+                    curve: Curves.fastLinearToSlowEaseIn,
+                    width: size.width * 0.214,
+                    height: size.height * 0.1,
+                    duration: Duration(milliseconds: 10000),
+                  ),
+                ],
               ),
             Container(
               height: size.height * 0.1,
