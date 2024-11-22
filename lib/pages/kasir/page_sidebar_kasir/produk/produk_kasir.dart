@@ -82,23 +82,28 @@ class _ProdukKasirState extends State<ProdukKasir> {
 
   @override
   Widget build(BuildContext context) {
-    final produk = context.watch<Cart>(); // Akses provider model produk
-    var size = MediaQuery.of(context).size;
-    // Hitung total harga
-    final totalHarga = produk.cart.fold(0, (previousValue, productEntry) {
-      final tanaman = productEntry.keys.first;
-      final quantity = productEntry[tanaman]!;
+    final produkCart = context.watch<Cart>(); // Akses provider model Cart
+var size = MediaQuery.of(context).size;
 
-      return previousValue + (tanaman.harga! * quantity);
-    });
-    // Hitung Subtotal harga
-    final subTotal = produk.cart.fold(0, (previousValue, productEntry) {
-      final tanaman = productEntry.keys.first;
-      final quantity = productEntry[tanaman]!;
-      final ppn = totalHarga * 0.02; //Hitung ppn
+// Hitung total harga
+final totalHarga = produkCart.cart.fold(0.0, (previousValue, item) {
+  final product = item['product'] ;
+  final quantity = item['quantity'] as int;
 
-      return previousValue + (tanaman.harga! * quantity + ppn.toInt() + 2500);
-    });
+  return previousValue + (product.harga * quantity);
+});
+
+// Hitung Subtotal harga
+final subTotal = produkCart.cart.fold(0.0, (previousValue, item) {
+  final product = item['product'];
+  final quantity = item['quantity'] as int;
+
+  final itemTotal = product.harga * quantity; // Harga per item
+  final ppn = itemTotal * 0.02; // Hitung PPN 2%
+  final biayaLain = 2500; // Biaya tambahan tetap
+
+  return previousValue + itemTotal + ppn + biayaLain;
+});
 
     // Rupiah
     String formatAngka(double angka) {
@@ -145,54 +150,53 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         // Menampilkan produk yang di input
                         Expanded(
                           child: Container(
-                            child: produk.cart.isNotEmpty
-                                ? Expanded(
-                                    child: ListView.builder(
-                                      itemCount: produk.cart.length,
-                                      itemBuilder: (context, index) {
-                                        // Each cart entry is a Map<tanaman, int>
-                                        final productEntry = produk.cart[index];
-                                        final tanaman = productEntry.keys.first;
-                                        final quantity = productEntry[tanaman]!;
+                            child: produkCart.cart.isNotEmpty
+                            ? Expanded(
+                                child: ListView.builder(
+                                  itemCount: produkCart.cart.length,
+                                  itemBuilder: (context, index) {
+                                    final item = produkCart.cart[index];
+    final product = item['product'];
+    final quantity = item['quantity'] as int;
+    final color = item['color'] as String; // Warna yang dipilih
+    final ageGroup = item['ageGroup'] as String; // Usia yang dipilih
 
-                                        // final ppn = tanaman.harga * 0.02;
-
-                                        return ListTile(
-                                          title: Text(tanaman.judulProduk),
-                                          subtitle: Text(
-                                            "Rp. ${tanaman.harga != null ? formatAngka(tanaman.harga!.toDouble()) : 'Tidak ada harga'}",
-                                            style: GoogleFonts.josefinSans(
-                                              fontSize: 20,
-                                              color: Color(0xffFF0A0A),
+                                    return ListTile(
+                                      title: Text(product.judulProduk!),
+                                      subtitle: Text(
+                                        "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
+                                        style: GoogleFonts.josefinSans(
+                                          fontSize: 20,
+                                          color: Color(0xffFF0A0A),
+                                        ),
+                                      ),
+                                      trailing: Container(
+                                        width: 30,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(width: 1),
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            '${quantity}',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
                                             ),
                                           ),
-                                          trailing: Container(
-                                            width: 30,
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(width: 1),
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                '${quantity}',
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          // trailing: Text(
-                                          //   'Total: Rp ${tanaman.harga * quantity}',
-                                          //   style: const TextStyle(
-                                          //     fontWeight: FontWeight.bold,
-                                          //     color: Colors.red,
-                                          //   ),
-                                          // ),
-                                        );
-                                      },
-                                    ),
+                                        ),
+                                      ),
+                                      // trailing: Text(
+                                      //   'Total: Rp ${tanaman.harga * quantity}',
+                                      //   style: const TextStyle(
+                                      //     fontWeight: FontWeight.bold,
+                                      //     color: Colors.red,
+                                      //   ),
+                                      // ),
+                                    );
+                                  },
+                                ),
                                   )
                                 : const Center(
                                     child: Text('Kosong'),
@@ -477,54 +481,53 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         // Menampilkan produk yang di input
                         Expanded(
                           child: Container(
-                            child: produk.cart.isNotEmpty
-                                ? Expanded(
-                                    child: ListView.builder(
-                                      itemCount: produk.cart.length,
-                                      itemBuilder: (context, index) {
-                                        // Each cart entry is a Map<tanaman, int>
-                                        final productEntry = produk.cart[index];
-                                        final tanaman = productEntry.keys.first;
-                                        final quantity = productEntry[tanaman]!;
+                            child: produkCart.cart.isNotEmpty
+                            ? Expanded(
+                                child: ListView.builder(
+                                  itemCount: produkCart.cart.length,
+                                  itemBuilder: (context, index) {
+                                    final item = produkCart.cart[index];
+    final product = item['product'];
+    final quantity = item['quantity'] as int;
+    final color = item['color'] as String; // Warna yang dipilih
+    final ageGroup = item['ageGroup'] as String; // Usia yang dipilih
 
-                                        // final ppn = tanaman.harga * 0.02;
-
-                                        return ListTile(
-                                          title: Text(tanaman.judulProduk),
-                                          subtitle: Text(
-                                            "Rp. ${tanaman.harga != null ? formatAngka(tanaman.harga!.toDouble()) : 'Tidak ada harga'}",
-                                            style: GoogleFonts.josefinSans(
-                                              fontSize: 20,
-                                              color: Color(0xffFF0A0A),
+                                    return ListTile(
+                                      title: Text(product.judulProduk!),
+                                      subtitle: Text(
+                                        "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
+                                        style: GoogleFonts.josefinSans(
+                                          fontSize: 20,
+                                          color: Color(0xffFF0A0A),
+                                        ),
+                                      ),
+                                      trailing: Container(
+                                        width: 30,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(width: 1),
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            '${quantity}',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
                                             ),
                                           ),
-                                          trailing: Container(
-                                            width: 30,
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(width: 1),
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                '${quantity}',
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          // trailing: Text(
-                                          //   'Total: Rp ${tanaman.harga * quantity}',
-                                          //   style: const TextStyle(
-                                          //     fontWeight: FontWeight.bold,
-                                          //     color: Colors.red,
-                                          //   ),
-                                          // ),
-                                        );
-                                      },
-                                    ),
+                                        ),
+                                      ),
+                                      // trailing: Text(
+                                      //   'Total: Rp ${tanaman.harga * quantity}',
+                                      //   style: const TextStyle(
+                                      //     fontWeight: FontWeight.bold,
+                                      //     color: Colors.red,
+                                      //   ),
+                                      // ),
+                                    );
+                                  },
+                                ),
                                   )
                                 : const Center(
                                     child: Text('Kosong'),

@@ -48,150 +48,144 @@ class _BurungKasirState extends State<BurungKasir> {
   // Pop up input jumlah untuk tablet
   void _showQuantityDialogTablet(BuildContext context, Product product) {
     final size = MediaQuery.of(context).size;
-    final Product = context.read<Cart>();
+    final cartProvider = context.read<Cart>();
+
+    int quantity = 1; // Jumlah default
+    String? variasi;
+    int? _selectedColor; // Indeks warna yang dipilih
+    int? _selectedAgeGroup; // Indeks usia yang dipilih
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        int quantity = 1; // Jumlah default
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text(
-                'Masukkan Detail Produk',
-              ),
+              title: Text('Masukkan Detail Produk'),
               content: Container(
-                height: 350,
-                width: 400,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Produk: ${product.judulProduk}'),
-                    Text('Harga: Rp. ${product.harga}'),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("Warna"),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Wrap(
-                      spacing: 10, // Jarak horizontal antar item
-                      runSpacing: 10.0, // Jarak vertikal antar baris
-                      children: List.generate(category.length, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selected = index;
-                            });
-                          },
-                          child: AnimatedContainer(
-                            duration: Duration(
-                                milliseconds: 300), // Animasi perubahan warna
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            decoration: BoxDecoration(
-                              color: _selected == index
-                                  ? const Color(0xFF28DFB1)
-                                  : Colors.transparent,
-                              border: Border.all(
-                                color: _selected == index
+                height: size.height * 0.5,
+                width: size.width * 0.4,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("Warna"),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Wrap(
+                        spacing: 10,
+                        runSpacing: 10.0,
+                        children: List.generate(category.length, (index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedColor = index;
+                                variasi = "Warna";
+                              });
+                            },
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: _selectedColor == index
                                     ? const Color(0xFF28DFB1)
-                                    : Colors.grey,
+                                    : Colors.transparent,
+                                border: Border.all(
+                                  color: _selectedColor == index
+                                      ? const Color(0xFF28DFB1)
+                                      : Colors.grey,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              category[index],
-                              style: TextStyle(
-                                color: _selected == index
-                                    ? Colors.white
-                                    : Colors.grey,
-                                fontSize: 16,
+                              child: Text(
+                                category[index],
+                                style: TextStyle(
+                                  color: _selectedColor == index
+                                      ? Colors.white
+                                      : Colors.grey,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("Usia"),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Wrap(
-                      spacing: 10, // Jarak horizontal antar item
-                      runSpacing: 10.0, // Jarak vertikal antar baris
-                      children: List.generate(categoryUsia.length, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selectedUsia = index;
-                            });
-                          },
-                          child: AnimatedContainer(
-                            duration: Duration(
-                                milliseconds: 300), // Animasi perubahan warna
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            decoration: BoxDecoration(
-                              color: _selectedUsia == index
-                                  ? const Color(0xFF28DFB1)
-                                  : Colors.transparent,
-                              border: Border.all(
-                                color: _selectedUsia == index
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("Usia"),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Wrap(
+                        spacing: 10,
+                        runSpacing: 10.0,
+                        children: List.generate(categoryUsia.length, (index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedAgeGroup = index;
+                              });
+                            },
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: _selectedAgeGroup == index
                                     ? const Color(0xFF28DFB1)
-                                    : Colors.grey,
+                                    : Colors.transparent,
+                                border: Border.all(
+                                  color: _selectedAgeGroup == index
+                                      ? const Color(0xFF28DFB1)
+                                      : Colors.grey,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              categoryUsia[index],
-                              style: TextStyle(
-                                color: _selectedUsia == index
-                                    ? Colors.white
-                                    : Colors.grey,
-                                fontSize: 16,
+                              child: Text(
+                                categoryUsia[index],
+                                style: TextStyle(
+                                  color: _selectedAgeGroup == index
+                                      ? Colors.white
+                                      : Colors.grey,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
+                          );
+                        }),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                if (quantity > 1) quantity--;
+                              });
+                            },
+                            icon: Icon(Icons.remove),
                           ),
-                        );
-                      }),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              if (quantity > 1) {
-                                quantity--;
-                              }
-                            });
-                          },
-                          icon: Icon(Icons.remove),
-                        ),
-                        Text('$quantity'),
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              quantity++;
-                            });
-                          },
-                          icon: Icon(Icons.add),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Text('$quantity'),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                quantity++;
+                              });
+                            },
+                            icon: Icon(Icons.add),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               actions: [
@@ -203,8 +197,20 @@ class _BurungKasirState extends State<BurungKasir> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Product.addToCart(product, quantity);
-                    Navigator.pop(context);
+                    if (_selectedColor != null && _selectedAgeGroup != null) {
+                      final selectedColor = category[_selectedColor!];
+                      final selectedAgeGroup = categoryUsia[_selectedAgeGroup!];
+                      cartProvider.addToCart(
+                          product, quantity, selectedColor, selectedAgeGroup, variasi!);
+                      Navigator.pop(context);
+                    } else {
+                      // Tampilkan pesan error jika warna/usia tidak dipilih
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content:
+                                Text('Pilih warna dan usia terlebih dahulu')),
+                      );
+                    }
                   },
                   child: Text('Tambah'),
                 ),
@@ -219,150 +225,144 @@ class _BurungKasirState extends State<BurungKasir> {
   // Pop up input jumlah untuk Mobile
   void _showQuantityDialogMobile(BuildContext context, Product product) {
     final size = MediaQuery.of(context).size;
-    final Product = context.read<Cart>();
+    final cartProvider = context.read<Cart>();
+
+    int quantity = 1; // Jumlah default
+    String? variasi;
+    int? _selectedColor; // Indeks warna yang dipilih
+    int? _selectedAgeGroup; // Indeks usia yang dipilih
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        int quantity = 1; // Jumlah default
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text(
-                'Masukkan Detail Produk , Mobile',
-              ),
+              title: Text('Masukkan Detail Produk'),
               content: Container(
-                height: 350,
-                width: 400,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('Produk: ${product.judulProduk}'),
-                    Text('Harga: Rp. ${product.harga}'),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("Warna"),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Wrap(
-                      spacing: 10, // Jarak horizontal antar item
-                      runSpacing: 10.0, // Jarak vertikal antar baris
-                      children: List.generate(category.length, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selected = index;
-                            });
-                          },
-                          child: AnimatedContainer(
-                            duration: Duration(
-                                milliseconds: 300), // Animasi perubahan warna
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            decoration: BoxDecoration(
-                              color: _selected == index
-                                  ? const Color(0xFF28DFB1)
-                                  : Colors.transparent,
-                              border: Border.all(
-                                color: _selected == index
+                height: size.height * 0.5,
+                width: size.width * 0.4,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("Warna"),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Wrap(
+                        spacing: 10,
+                        runSpacing: 10.0,
+                        children: List.generate(category.length, (index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedColor = index;
+                                variasi = "Warna";
+                              });
+                            },
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: _selectedColor == index
                                     ? const Color(0xFF28DFB1)
-                                    : Colors.grey,
+                                    : Colors.transparent,
+                                border: Border.all(
+                                  color: _selectedColor == index
+                                      ? const Color(0xFF28DFB1)
+                                      : Colors.grey,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              category[index],
-                              style: TextStyle(
-                                color: _selected == index
-                                    ? Colors.white
-                                    : Colors.grey,
-                                fontSize: 16,
+                              child: Text(
+                                category[index],
+                                style: TextStyle(
+                                  color: _selectedColor == index
+                                      ? Colors.white
+                                      : Colors.grey,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("Usia"),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Wrap(
-                      spacing: 10, // Jarak horizontal antar item
-                      runSpacing: 10.0, // Jarak vertikal antar baris
-                      children: List.generate(categoryUsia.length, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selectedUsia = index;
-                            });
-                          },
-                          child: AnimatedContainer(
-                            duration: Duration(
-                                milliseconds: 300), // Animasi perubahan warna
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            decoration: BoxDecoration(
-                              color: _selectedUsia == index
-                                  ? const Color(0xFF28DFB1)
-                                  : Colors.transparent,
-                              border: Border.all(
-                                color: _selectedUsia == index
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("Usia"),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Wrap(
+                        spacing: 10,
+                        runSpacing: 10.0,
+                        children: List.generate(categoryUsia.length, (index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedAgeGroup = index;
+                              });
+                            },
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              decoration: BoxDecoration(
+                                color: _selectedAgeGroup == index
                                     ? const Color(0xFF28DFB1)
-                                    : Colors.grey,
+                                    : Colors.transparent,
+                                border: Border.all(
+                                  color: _selectedAgeGroup == index
+                                      ? const Color(0xFF28DFB1)
+                                      : Colors.grey,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              categoryUsia[index],
-                              style: TextStyle(
-                                color: _selectedUsia == index
-                                    ? Colors.white
-                                    : Colors.grey,
-                                fontSize: 16,
+                              child: Text(
+                                categoryUsia[index],
+                                style: TextStyle(
+                                  color: _selectedAgeGroup == index
+                                      ? Colors.white
+                                      : Colors.grey,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
+                          );
+                        }),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                if (quantity > 1) quantity--;
+                              });
+                            },
+                            icon: Icon(Icons.remove),
                           ),
-                        );
-                      }),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              if (quantity > 1) {
-                                quantity--;
-                              }
-                            });
-                          },
-                          icon: Icon(Icons.remove),
-                        ),
-                        Text('$quantity'),
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              quantity++;
-                            });
-                          },
-                          icon: Icon(Icons.add),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Text('$quantity'),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                quantity++;
+                              });
+                            },
+                            icon: Icon(Icons.add),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               actions: [
@@ -374,8 +374,20 @@ class _BurungKasirState extends State<BurungKasir> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Product.addToCart(product, quantity);
-                    Navigator.pop(context);
+                    if (_selectedColor != null && _selectedAgeGroup != null) {
+                      final selectedColor = category[_selectedColor!];
+                      final selectedAgeGroup = categoryUsia[_selectedAgeGroup!];
+                      cartProvider.addToCart(
+                          product, quantity, selectedColor, selectedAgeGroup, variasi!);
+                      Navigator.pop(context);
+                    } else {
+                      // Tampilkan pesan error jika warna/usia tidak dipilih
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content:
+                                Text('Pilih warna dan usia terlebih dahulu')),
+                      );
+                    }
                   },
                   child: Text('Tambah'),
                 ),
@@ -494,7 +506,7 @@ class _BurungKasirState extends State<BurungKasir> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                product.judulProduk,
+                                                product.judulProduk!,
                                                 style: GoogleFonts.josefinSans(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.w400,
@@ -626,7 +638,7 @@ class _BurungKasirState extends State<BurungKasir> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                product.judulProduk,
+                                                product.judulProduk!,
                                                 style: GoogleFonts.josefinSans(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.w400,

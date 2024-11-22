@@ -261,11 +261,14 @@ class _PrinterStruckKasirState extends State<PrinterStruckKasir> {
       final pdf = pw.Document();
       final produk = context.read<Cart>();
 
-      int total = produk.cart.fold(0, (previousValue, productEntry) {
-        if (productEntry is Map<Product, int>) {
-          final tanaman = productEntry.keys.first;
-          final quantity = productEntry[tanaman]!;
-          return previousValue + (tanaman.harga! * quantity);
+      int total = produk.cart.fold(0, (previousValue, item) {
+        // Pastikan item adalah Map<String, dynamic>
+        if (item is Map<String, dynamic>) {
+          final product = item['product'] as Product;
+          final quantity = item['quantity'] as int;
+
+          // Hitung total harga untuk item ini
+          return previousValue + (product.harga! * quantity);
         }
         return previousValue;
       });
@@ -288,15 +291,23 @@ class _PrinterStruckKasirState extends State<PrinterStruckKasir> {
           locale: "id_ID", symbol: "Rp ", decimalDigits: 0);
 
       for (var productEntry in produk.cart) {
-        if (productEntry is Map<Product, int>) {
-          final tanaman = productEntry.keys.first;
-          final quantity = productEntry[tanaman]!;
+        // productEntry adalah Map<String, dynamic>
+        if (productEntry is Map<String, dynamic>) {
+          final tanaman = productEntry['product'] as Product;
+          final quantity = productEntry['quantity'] as int;
+
           items.add(
             pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
-                pw.Text(tanaman.judulProduk, style: pw.TextStyle(fontSize: 16)),
-                pw.Text('$quantity', style: pw.TextStyle(fontSize: 16)),
+                pw.Text(
+                  tanaman.judulProduk!,
+                  style: pw.TextStyle(fontSize: 16),
+                ),
+                pw.Text(
+                  '$quantity',
+                  style: pw.TextStyle(fontSize: 16),
+                ),
               ],
             ),
           );

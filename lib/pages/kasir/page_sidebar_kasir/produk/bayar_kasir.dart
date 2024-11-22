@@ -1,7 +1,11 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/printer_struck_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/InputNominal.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/bayar_berhasil_kasir.dart';
@@ -16,6 +20,21 @@ class BayarKasir extends StatefulWidget {
 }
 
 class _BayarKasirState extends State<BayarKasir> {
+  String? token;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      token = prefs.getString('token');
+    });
+  }
+
   //untuk pilihan metode pembayaran dropdownbutton
   final List<String> _pembayaran = [
     "dana",
@@ -90,25 +109,28 @@ class _BayarKasirState extends State<BayarKasir> {
 
   @override
   Widget build(BuildContext context) {
-    final produkTanaman =
-        context.watch<Cart>(); // Akses provider model ProdukTanaman
-    var size = MediaQuery.of(context).size;
-    // Hitung total harga
-    final totalHarga =
-        produkTanaman.cart.fold(0, (previousValue, productEntry) {
-      final tanaman = productEntry.keys.first;
-      final quantity = productEntry[tanaman]!;
+    final produkCart = context.watch<Cart>(); // Akses provider model Cart
+var size = MediaQuery.of(context).size;
 
-      return previousValue + (tanaman.harga! * quantity);
-    });
-    // Hitung Subtotal harga
-    final subTotal = produkTanaman.cart.fold(0, (previousValue, productEntry) {
-      final tanaman = productEntry.keys.first;
-      final quantity = productEntry[tanaman]!;
-      final ppn = totalHarga * 0.02; //Hitung ppn
+// Hitung total harga
+final totalHarga = produkCart.cart.fold(0.0, (previousValue, item) {
+  final product = item['product'] ;
+  final quantity = item['quantity'] as int;
 
-      return previousValue + (tanaman.harga! * quantity + ppn.toInt() + 2500);
-    });
+  return previousValue + (product.harga * quantity);
+});
+
+// Hitung Subtotal harga
+final subTotal = produkCart.cart.fold(0.0, (previousValue, item) {
+  final product = item['product'];
+  final quantity = item['quantity'] as int;
+
+  final itemTotal = product.harga * quantity; // Harga per item
+  final ppn = itemTotal * 0.02; // Hitung PPN 2%
+  final biayaLain = 2500; // Biaya tambahan tetap
+
+  return previousValue + itemTotal + ppn + biayaLain;
+});
 
     // Rupiah
     String formatAngka(double angka) {
@@ -147,23 +169,22 @@ class _BayarKasirState extends State<BayarKasir> {
                     // Menampilkan produk yang di input
                     Expanded(
                       child: Container(
-                        child: produkTanaman.cart.isNotEmpty
+                        child: produkCart.cart.isNotEmpty
                             ? Expanded(
                                 child: ListView.builder(
-                                  itemCount: produkTanaman.cart.length,
+                                  itemCount: produkCart.cart.length,
                                   itemBuilder: (context, index) {
-                                    // Each cart entry is a Map<tanaman, int>
-                                    final productEntry =
-                                        produkTanaman.cart[index];
-                                    final tanaman = productEntry.keys.first;
-                                    final quantity = productEntry[tanaman]!;
-
-                                    // final ppn = tanaman.harga * 0.02;
+                                    // Setiap item di cart adalah Map<String, dynamic>
+    final item = produkCart.cart[index];
+    final product = item['product'];
+    final quantity = item['quantity'] as int;
+    final color = item['color'] as String; // Warna yang dipilih
+    final ageGroup = item['ageGroup'] as String; // Usia yang dipilih
 
                                     return ListTile(
-                                      title: Text(tanaman.judulProduk),
+                                      title: Text(product.judulProduk!),
                                       subtitle: Text(
-                                        "Rp. ${tanaman.harga != null ? formatAngka(tanaman.harga!.toDouble()) : 'Tidak ada harga'}",
+                                        "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
                                         style: GoogleFonts.josefinSans(
                                           fontSize: 20,
                                           color: Color(0xffFF0A0A),
@@ -518,23 +539,21 @@ class _BayarKasirState extends State<BayarKasir> {
                     // Menampilkan produk yang di input
                     Expanded(
                       child: Container(
-                        child: produkTanaman.cart.isNotEmpty
+                        child: produkCart.cart.isNotEmpty
                             ? Expanded(
                                 child: ListView.builder(
-                                  itemCount: produkTanaman.cart.length,
+                                  itemCount: produkCart.cart.length,
                                   itemBuilder: (context, index) {
-                                    // Each cart entry is a Map<tanaman, int>
-                                    final productEntry =
-                                        produkTanaman.cart[index];
-                                    final tanaman = productEntry.keys.first;
-                                    final quantity = productEntry[tanaman]!;
-
-                                    // final ppn = tanaman.harga * 0.02;
+                                    final item = produkCart.cart[index];
+    final product = item['product'];
+    final quantity = item['quantity'] as int;
+    final color = item['color'] as String; // Warna yang dipilih
+    final ageGroup = item['ageGroup'] as String; // Usia yang dipilih
 
                                     return ListTile(
-                                      title: Text(tanaman.judulProduk),
+                                      title: Text(product.judulProduk!),
                                       subtitle: Text(
-                                        "Rp. ${tanaman.harga != null ? formatAngka(tanaman.harga!.toDouble()) : 'Tidak ada harga'}",
+                                        "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
                                         style: GoogleFonts.josefinSans(
                                           fontSize: 20,
                                           color: Color(0xffFF0A0A),
@@ -843,7 +862,10 @@ class _BayarKasirState extends State<BayarKasir> {
                           horizontal: size.width * 0.04,
                         ),
                       ),
-                      onPressed: _navigateToPrinterStruckKasir,
+                      onPressed: () {
+                        _navigateToPrinterStruckKasir;
+                        
+                      },
                       child: Text(
                         "Bayar",
                         style: GoogleFonts.josefinSans(
