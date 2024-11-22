@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:ttrana_pos/pages/kasir/main_page_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/models/cart.dart';
 import 'package:ttrana_pos/pages/kasir/models/produk.dart';
-import 'package:ttrana_pos/responsive.dart';
+import 'package:ttrana_pos/widget/responsive.dart';
 
 class PrinterStruckKasir extends StatefulWidget {
   final double nominalDiberikan;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ttrana_pos/pages/kasir/animasi_kasir/animasi_m_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/animasi_kasir/animasi_t_kasir.dart';
-import 'package:ttrana_pos/responsive.dart';
+import 'package:ttrana_pos/widget/responsive.dart';
 import 'package:ttrana_pos/widget/abil_icon_icons.dart';
 
 class SidebarKasir extends StatefulWidget {

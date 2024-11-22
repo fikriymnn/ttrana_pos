@@ -2,13 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ttrana_pos/pages/kasir/models/produk.dart';
 
-
 class Cart extends ChangeNotifier {
   // Menggunakan struktur yang fleksibel
   List<Map<String, dynamic>> _cart = [];
   List<Map<String, dynamic>> get cart => _cart;
 
-  void addToCart(Product tanaman, int quantity, String color, String ageGroup, String variasi) {
+  void addToCart(Product tanaman, int quantity, String color, String ageGroup,
+      String variasi) {
     _cart.add({
       'product': tanaman,
       'quantity': quantity,

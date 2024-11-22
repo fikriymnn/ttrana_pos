@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:ttrana_pos/pages/kasir/services/api_services.dart';
+import 'package:ttrana_pos/services/api_services.dart';
 import 'package:ttrana_pos/pages/kasir/models/produk.dart';
 import 'package:ttrana_pos/pages/kasir/models/cart.dart';
-import 'package:ttrana_pos/responsive.dart';
+import 'package:ttrana_pos/widget/responsive.dart';
 import 'package:intl/intl.dart';
 
 class TanamanKasir extends StatefulWidget {
@@ -200,8 +200,8 @@ class _TanamanKasirState extends State<TanamanKasir> {
                     if (_selectedColor != null && _selectedAgeGroup != null) {
                       final selectedColor = category[_selectedColor!];
                       final selectedAgeGroup = categoryUsia[_selectedAgeGroup!];
-                      cartProvider.addToCart(
-                          product, quantity, selectedColor, selectedAgeGroup, variasi!);
+                      cartProvider.addToCart(product, quantity, selectedColor,
+                          selectedAgeGroup, variasi!);
                       Navigator.pop(context);
                     } else {
                       // Tampilkan pesan error jika warna/usia tidak dipilih
@@ -377,8 +377,8 @@ class _TanamanKasirState extends State<TanamanKasir> {
                     if (_selectedColor != null && _selectedAgeGroup != null) {
                       final selectedColor = category[_selectedColor!];
                       final selectedAgeGroup = categoryUsia[_selectedAgeGroup!];
-                      cartProvider.addToCart(
-                          product, quantity, selectedColor, selectedAgeGroup, variasi!);
+                      cartProvider.addToCart(product, quantity, selectedColor,
+                          selectedAgeGroup, variasi!);
                       Navigator.pop(context);
                     } else {
                       // Tampilkan pesan error jika warna/usia tidak dipilih

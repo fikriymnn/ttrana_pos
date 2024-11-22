@@ -7,7 +7,7 @@ import 'package:ttrana_pos/pages/admin/main_page.dart';
 import 'package:ttrana_pos/pages/kasir/main_page_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/permintaan.dart';
 import 'package:ttrana_pos/pages/model_login/model_login.dart';
-import 'package:ttrana_pos/responsive.dart';
+import 'package:ttrana_pos/widget/responsive.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

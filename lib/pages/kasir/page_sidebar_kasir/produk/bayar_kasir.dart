@@ -6,11 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/printer_struck_kasir.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/InputNominal.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/bayar_berhasil_kasir.dart';
+import 'package:ttrana_pos/pages/kasir/printer_struck_kasir.dart';
+import 'package:ttrana_pos/widget/InputNominal.dart';
+
 import 'package:ttrana_pos/pages/kasir/models/cart.dart';
-import 'package:ttrana_pos/responsive.dart';
+import 'package:ttrana_pos/widget/responsive.dart';
 
 class BayarKasir extends StatefulWidget {
   const BayarKasir({super.key});
@@ -110,27 +110,27 @@ class _BayarKasirState extends State<BayarKasir> {
   @override
   Widget build(BuildContext context) {
     final produkCart = context.watch<Cart>(); // Akses provider model Cart
-var size = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
 
 // Hitung total harga
-final totalHarga = produkCart.cart.fold(0.0, (previousValue, item) {
-  final product = item['product'] ;
-  final quantity = item['quantity'] as int;
+    final totalHarga = produkCart.cart.fold(0.0, (previousValue, item) {
+      final product = item['product'];
+      final quantity = item['quantity'] as int;
 
-  return previousValue + (product.harga * quantity);
-});
+      return previousValue + (product.harga * quantity);
+    });
 
 // Hitung Subtotal harga
-final subTotal = produkCart.cart.fold(0.0, (previousValue, item) {
-  final product = item['product'];
-  final quantity = item['quantity'] as int;
+    final subTotal = produkCart.cart.fold(0.0, (previousValue, item) {
+      final product = item['product'];
+      final quantity = item['quantity'] as int;
 
-  final itemTotal = product.harga * quantity; // Harga per item
-  final ppn = itemTotal * 0.02; // Hitung PPN 2%
-  final biayaLain = 2500; // Biaya tambahan tetap
+      final itemTotal = product.harga * quantity; // Harga per item
+      final ppn = itemTotal * 0.02; // Hitung PPN 2%
+      final biayaLain = 2500; // Biaya tambahan tetap
 
-  return previousValue + itemTotal + ppn + biayaLain;
-});
+      return previousValue + itemTotal + ppn + biayaLain;
+    });
 
     // Rupiah
     String formatAngka(double angka) {
@@ -175,11 +175,13 @@ final subTotal = produkCart.cart.fold(0.0, (previousValue, item) {
                                   itemCount: produkCart.cart.length,
                                   itemBuilder: (context, index) {
                                     // Setiap item di cart adalah Map<String, dynamic>
-    final item = produkCart.cart[index];
-    final product = item['product'];
-    final quantity = item['quantity'] as int;
-    final color = item['color'] as String; // Warna yang dipilih
-    final ageGroup = item['ageGroup'] as String; // Usia yang dipilih
+                                    final item = produkCart.cart[index];
+                                    final product = item['product'];
+                                    final quantity = item['quantity'] as int;
+                                    final color = item['color']
+                                        as String; // Warna yang dipilih
+                                    final ageGroup = item['ageGroup']
+                                        as String; // Usia yang dipilih
 
                                     return ListTile(
                                       title: Text(product.judulProduk!),
@@ -481,12 +483,7 @@ final subTotal = produkCart.cart.fold(0.0, (previousValue, item) {
                       height: size.height * 0.39,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BayarBerhasilKasir()));
-                      },
+                      onTap: () {},
                       child: Container(
                         width: size.width * 0.12,
                         height: size.height * 0.06,
@@ -545,10 +542,12 @@ final subTotal = produkCart.cart.fold(0.0, (previousValue, item) {
                                   itemCount: produkCart.cart.length,
                                   itemBuilder: (context, index) {
                                     final item = produkCart.cart[index];
-    final product = item['product'];
-    final quantity = item['quantity'] as int;
-    final color = item['color'] as String; // Warna yang dipilih
-    final ageGroup = item['ageGroup'] as String; // Usia yang dipilih
+                                    final product = item['product'];
+                                    final quantity = item['quantity'] as int;
+                                    final color = item['color']
+                                        as String; // Warna yang dipilih
+                                    final ageGroup = item['ageGroup']
+                                        as String; // Usia yang dipilih
 
                                     return ListTile(
                                       title: Text(product.judulProduk!),
@@ -863,8 +862,7 @@ final subTotal = produkCart.cart.fold(0.0, (previousValue, item) {
                         ),
                       ),
                       onPressed: () {
-                        _navigateToPrinterStruckKasir;
-                        
+                        _navigateToPrinterStruckKasir();
                       },
                       child: Text(
                         "Bayar",

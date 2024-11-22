@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:ttrana_pos/pages/kasir/services/api_services.dart';
+import 'package:ttrana_pos/services/api_services.dart';
 import 'package:ttrana_pos/pages/kasir/models/produk.dart';
 import 'package:ttrana_pos/pages/kasir/models/cart.dart';
-import 'package:ttrana_pos/responsive.dart';
+import 'package:ttrana_pos/widget/responsive.dart';
 import 'package:intl/intl.dart';
 
 class IkanKasir extends StatefulWidget {
