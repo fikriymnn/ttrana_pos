@@ -11,7 +11,7 @@ class ApiService {
 
     try {
       Response response = await _dio.get(url);
-      print(response.data);
+
       List<dynamic> data = response.data;
 
       // Konversi data JSON menjadi daftar objek Product

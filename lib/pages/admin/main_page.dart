@@ -28,8 +28,8 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> _pages = [
     const Produk(),
     const TambahProduk(),
-    const Profile(),
     AdminPermintaanPage(),
+    const Profile(),
   ];
 
   @override

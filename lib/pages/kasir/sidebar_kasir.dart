@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ttrana_pos/pages/kasir/animasi_kasir/animasi_m_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/animasi_kasir/animasi_t_kasir.dart';
-import 'package:ttrana_pos/responsive.dart';
+import 'package:ttrana_pos/widget/responsive.dart';
 import 'package:ttrana_pos/widget/abil_icon_icons.dart';
 
 class SidebarKasir extends StatefulWidget {
@@ -229,25 +229,25 @@ class _SidebarKasirState extends State<SidebarKasir> {
                     child: ListView(
                       padding: EdgeInsets.only(top: size.width * 0.03),
                       children: [
-                        AnimasiMKasir(
+                        AnimasiTKasir(
                           icon: AbilIcon.produk,
                           text: "Produk",
                           selected: _selected[0],
                           onTap: () => _onItemTapped(0),
                         ),
-                        AnimasiMKasir(
+                        AnimasiTKasir(
                           icon: Icons.request_page,
                           text: "Permintaan",
                           selected: _selected[1],
                           onTap: () => _onItemTapped(1),
                         ),
-                        AnimasiMKasir(
+                        AnimasiTKasir(
                           icon: Icons.request_page,
                           text: "Status Permintaan",
                           selected: _selected[2],
                           onTap: () => _onItemTapped(2),
                         ),
-                        AnimasiMKasir(
+                        AnimasiTKasir(
                           icon: Icons.person_2,
                           text: "Profile",
                           selected: _selected[3],

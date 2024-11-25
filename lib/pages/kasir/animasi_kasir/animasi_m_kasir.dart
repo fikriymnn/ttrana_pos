@@ -84,7 +84,7 @@ class _AnimasiMKasirState extends State<AnimasiMKasir>
     _anim3 = Tween(begin: size.width * 0.1, end: size.width * 0.05)
         .animate(_controller2);
 
-    _color = ColorTween(end: Colors.green, begin: Colors.white)
+    _color = ColorTween(end: Color(0xFF167960), begin: Colors.white)
         .animate(_controller2);
 
     return GestureDetector(

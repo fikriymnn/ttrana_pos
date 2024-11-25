@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/printer_struck_kasir.dart';
+import 'package:ttrana_pos/pages/kasir/printer_struck_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/produk_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/profile_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/permintaan.dart';

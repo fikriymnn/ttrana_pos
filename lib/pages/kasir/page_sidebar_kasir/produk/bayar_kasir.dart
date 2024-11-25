@@ -1,12 +1,16 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/printer_struck_kasir.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/InputNominal.dart';
-import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/bayar_berhasil_kasir.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ttrana_pos/pages/kasir/printer_struck_kasir.dart';
+import 'package:ttrana_pos/widget/InputNominal.dart';
+
 import 'package:ttrana_pos/pages/kasir/models/cart.dart';
-import 'package:ttrana_pos/responsive.dart';
+import 'package:ttrana_pos/widget/responsive.dart';
 
 class BayarKasir extends StatefulWidget {
   const BayarKasir({super.key});
@@ -16,8 +20,31 @@ class BayarKasir extends StatefulWidget {
 }
 
 class _BayarKasirState extends State<BayarKasir> {
-  final List<String> _metodePembayaran = ['gopay', 'dana', 'Mbanking'];
-  String? selectedValue;
+  String? token;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      token = prefs.getString('token');
+    });
+  }
+
+  //untuk pilihan metode pembayaran dropdownbutton
+  final List<String> _pembayaran = [
+    "dana",
+    "gopay",
+    "Mbanking",
+    "ovo",
+    "seaBank"
+  ];
+  //untuk menyimpan perubahan dropdownbutton untuk pembayaran
+  String? _selectedItem;
   final TextEditingController _nominalController = TextEditingController();
   final NumberFormat _numberFormat =
       NumberFormat('#,##0', 'id_ID'); // Format untuk Indonesia
@@ -82,24 +109,27 @@ class _BayarKasirState extends State<BayarKasir> {
 
   @override
   Widget build(BuildContext context) {
-    final produkTanaman =
-        context.watch<Cart>(); // Akses provider model ProdukTanaman
+    final produkCart = context.watch<Cart>(); // Akses provider model Cart
     var size = MediaQuery.of(context).size;
-    // Hitung total harga
-    final totalHarga =
-        produkTanaman.cart.fold(0, (previousValue, productEntry) {
-      final tanaman = productEntry.keys.first;
-      final quantity = productEntry[tanaman]!;
 
-      return previousValue + (tanaman.harga * quantity);
+// Hitung total harga
+    final totalHarga = produkCart.cart.fold(0.0, (previousValue, item) {
+      final product = item['product'];
+      final quantity = item['quantity'] as int;
+
+      return previousValue + (product.harga * quantity);
     });
-    // Hitung Subtotal harga
-    final subTotal = produkTanaman.cart.fold(0, (previousValue, productEntry) {
-      final tanaman = productEntry.keys.first;
-      final quantity = productEntry[tanaman]!;
-      final ppn = totalHarga * 0.02; //Hitung ppn
 
-      return previousValue + (tanaman.harga * quantity + ppn.toInt() + 2500);
+// Hitung Subtotal harga
+    final subTotal = produkCart.cart.fold(0.0, (previousValue, item) {
+      final product = item['product'];
+      final quantity = item['quantity'] as int;
+
+      final itemTotal = product.harga * quantity; // Harga per item
+      final ppn = itemTotal * 0.02; // Hitung PPN 2%
+      final biayaLain = 2500; // Biaya tambahan tetap
+
+      return previousValue + itemTotal + ppn + biayaLain;
     });
 
     // Rupiah
@@ -139,23 +169,24 @@ class _BayarKasirState extends State<BayarKasir> {
                     // Menampilkan produk yang di input
                     Expanded(
                       child: Container(
-                        child: produkTanaman.cart.isNotEmpty
+                        child: produkCart.cart.isNotEmpty
                             ? Expanded(
                                 child: ListView.builder(
-                                  itemCount: produkTanaman.cart.length,
+                                  itemCount: produkCart.cart.length,
                                   itemBuilder: (context, index) {
-                                    // Each cart entry is a Map<tanaman, int>
-                                    final productEntry =
-                                        produkTanaman.cart[index];
-                                    final tanaman = productEntry.keys.first;
-                                    final quantity = productEntry[tanaman]!;
-
-                                    // final ppn = tanaman.harga * 0.02;
+                                    // Setiap item di cart adalah Map<String, dynamic>
+                                    final item = produkCart.cart[index];
+                                    final product = item['product'];
+                                    final quantity = item['quantity'] as int;
+                                    final color = item['color']
+                                        as String; // Warna yang dipilih
+                                    final ageGroup = item['ageGroup']
+                                        as String; // Usia yang dipilih
 
                                     return ListTile(
-                                      title: Text(tanaman.judulProduk),
+                                      title: Text(product.judulProduk!),
                                       subtitle: Text(
-                                        "Rp. ${formatAngka(tanaman.harga.toDouble())}",
+                                        "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
                                         style: GoogleFonts.josefinSans(
                                           fontSize: 20,
                                           color: Color(0xffFF0A0A),
@@ -452,12 +483,7 @@ class _BayarKasirState extends State<BayarKasir> {
                       height: size.height * 0.39,
                     ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BayarBerhasilKasir()));
-                      },
+                      onTap: () {},
                       child: Container(
                         width: size.width * 0.12,
                         height: size.height * 0.06,
@@ -510,23 +536,23 @@ class _BayarKasirState extends State<BayarKasir> {
                     // Menampilkan produk yang di input
                     Expanded(
                       child: Container(
-                        child: produkTanaman.cart.isNotEmpty
+                        child: produkCart.cart.isNotEmpty
                             ? Expanded(
                                 child: ListView.builder(
-                                  itemCount: produkTanaman.cart.length,
+                                  itemCount: produkCart.cart.length,
                                   itemBuilder: (context, index) {
-                                    // Each cart entry is a Map<tanaman, int>
-                                    final productEntry =
-                                        produkTanaman.cart[index];
-                                    final tanaman = productEntry.keys.first;
-                                    final quantity = productEntry[tanaman]!;
-
-                                    // final ppn = tanaman.harga * 0.02;
+                                    final item = produkCart.cart[index];
+                                    final product = item['product'];
+                                    final quantity = item['quantity'] as int;
+                                    final color = item['color']
+                                        as String; // Warna yang dipilih
+                                    final ageGroup = item['ageGroup']
+                                        as String; // Usia yang dipilih
 
                                     return ListTile(
-                                      title: Text(tanaman.judulProduk),
+                                      title: Text(product.judulProduk!),
                                       subtitle: Text(
-                                        "Rp. ${formatAngka(tanaman.harga.toDouble())}",
+                                        "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
                                         style: GoogleFonts.josefinSans(
                                           fontSize: 20,
                                           color: Color(0xffFF0A0A),
@@ -661,7 +687,7 @@ class _BayarKasirState extends State<BayarKasir> {
               ),
               Container(
                 height: size.height,
-                width: size.width * 0.73,
+                width: size.width * 0.769,
                 color: const Color.fromARGB(255, 202, 231, 239),
                 child: Column(
                   children: [
@@ -749,13 +775,73 @@ class _BayarKasirState extends State<BayarKasir> {
                             decoration: InputDecoration(
                               hintText: 'Masukan nominal',
                               hintStyle: TextStyle(
-                                color: Colors
-                                    .grey, // Anda bisa mengubah warna hintText jika perlu
+                                color: Color.fromARGB(255, 73, 142, 125),
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   vertical: size.height * 0.02,
                                   horizontal: size.width * 0.02),
                             ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: size.height * 0.01,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.035,
+                        ),
+                        Text(
+                          "Metode\nPembayaran",
+                          style: GoogleFonts.josefinSans(
+                            fontWeight: FontWeight.bold,
+                            fontSize: size.width * 0.02,
+                          ),
+                        ),
+                        SizedBox(width: size.width * 0.07),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 169, 240, 210),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(size.width * 0.003),
+                            ),
+                            border: Border.all(
+                              width: size.width * 0.001,
+                              color: Color.fromARGB(255, 73, 142, 125),
+                            ),
+                          ),
+                          child: DropdownButton<String>(
+                            underline: SizedBox(),
+                            style: GoogleFonts.josefinSans(
+                              color: Color.fromARGB(255, 73, 142, 125),
+                              fontWeight: FontWeight.bold,
+                              fontSize: size.width * 0.017,
+                            ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: size.width * 0.002),
+                            value: _selectedItem,
+                            dropdownColor:
+                                const Color.fromARGB(255, 169, 240, 210),
+                            hint: Text(
+                              "Pilih Pembayaran",
+                              style:
+                                  GoogleFonts.josefinSans(color: Colors.grey),
+                            ),
+                            items: _pembayaran.map(
+                              (String item) {
+                                return DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(item),
+                                );
+                              },
+                            ).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                _selectedItem = newValue;
+                              });
+                            },
                           ),
                         ),
                       ],
@@ -775,7 +861,9 @@ class _BayarKasirState extends State<BayarKasir> {
                           horizontal: size.width * 0.04,
                         ),
                       ),
-                      onPressed: _navigateToPrinterStruckKasir,
+                      onPressed: () {
+                        _navigateToPrinterStruckKasir();
+                      },
                       child: Text(
                         "Bayar",
                         style: GoogleFonts.josefinSans(

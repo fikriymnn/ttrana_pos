@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/produk/burung.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/produk/ikan.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/produk/tanaman.dart';
-import 'package:ttrana_pos/responsive.dart';
+import 'package:ttrana_pos/widget/responsive.dart';
 
 class Produk extends StatefulWidget {
   const Produk({super.key});
@@ -91,7 +91,6 @@ class _ProdukState extends State<Produk> {
                 height: size.height * 0.09,
                 width: size.width * 0.32,
                 child: TextField(
-                  
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     contentPadding: EdgeInsets.only(
@@ -112,7 +111,7 @@ class _ProdukState extends State<Produk> {
                       Container(
                         width: size.width * 0.282,
                         height: size.height * 0.059,
-                        // color: Colors.black,
+                        color: Colors.black,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: tabs.length,
@@ -209,6 +208,7 @@ class _ProdukState extends State<Produk> {
                       Container(
                         width: size.width * 0.233,
                         height: size.height * 0.05,
+                        // color: Colors.black,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: tabs.length,

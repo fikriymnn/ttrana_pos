@@ -7,7 +7,7 @@ import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/bayar_kasir.dar
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/burung_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/models/cart.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/ikan_kasir.dart';
-import 'package:ttrana_pos/responsive.dart';
+import 'package:ttrana_pos/widget/responsive.dart';
 
 class ProdukKasir extends StatefulWidget {
   const ProdukKasir({super.key});
@@ -82,22 +82,27 @@ class _ProdukKasirState extends State<ProdukKasir> {
 
   @override
   Widget build(BuildContext context) {
-    final produk = context.watch<Cart>(); // Akses provider model produk
+    final produkCart = context.watch<Cart>(); // Akses provider model Cart
     var size = MediaQuery.of(context).size;
-    // Hitung total harga
-    final totalHarga = produk.cart.fold(0, (previousValue, productEntry) {
-      final tanaman = productEntry.keys.first;
-      final quantity = productEntry[tanaman]!;
 
-      return previousValue + (tanaman.harga * quantity);
+// Hitung total harga
+    final totalHarga = produkCart.cart.fold(0.0, (previousValue, item) {
+      final product = item['product'];
+      final quantity = item['quantity'] as int;
+
+      return previousValue + (product.harga * quantity);
     });
-    // Hitung Subtotal harga
-    final subTotal = produk.cart.fold(0, (previousValue, productEntry) {
-      final tanaman = productEntry.keys.first;
-      final quantity = productEntry[tanaman]!;
-      final ppn = totalHarga * 0.02; //Hitung ppn
 
-      return previousValue + (tanaman.harga * quantity + ppn.toInt() + 2500);
+// Hitung Subtotal harga
+    final subTotal = produkCart.cart.fold(0.0, (previousValue, item) {
+      final product = item['product'];
+      final quantity = item['quantity'] as int;
+
+      final itemTotal = product.harga * quantity; // Harga per item
+      final ppn = itemTotal * 0.02; // Hitung PPN 2%
+      final biayaLain = 2500; // Biaya tambahan tetap
+
+      return previousValue + itemTotal + ppn + biayaLain;
     });
 
     // Rupiah
@@ -145,22 +150,24 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         // Menampilkan produk yang di input
                         Expanded(
                           child: Container(
-                            child: produk.cart.isNotEmpty
+                            child: produkCart.cart.isNotEmpty
                                 ? Expanded(
                                     child: ListView.builder(
-                                      itemCount: produk.cart.length,
+                                      itemCount: produkCart.cart.length,
                                       itemBuilder: (context, index) {
-                                        // Each cart entry is a Map<tanaman, int>
-                                        final productEntry = produk.cart[index];
-                                        final tanaman = productEntry.keys.first;
-                                        final quantity = productEntry[tanaman]!;
-
-                                        // final ppn = tanaman.harga * 0.02;
+                                        final item = produkCart.cart[index];
+                                        final product = item['product'];
+                                        final quantity =
+                                            item['quantity'] as int;
+                                        final color = item['color']
+                                            as String; // Warna yang dipilih
+                                        final ageGroup = item['ageGroup']
+                                            as String; // Usia yang dipilih
 
                                         return ListTile(
-                                          title: Text(tanaman.judulProduk),
+                                          title: Text(product.judulProduk!),
                                           subtitle: Text(
-                                            "Rp. ${formatAngka(tanaman.harga.toDouble())}",
+                                            "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
                                             style: GoogleFonts.josefinSans(
                                               fontSize: 20,
                                               color: Color(0xffFF0A0A),
@@ -477,22 +484,24 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         // Menampilkan produk yang di input
                         Expanded(
                           child: Container(
-                            child: produk.cart.isNotEmpty
+                            child: produkCart.cart.isNotEmpty
                                 ? Expanded(
                                     child: ListView.builder(
-                                      itemCount: produk.cart.length,
+                                      itemCount: produkCart.cart.length,
                                       itemBuilder: (context, index) {
-                                        // Each cart entry is a Map<tanaman, int>
-                                        final productEntry = produk.cart[index];
-                                        final tanaman = productEntry.keys.first;
-                                        final quantity = productEntry[tanaman]!;
-
-                                        // final ppn = tanaman.harga * 0.02;
+                                        final item = produkCart.cart[index];
+                                        final product = item['product'];
+                                        final quantity =
+                                            item['quantity'] as int;
+                                        final color = item['color']
+                                            as String; // Warna yang dipilih
+                                        final ageGroup = item['ageGroup']
+                                            as String; // Usia yang dipilih
 
                                         return ListTile(
-                                          title: Text(tanaman.judulProduk),
+                                          title: Text(product.judulProduk!),
                                           subtitle: Text(
-                                            "Rp. ${formatAngka(tanaman.harga.toDouble())}",
+                                            "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
                                             style: GoogleFonts.josefinSans(
                                               fontSize: 20,
                                               color: Color(0xffFF0A0A),
@@ -661,7 +670,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                           children: [
                             Container(
                               width: size.width * 0.3,
-                              height: size.height * 0.05,
+                              height: size.height * 0.045,
                               // color: Colors.black,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,

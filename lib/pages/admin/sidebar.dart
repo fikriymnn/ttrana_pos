@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ttrana_pos/pages/admin/animasi/animasi_m.dart';
-import 'package:ttrana_pos/responsive.dart';
+import 'package:ttrana_pos/widget/responsive.dart';
 import 'package:ttrana_pos/widget/abil_icon_icons.dart';
 import 'package:ttrana_pos/pages/admin/animasi/animasi_T.dart';
 
@@ -104,21 +104,22 @@ class _SidebarState extends State<Sidebar> {
                     onTap: () => _onItemTapped(1),
                   ),
                   AnimasiM(
-                    icon: Icons.person_2_outlined,
-                    text: 'Profile',
+                    icon: Icons.request_page,
+                    text: 'Permintaan Kasir',
                     selected: _selected[2],
                     onTap: () {
                       _onItemTapped(2);
                     },
                   ),
                   AnimasiM(
-                    icon: Icons.request_page,
-                    text: 'Permintaan Kasir',
+                    icon: Icons.person_2_outlined,
+                    text: 'Profile',
                     selected: _selected[3],
                     onTap: () {
                       _onItemTapped(3);
                     },
                   ),
+                  
                 ],
               ),
             ),
@@ -187,14 +188,14 @@ class _SidebarState extends State<Sidebar> {
                     onTap: () => _onItemTapped(1),
                   ),
                   AnimasiT(
-                    icon: Ionicons.person_circle_outline,
-                    text: "Profil",
+                    icon: Ionicons.git_pull_request_outline,
+                    text: "Permintaan Kasir",
                     selected: _selected[2],
                     onTap: () => _onItemTapped(2),
                   ),
                   AnimasiT(
-                    icon: Ionicons.git_pull_request_outline,
-                    text: "Permintaan Kasir",
+                    icon: Ionicons.person_circle_outline,
+                    text: "Profil",
                     selected: _selected[3],
                     onTap: () => _onItemTapped(3),
                   ),

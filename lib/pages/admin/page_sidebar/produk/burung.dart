@@ -59,63 +59,90 @@ class Burung extends StatelessWidget {
                     ),
                     itemBuilder: (context, index) {
                       var product = snapshot.data![index];
-                      return Material(
-                        borderRadius: BorderRadius.circular(20),
-                        elevation: 5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.network(
-                              'https://74gslzvj-8000.asse.devtunnels.ms${product['foto_produk']}',
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const Icon(Icons.error),
-                              height: 150,
-                              width: 150,
-                              fit: BoxFit.cover,
-                            ),
-                            const SizedBox(height: 10),
-                            Container(
-                              width: 150,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    product['judul_produk'] ?? 'Tanpa Judul',
-                                    style: GoogleFonts.josefinSans(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
+                      return Card(
+                        elevation: 2,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            right: size.width * 0.01,
+                            left: size.width * 0.01,
+                            top: size.height * 0.03,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: product['foto_produk'] != null &&
+                                        product['foto_produk'].isNotEmpty
+                                    ? Image.network(
+                                        'https://74gslzvj-8000.asse.devtunnels.ms${product['foto_produk']}',
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Container(
+                                            color: Colors.grey[200],
+                                            child:
+                                                Icon(Icons.image_not_supported),
+                                          );
+                                        },
+                                      )
+                                    : Container(
+                                        color: Colors.grey[200],
+                                        child: Icon(Icons.image_not_supported),
+                                      ),
                               ),
-                            ),
-                            const SizedBox(height: 1),
-                            Container(
-                              width: 150,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Rp. ${NumberFormat.currency(locale: 'id_ID', symbol: '', decimalDigits: 0).format(product['harga'])}',
-                                    style: GoogleFonts.josefinSans(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(0xffFF0A0A),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * 0.008,
+                                  vertical: size.height * 0.008,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      product['judul_produk'] ?? 'Tanpa Judul',
+                                      style: GoogleFonts.josefinSans(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                  ),
-                                  Text(
-                                    'Stok: ${product['jumlah']}',
-                                    style: GoogleFonts.josefinSans(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.grey,
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Rp. ${NumberFormat.currency(locale: 'id_ID', symbol: '', decimalDigits: 0).format(product['harga'])}',
+                                          style: GoogleFonts.josefinSans(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.red,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          'Stok: ${product['jumlahProduk']}',
+                                          style: GoogleFonts.josefinSans(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     },
