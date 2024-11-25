@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
   final TextEditingController passwordController = TextEditingController();
   final Dio _dio = Dio();
   bool isLoading = false;
-  bool _change = true; // Flag untuk menyembunyikan password
+  bool _change = false;
 
   // Fungsi untuk melakukan login
   Future<void> _login() async {
