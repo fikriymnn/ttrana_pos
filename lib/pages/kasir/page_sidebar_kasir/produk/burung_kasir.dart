@@ -32,8 +32,8 @@ class _BurungKasirState extends State<BurungKasir> {
     'Putih',
     'Merah',
     'Kuning',
-    'pink',
-    'ungu',
+    'Pink',
+    'Ungu',
   ];
   final List<String> categoryUsia = [
     '2 Bulan',
@@ -460,7 +460,7 @@ class _BurungKasirState extends State<BurungKasir> {
                               final product = tanaman[index];
                               return GestureDetector(
                                 onTap: () {
-                                  _showQuantityDialogTablet(context, product);
+                                  _showQuantityDialogMobile(context, product);
                                 },
                                 child: Card(
                                   elevation: 2,
@@ -552,7 +552,7 @@ class _BurungKasirState extends State<BurungKasir> {
               vertical: size.height * 0.02,
             ),
             child: Container(
-              height: size.height, // Menggunakan ukuran lebar untuk tinggi
+              height: size.height,
               width: size.width * 0.65,
               color: Colors.white,
               child: Center(
@@ -564,43 +564,51 @@ class _BurungKasirState extends State<BurungKasir> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Center(child: CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
                           } else if (snapshot.hasError) {
                             return Center(
                                 child: Text('Error: ${snapshot.error}'));
                           } else if (!snapshot.hasData ||
                               snapshot.data!.isEmpty) {
-                            return Center(child: Text('No products available'));
+                            return const Center(
+                                child: Text('No products available'));
                           }
 
                           final tanaman = snapshot.data!;
 
                           return GridView.builder(
+                            itemCount: tanaman.length,
+                            padding: const EdgeInsets.all(20),
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 4,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 15,
+                              mainAxisSpacing: 25,
                               childAspectRatio: 0.7,
                             ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: size.width * 0.01,
-                              vertical: size.height * 0.01,
-                            ),
-                            itemCount: tanaman.length,
                             itemBuilder: (context, index) {
-                              final product = tanaman[index];
+                              var product = tanaman[index];
+
+                              // Mengambil subvariasi pertama untuk contoh
+                              final firstSubvariasi = product.variasis
+                                  ?.expand(
+                                      (variasi) => variasi.subvariasis ?? [])
+                                  .toList()
+                                  .firstOrNull;
+
                               return GestureDetector(
                                 onTap: () {
                                   _showQuantityDialogTablet(context, product);
                                 },
                                 child: Card(
                                   elevation: 2,
+                                  color: Colors.white,
                                   child: Padding(
                                     padding: EdgeInsets.only(
                                       right: size.width * 0.01,
                                       left: size.width * 0.01,
-                                      top: size.height * 0.1,
+                                      top: size.height * 0.03,
                                     ),
                                     child: Column(
                                       crossAxisAlignment:
@@ -610,21 +618,21 @@ class _BurungKasirState extends State<BurungKasir> {
                                           child: product.fotoProduk != null &&
                                                   product.fotoProduk!.isNotEmpty
                                               ? Image.network(
-                                                  'https://74gslzvj-8000.asse.devtunnels.ms${product.fotoProduk}',
+                                                  'https://74gslzvj-8000.asse.devtunnels.ms${product.fotoProduk!}',
                                                   fit: BoxFit.cover,
                                                   width: double.infinity,
                                                   errorBuilder: (context, error,
                                                       stackTrace) {
                                                     return Container(
                                                       color: Colors.grey[200],
-                                                      child: Icon(Icons
+                                                      child: const Icon(Icons
                                                           .image_not_supported),
                                                     );
                                                   },
                                                 )
                                               : Container(
                                                   color: Colors.grey[200],
-                                                  child: Icon(Icons
+                                                  child: const Icon(Icons
                                                       .image_not_supported),
                                                 ),
                                         ),
@@ -638,7 +646,8 @@ class _BurungKasirState extends State<BurungKasir> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                product.judulProduk!,
+                                                product.judulProduk ??
+                                                    'Tanpa Judul',
                                                 style: GoogleFonts.josefinSans(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.w400,
@@ -646,13 +655,41 @@ class _BurungKasirState extends State<BurungKasir> {
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                               ),
-                                              Text(
-                                                "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
-                                                style: GoogleFonts.josefinSans(
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.red,
-                                                ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Rp. ${NumberFormat.currency(locale: 'id_ID', symbol: '', decimalDigits: 0).format(product.harga)}',
+                                                    style:
+                                                        GoogleFonts.josefinSans(
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Colors.red,
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    "Stok: ${product.jumlahProduk}",
+                                                    style:
+                                                        GoogleFonts.josefinSans(
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),

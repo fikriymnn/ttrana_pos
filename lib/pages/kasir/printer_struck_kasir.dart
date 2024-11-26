@@ -268,7 +268,7 @@ class _PrinterStruckKasirState extends State<PrinterStruckKasir> {
           final quantity = item['quantity'] as int;
 
           // Hitung total harga untuk item ini
-          return previousValue + (product.harga! * quantity);
+          return previousValue + (product.harga!.toInt() * quantity);
         }
         return previousValue;
       });
