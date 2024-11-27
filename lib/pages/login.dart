@@ -20,24 +20,26 @@ class _LoginState extends State<Login> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final Dio _dio = Dio();
-  bool isLoading = false;
-  bool _change = true; // Flag untuk menyembunyikan password
+  bool _isLoading = false;
+  bool _change = true;
 
-  // Fungsi untuk melakukan login
-  Future<void> _login() async {
-    final username = usernameController.text;
-    final password = passwordController.text;
+  void _login() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final username = usernameController.text.trim();
+    final password = passwordController.text.trim();
 
     if (username.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Username dan password harus diisi')),
+        const SnackBar(content: Text('Username dan Password wajib diisi')),
       );
+      setState(() {
+        _isLoading = false;
+      });
       return;
     }
-
-    setState(() {
-      isLoading = true;
-    });
 
     try {
       final response = await _dio.post(
@@ -46,56 +48,78 @@ class _LoginState extends State<Login> {
           'username': username,
           'password': password,
         },
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
       );
 
-      // Log untuk memverifikasi respons
-      print("Response data: ${response.data}");
+      if (response.statusCode == 200) {
+        final role = response.data['user']['role'];
+        final token = response.data['token'];
+        final kasirName = response.data['user']['username'];
 
-      // Pastikan message dari server mengindikasikan login berhasil
-      if (response.statusCode == 200 &&
-          response.data['message'] == 'Login successful') {
-        final user = response.data['user'];
-        final token =
-            response.data['token']; // Cek apakah token ada dalam respons
+        // Simpan data ke SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', token);
+        await prefs.setString('role', role);
+        await prefs.setString('username', kasirName);
 
-        if (token != null && token is String) {
-          // Simpan data user dan token ke SharedPreferences
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString('username', user['username']);
-          await prefs.setString('role', user['role']);
-          await prefs.setString('token', token); // Simpan token
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Login berhasil')),
-          );
-
-          // Navigasi ke halaman MainPageKasir setelah login berhasil
+        // Navigasi berdasarkan role
+        if (role == 'kasir') {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => MainPageKasir()),
+            MaterialPageRoute(builder: (context) => const MainPageKasir()),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Login sebagai Kasir berhasil')),
+          );
+        } else if (role == 'admin') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const MainPage()),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Login sebagai Admin berhasil')),
           );
         } else {
-          // Jika token tidak ditemukan atau tidak valid
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Token tidak ditemukan!')),
-          );
+          throw Exception('Role tidak dikenali');
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Login gagal: Username atau password salah')),
-        );
+        throw Exception('Login gagal, periksa kredensial Anda');
       }
-    } catch (e) {
-      print("Error during login: $e");
-
+    } on DioError catch (e) {
+      print('Error Code: ${e.response?.statusCode}');
+      print('Error Data: ${e.response?.data}');
+      print('Headers: ${e.response?.headers}');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Terjadi kesalahan. Coba lagi nanti')),
+        SnackBar(
+          content: Text(
+              'Login gagal: ${e.response?.data['message'] ?? 'Kesalahan tidak diketahui'}'),
+        ),
+      );
+    } catch (e) {
+      print('Unexpected Error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login gagal: ${e.toString()}')),
       );
     } finally {
       setState(() {
-        isLoading = false;
+        _isLoading = false;
       });
+    }
+  }
+
+  Future<void> _checkToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    if (token != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Token: $token')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Token tidak ditemukan')),
+      );
     }
   }
 
@@ -259,7 +283,7 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(height: size.height * 0.065),
                       GestureDetector(
-                        onTap: _login,
+                        onTap: _isLoading ? null : _login,
                         child: Container(
                           width: size.width * 0.14,
                           height: size.height * 0.069,
@@ -411,7 +435,7 @@ class _LoginState extends State<Login> {
                                       });
                                     },
                                     icon: Icon(
-                                      _change ? Ionicons.eye : Ionicons.eye_off,
+                                      _change ? Ionicons.eye_off : Ionicons.eye,
                                       color: const Color(0xFF3F9272),
                                       size: size.width * 0.025,
                                     ),
@@ -437,10 +461,10 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       SizedBox(height: size.height * 0.065),
-                      isLoading
+                      _isLoading
                           ? CircularProgressIndicator()
                           : ElevatedButton(
-                              onPressed: _login,
+                              onPressed: _isLoading ? null : _login,
                               child: Text('Login'),
                             ),
                     ],

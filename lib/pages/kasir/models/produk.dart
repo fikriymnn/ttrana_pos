@@ -1,12 +1,12 @@
 class Product {
-  int? id;
+  num? id;
   String? judulProduk;
   String? deskripsiProduk;
   String? fotoProduk;
-  int? harga;
-  int? jumlahProduk;
+  num? harga;
+  num? jumlahProduk;
   String? kategoriProduk;
-  int? ratingProduk;
+  num? ratingProduk;
   String? createdAt;
   String? updatedAt;
   List<Variasis>? variasis;
@@ -24,7 +24,7 @@ class Product {
       this.updatedAt,
       this.variasis});
 
-      Product.fromJson(Map<String, dynamic> json) {
+  Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     judulProduk = json['judul_produk'];
     deskripsiProduk = json['deskripsi_produk'];
@@ -42,7 +42,6 @@ class Product {
       });
     }
   }
-
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -163,37 +162,3 @@ class Subvariasis {
     return data;
   }
 }
-
-
-
-// class Product {
-//   final int? id;
-//   final String judulProduk;
-//   final String deskripsiProduk;
-//   final String? fotoProduk;
-//   final int? harga;
-//   final int? jumlah;
-//   final String kategoriProduk;
-
-//   Product({
-//     this.id,
-//     required this.judulProduk,
-//     required this.deskripsiProduk,
-//     this.fotoProduk,
-//     this.harga,
-//     this.jumlah,
-//     required this.kategoriProduk,
-//   });
-
-//   factory Product.fromJson(Map<String, dynamic> json) {
-//     return Product(
-//       id: json['id'] as int?,
-//       judulProduk: json['judul_produk'] ?? 'Tanpa Judul',
-//       deskripsiProduk: json['deskripsi_produk'] ?? '',
-//       fotoProduk: json['foto_produk'],
-//       harga: json['harga'] ?? 0,
-//       jumlah: json['jumlah'] ?? 1,
-//       kategoriProduk: json['kategori_produk'] ?? 'Tanpa Kategori',
-//     );
-//   }
-// }
