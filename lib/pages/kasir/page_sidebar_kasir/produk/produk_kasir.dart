@@ -495,8 +495,7 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                             item['quantity'] as int;
                                         final color = item['color']
                                             as String; // Warna yang dipilih
-                                        final ageGroup = item['ageGroup']
-                                            as String; // Usia yang dipilih
+                                        
 
                                         return ListTile(
                                           title: Text(product.judulProduk!),
@@ -752,12 +751,16 @@ class _ProdukKasirState extends State<ProdukKasir> {
                   height: size.height * 0.1,
                   // color: Colors.black,
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BayarKasir()));
-                    },
+                    onTap: produkCart.cart.isNotEmpty
+                        ? () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BayarKasir(),
+                              ),
+                            );
+                          }
+                        : null,
                     child: Center(
                       child: Container(
                         width: size.width * 0.12,

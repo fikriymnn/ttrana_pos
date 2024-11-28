@@ -7,14 +7,15 @@ class Cart extends ChangeNotifier {
   List<Map<String, dynamic>> _cart = [];
   List<Map<String, dynamic>> get cart => _cart;
 
-  void addToCart(Product tanaman, int quantity, String color, String ageGroup,
-      String variasi) {
+  void addToCart(
+    Product tanaman,
+    int quantity,
+    String color,
+  ) {
     _cart.add({
       'product': tanaman,
       'quantity': quantity,
       'color': color,
-      'ageGroup': ageGroup,
-      'variasi': variasi,
     });
     notifyListeners();
   }
