@@ -30,6 +30,7 @@ class _SidebarState extends State<Sidebar> {
     false,
     false,
     false,
+    false,
   ]; // Status terpilih
   bool subMenu1 = false;
 
@@ -37,6 +38,7 @@ class _SidebarState extends State<Sidebar> {
   void _onItemTapped(int index) {
     setState(() {
       _selected = [
+        false,
         false,
         false,
         false,
@@ -112,14 +114,21 @@ class _SidebarState extends State<Sidebar> {
                     },
                   ),
                   AnimasiM(
-                    icon: Icons.person_2_outlined,
-                    text: 'Profile',
+                    icon: Icons.request_page,
+                    text: 'Kebutuhan',
                     selected: _selected[3],
                     onTap: () {
                       _onItemTapped(3);
                     },
                   ),
-                  
+                  AnimasiM(
+                    icon: Icons.person_2_outlined,
+                    text: 'Profile',
+                    selected: _selected[4],
+                    onTap: () {
+                      _onItemTapped(4);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -194,10 +203,16 @@ class _SidebarState extends State<Sidebar> {
                     onTap: () => _onItemTapped(2),
                   ),
                   AnimasiT(
-                    icon: Ionicons.person_circle_outline,
-                    text: "Profil",
+                    icon: Ionicons.git_pull_request_outline,
+                    text: "Kebutuhan",
                     selected: _selected[3],
                     onTap: () => _onItemTapped(3),
+                  ),
+                  AnimasiT(
+                    icon: Ionicons.person_circle_outline,
+                    text: "Profil",
+                    selected: _selected[4],
+                    onTap: () => _onItemTapped(4),
                   ),
                 ],
               ),
