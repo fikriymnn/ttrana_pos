@@ -29,6 +29,8 @@ class _BurungKasirState extends State<BurungKasir> {
   void _showQuantityDialogTablet(BuildContext context, Product product) {
     final size = MediaQuery.of(context).size;
     final cartProvider = context.read<Cart>();
+    String namaVariasi =
+        product.variasis![0].namaVariasi ?? 'Nama variasi tidak tersedia';
 
     int quantity = 1; // Jumlah default
 
@@ -63,7 +65,7 @@ class _BurungKasirState extends State<BurungKasir> {
                             padding:
                                 EdgeInsets.only(bottom: size.height * 0.01),
                             child: Text(
-                              "Warna",
+                              namaVariasi,
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 20,
