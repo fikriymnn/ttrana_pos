@@ -180,7 +180,7 @@ class _PermintaanFormState extends State<PermintaanForm> {
           hintText: 'Masukkan deskripsi produk',
         ),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 8),
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
           child: Text(
             "Subtotal: Rp ${items[index]['subtotal'].toStringAsFixed(2)}",
             style: GoogleFonts.josefinSans(
@@ -202,46 +202,117 @@ class _PermintaanFormState extends State<PermintaanForm> {
     bool isNumeric = false,
     Function? onChanged,
   }) {
-    return TextFormField(
-      controller: controller,
-      keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: hintText,
-        border: OutlineInputBorder(),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
+        decoration: InputDecoration(
+          fillColor: Colors.white,
+          filled: true,
+          labelText: label,
+          labelStyle: TextStyle(
+            color: Color(0xff3F9272),
+            fontWeight: FontWeight.bold,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: BorderSide(color: Color(0xff3F9272), width: 1),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: BorderSide(color: Color(0xff3F9272), width: 1),
+          ),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 5,
+          ),
+        ),
+        onChanged: (value) {
+          if (onChanged != null) onChanged();
+        },
       ),
-      onChanged: (value) {
-        if (onChanged != null) onChanged();
-      },
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: isLoading
           ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  ListView.builder(
-                    itemCount: items.length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => _buildItemForm(index),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: addItem,
-                    child: Text("Tambah Item"),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: submitPermintaan,
-                    child: Text("Kirim"),
-                  ),
-                ],
+          : Padding(
+              padding: EdgeInsets.only(left: size.width * 0.03),
+              child: Container(
+                height: size.height,
+                color: Color(0xFFE0F7FA),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: Expanded(
+                          child: ListView.builder(
+                            itemCount: items.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) =>
+                                _buildItemForm(index),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                onPressed: addItem,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xff3F9272),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                                child: Text(
+                                  "Tambah Item",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    right: size.width * 0.05,
+                                    bottom: size.height * 0.05),
+                                child: ElevatedButton(
+                                  onPressed: submitPermintaan,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0xff3F9272),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    "Kirim",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
     );

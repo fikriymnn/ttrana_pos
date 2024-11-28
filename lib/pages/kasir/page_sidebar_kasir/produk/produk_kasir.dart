@@ -483,63 +483,64 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         ),
                         // Menampilkan produk yang di input
                         Expanded(
-                          child: Container(
-                            child: produkCart.cart.isNotEmpty
-                                ? Expanded(
-                                    child: ListView.builder(
-                                      itemCount: produkCart.cart.length,
-                                      itemBuilder: (context, index) {
-                                        final item = produkCart.cart[index];
-                                        final product = item['product'];
-                                        final quantity =
-                                            item['quantity'] as int;
-                                        final color = item['color']
-                                            as String; // Warna yang dipilih
-                                        final ageGroup = item['ageGroup']
-                                            as String; // Usia yang dipilih
+  child: Container(
+    child: produkCart.cart.isNotEmpty
+        ? ListView.builder(
+            itemCount: produkCart.cart.length,
+            itemBuilder: (context, index) {
+              final item = produkCart.cart[index];
+              final product = item['product'];
+              final quantity = item['quantity'] as int;
+              final color = item['color'] as String; // Warna yang dipilih
 
-                                        return ListTile(
-                                          title: Text(product.judulProduk!),
-                                          subtitle: Text(
-                                            "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
-                                            style: GoogleFonts.josefinSans(
-                                              fontSize: 20,
-                                              color: Color(0xffFF0A0A),
-                                            ),
-                                          ),
-                                          trailing: Container(
-                                            width: 30,
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(width: 1),
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                '${quantity}',
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          // trailing: Text(
-                                          //   'Total: Rp ${tanaman.harga * quantity}',
-                                          //   style: const TextStyle(
-                                          //     fontWeight: FontWeight.bold,
-                                          //     color: Colors.red,
-                                          //   ),
-                                          // ),
-                                        );
-                                      },
-                                    ),
-                                  )
-                                : const Center(
-                                    child: Text('Kosong'),
-                                  ),
+              return ListTile(
+                title: Text(product.judulProduk!),
+                subtitle: Text(
+                  "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
+                  style: GoogleFonts.josefinSans(
+                    fontSize: 20,
+                    color: Color(0xffFF0A0A),
+                  ),
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Text(
+                          '${quantity}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
                           ),
                         ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete, color: Colors.red),
+                      onPressed: () {
+                        // Fungsi untuk menghapus produk berdasarkan index
+                        produkCart.cart.removeAt(index);
+                        setState(() {});
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          )
+        : const Center(
+            child: Text('Kosong'),
+          ),
+  ),
+),
+
                         Container(
                           child: Column(
                             children: [
@@ -752,12 +753,16 @@ class _ProdukKasirState extends State<ProdukKasir> {
                   height: size.height * 0.1,
                   // color: Colors.black,
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BayarKasir()));
-                    },
+                    onTap: produkCart.cart.isNotEmpty
+                        ? () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BayarKasir(),
+                              ),
+                            );
+                          }
+                        : null,
                     child: Center(
                       child: Container(
                         width: size.width * 0.12,
