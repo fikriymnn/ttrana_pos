@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ttrana_pos/services/logout_function.dart';
 import 'package:ttrana_pos/widget/custom_button.dart';
 
 class ProfileKasir extends StatelessWidget {
@@ -201,7 +202,11 @@ class ProfileKasir extends StatelessWidget {
                           ),
                         ),
                         //Button Logout
-                        CustomButton(text: 'Logout'),
+                        ElevatedButton(
+                            onPressed: () {
+                              logout(context);
+                            },
+                            child: Text("Logout"))
                       ],
                     ),
                   ),

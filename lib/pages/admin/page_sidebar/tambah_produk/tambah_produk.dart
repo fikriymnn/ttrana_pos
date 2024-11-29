@@ -75,8 +75,17 @@ class _TambahProdukState extends State<TambahProduk> {
       _formKey.currentState!.save();
 
       try {
-        Dio dio = Dio();
+        print('Judul Produk: $judulProduk');
+        print('Deskripsi: $deskripsi');
+        print('Kategori: $pilihKategori');
+        print('Harga: $harga');
+        print(
+            'Variasi: ${jsonEncode(variasiList.map((e) => e.toJson()).toList())}');
+        if (_image != null) {
+          print('Gambar: ${_image!.path}');
+        }
 
+        Dio dio = Dio();
         String url = 'https://74gslzvj-8000.asse.devtunnels.ms/api/produk';
 
         FormData formData = FormData.fromMap({
@@ -95,11 +104,9 @@ class _TambahProdukState extends State<TambahProduk> {
         Response response = await dio.post(url, data: formData);
 
         if (response.statusCode == 200) {
-          // Berhasil
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Produk berhasil diupload')),
           );
-          // Reset form jika diperlukan
           _formKey.currentState!.reset();
           setState(() {
             _image = null;
@@ -107,13 +114,11 @@ class _TambahProdukState extends State<TambahProduk> {
             pilihKategori = '';
           });
         } else {
-          // Gagal
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Gagal mengupload produk')),
           );
         }
       } catch (e) {
-        // Penanganan error
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error: ${e.toString()}')),
         );
@@ -528,6 +533,8 @@ class _TambahProdukState extends State<TambahProduk> {
                                             MediaQuery.of(context).size.width *
                                                 0.15,
                                         child: TextFormField(
+                                          initialValue:
+                                              variasiList[index].namaVariasi,
                                           decoration: InputDecoration(
                                             fillColor: Colors.white,
                                             filled: true,
@@ -548,9 +555,15 @@ class _TambahProdukState extends State<TambahProduk> {
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return 'Masukkan nama variasi';
+                                              return 'Nama variasi tidak boleh kosong';
                                             }
                                             return null;
+                                          },
+                                          onChanged: (value) {
+                                            setState(() {
+                                              variasiList[index].namaVariasi =
+                                                  value;
+                                            });
                                           },
                                         ),
                                       ),
@@ -905,7 +918,7 @@ class _TambahProdukState extends State<TambahProduk> {
                               ),
                             );
                           },
-                        ),
+                        ), //
                         SizedBox(
                           height: size.height * 0.03,
                         ),
