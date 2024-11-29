@@ -483,63 +483,65 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         ),
                         // Menampilkan produk yang di input
                         Expanded(
-  child: Container(
-    child: produkCart.cart.isNotEmpty
-        ? ListView.builder(
-            itemCount: produkCart.cart.length,
-            itemBuilder: (context, index) {
-              final item = produkCart.cart[index];
-              final product = item['product'];
-              final quantity = item['quantity'] as int;
-              final color = item['color'] as String; // Warna yang dipilih
+                          child: Container(
+                            child: produkCart.cart.isNotEmpty
+                                ? ListView.builder(
+                                    itemCount: produkCart.cart.length,
+                                    itemBuilder: (context, index) {
+                                      final item = produkCart.cart[index];
+                                      final product = item['product'];
+                                      final quantity = item['quantity'] as int;
+                                      final color = item['color']
+                                          as String; // Warna yang dipilih
 
-              return ListTile(
-                title: Text(product.judulProduk!),
-                subtitle: Text(
-                  "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
-                  style: GoogleFonts.josefinSans(
-                    fontSize: 20,
-                    color: Color(0xffFF0A0A),
-                  ),
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Text(
-                          '${quantity}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
+                                      return ListTile(
+                                        title: Text(product.judulProduk!),
+                                        subtitle: Text(
+                                          "Rp. ${product.harga != null ? formatAngka(product.harga!.toDouble()) : 'Tidak ada harga'}",
+                                          style: GoogleFonts.josefinSans(
+                                            fontSize: 20,
+                                            color: Color(0xffFF0A0A),
+                                          ),
+                                        ),
+                                        trailing: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(
+                                              width: 30,
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(width: 1),
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  '${quantity}',
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.delete,
+                                                  color: Colors.red),
+                                              onPressed: () {
+                                                // Fungsi untuk menghapus produk berdasarkan index
+                                                produkCart.cart.removeAt(index);
+                                                setState(() {});
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : const Center(
+                                    child: Text('Kosong'),
+                                  ),
                           ),
                         ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.delete, color: Colors.red),
-                      onPressed: () {
-                        // Fungsi untuk menghapus produk berdasarkan index
-                        produkCart.cart.removeAt(index);
-                        setState(() {});
-                      },
-                    ),
-                  ],
-                ),
-              );
-            },
-          )
-        : const Center(
-            child: Text('Kosong'),
-          ),
-  ),
-),
 
                         Container(
                           child: Column(
@@ -647,83 +649,69 @@ class _ProdukKasirState extends State<ProdukKasir> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        right: size.width * 0.20,
-                        left: size.width * 0.20,
                         top: size.height * 0.05,
                       ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: size.height * 0.009,
-                            horizontal: size.width * 0.02,
-                          ),
-                          border: OutlineInputBorder(),
-                          suffixIcon: Icon(
-                            Icons.search,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Stack(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: size.width * 0.3,
-                              height: size.height * 0.045,
-                              // color: Colors.black,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: tabs.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        current = index;
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                        left: index == 0
-                                            ? size.width * 0.016
-                                            : size.width * 0.034,
-                                      ),
-                                      child: Text(
-                                        tabs[index],
-                                        style: GoogleFonts.josefinSans(
-                                          fontSize: size.width * 0.0196,
-                                          fontWeight: current == index
-                                              ? FontWeight.bold
-                                              : FontWeight.normal,
-                                          color: current == index
-                                              ? Colors.green
-                                              : Colors.grey,
+                      child: Stack(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: size.width * 0.3,
+                                height: size.height * 0.045,
+                                // color: Colors.black,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: tabs.length,
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          current = index;
+                                        });
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          left: index == 0
+                                              ? size.width * 0.016
+                                              : size.width * 0.034,
+                                        ),
+                                        child: Text(
+                                          tabs[index],
+                                          style: GoogleFonts.josefinSans(
+                                            fontSize: size.width * 0.0196,
+                                            fontWeight: current == index
+                                                ? FontWeight.bold
+                                                : FontWeight.normal,
+                                            color: current == index
+                                                ? Colors.green
+                                                : Colors.grey,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          AnimatedPositioned(
+                            bottom: 0,
+                            left: changePositionT(size),
+                            curve: Curves.fastEaseInToSlowEaseOut,
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 500),
+                              width: changeContainerWidthT(size),
+                              height: size.height * 0.006,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.green,
                               ),
                             ),
-                          ],
-                        ),
-                        AnimatedPositioned(
-                          bottom: 0,
-                          left: changePositionT(size),
-                          curve: Curves.fastEaseInToSlowEaseOut,
-                          child: AnimatedContainer(
                             duration: const Duration(milliseconds: 500),
-                            width: changeContainerWidthT(size),
-                            height: size.height * 0.006,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.green,
-                            ),
                           ),
-                          duration: const Duration(milliseconds: 500),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     SizedBox(height: size.width * 0.015),
                     Stack(
