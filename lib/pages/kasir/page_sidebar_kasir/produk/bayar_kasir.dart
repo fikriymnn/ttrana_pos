@@ -30,11 +30,11 @@ class _BayarKasirState extends State<BayarKasir> {
   final TextEditingController _nominalController = TextEditingController();
 
   final List<String> _pembayaran = [
-    "dana",
-    "gopay",
-    "mbanking",
-    "ovo",
-    "seaBank"
+    "Dana",
+    "Gopay",
+    "Mbanking",
+    "Ovo",
+    "SeaBank"
   ];
 
   @override
@@ -179,93 +179,14 @@ class _BayarKasirState extends State<BayarKasir> {
     }
 
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 202, 231, 239),
       resizeToAvoidBottomInset: false,
-      body: Row(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          _buildProdukList(size, formatAngka),
           _buildPembayaranSection(size, formatAngka),
         ],
       ),
-    );
-  }
-
-  Widget _buildProdukList(Size size, String Function(double) formatAngka) {
-    return Container(
-      height: size.height,
-      width: size.width * 0.23,
-      color: Colors.white,
-      child: Column(
-        children: [
-          Container(
-            height: size.height * 0.1,
-            color: Color.fromARGB(255, 73, 142, 125),
-            child: Center(
-              child: Text(
-                "Produk",
-                style: GoogleFonts.josefinSans(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: size.width * 0.02,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: widget.produkCart.cart.isNotEmpty
-                ? ListView.builder(
-                    itemCount: widget.produkCart.cart.length,
-                    itemBuilder: (context, index) {
-                      final item = widget.produkCart.cart[index];
-                      final product = item['product'];
-                      final quantity = item['quantity'] as int;
-                      return ListTile(
-                        title: Text(product.judulProduk!),
-                        subtitle: Text(
-                          "Rp. ${formatAngka(product.harga!.toDouble())}",
-                          style: GoogleFonts.josefinSans(
-                            fontSize: 20,
-                            color: Color(0xffFF0A0A),
-                          ),
-                        ),
-                        trailing: CircleAvatar(
-                          radius: 15,
-                          child:
-                              Text('$quantity', style: TextStyle(fontSize: 15)),
-                        ),
-                      );
-                    },
-                  )
-                : Center(child: Text('Kosong')),
-          ),
-          _buildSummary(size, formatAngka),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSummary(Size size, String Function(double) formatAngka) {
-    return Padding(
-      padding: EdgeInsets.all(size.width * 0.01),
-      child: Column(
-        children: [
-          Divider(),
-          _buildRow("Total", "Rp. ${formatAngka(widget.totalHarga)}"),
-          _buildRow("PPN", "2%"),
-          _buildRow("Biaya Lain", "Rp. 2.500"),
-          Divider(),
-          _buildRow("Sub Total", "Rp. ${formatAngka(widget.subTotal)}"),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRow(String label, String value) {
-    return Row(
-      children: [
-        Text(label, style: TextStyle(fontSize: 14)),
-        Spacer(),
-        Text(value, style: TextStyle(fontSize: 14)),
-      ],
     );
   }
 
@@ -273,25 +194,40 @@ class _BayarKasirState extends State<BayarKasir> {
       Size size, String Function(double) formatAngka) {
     return Container(
       height: size.height,
-      width: size.width * 0.77,
-      color: Color.fromARGB(255, 202, 231, 239),
+      width: size.width,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          GestureDetector(
-            onTap: () => Navigator.pop(context),
-            child: Container(
-              padding: EdgeInsets.all(size.width * 0.02),
-              child: Icon(Icons.arrow_back),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Container(
+                  padding: EdgeInsets.all(size.width * 0.02),
+                  child: Icon(Icons.arrow_back),
+                ),
+              ),
+            ],
+          ),
+          Center(
+            child: Text(
+              "Rp. ${formatAngka(widget.subTotal)}",
+              style: GoogleFonts.josefinSans(fontSize: size.width * 0.037),
             ),
           ),
-          Text(
-            "Rp. ${formatAngka(widget.subTotal)}",
-            style: GoogleFonts.josefinSans(fontSize: size.width * 0.037),
+          Padding(
+            padding: EdgeInsets.only(bottom: size.height * 0.1),
+            child: Divider(),
           ),
-          Divider(),
-          _buildNominalInput(size),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+            child: _buildNominalInput(size),
+          ),
           SizedBox(height: size.height * 0.02),
-          _buildDropdown(size),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+            child: _buildDropdown(size),
+          ),
           Spacer(),
           GestureDetector(
             onTap: _kirimTransaksi,
@@ -318,33 +254,109 @@ class _BayarKasirState extends State<BayarKasir> {
   Widget _buildNominalInput(Size size) {
     return Container(
       height: 50,
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-      color: Colors.white,
-      child: TextField(
-        controller: _nominalController,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(border: InputBorder.none),
-        onChanged: _onNominalChanged,
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+      child: Row(
+        children: [
+          Text(
+            "Tunai",
+            style: GoogleFonts.josefinSans(
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          SizedBox(width: size.width * 0.02),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(left: size.width * 0.11),
+              child: TextField(
+                controller: _nominalController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  fillColor: Color.fromARGB(255, 130, 212, 181),
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: BorderSide(
+                      color: Color(0xff3F9272),
+                      width: 1,
+                    ),
+                  ),
+                  hintText: "Masukkan nominal",
+                  hintStyle: TextStyle(
+                    color: Color(0xff3F9272),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+                ),
+                onChanged: _onNominalChanged,
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildDropdown(Size size) {
-    return DropdownButton<String>(
-      value: _selectedItem,
-      hint: Text('Metode Pembayaran'),
-      isExpanded: true,
-      items: _pembayaran.map((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-      onChanged: (String? value) {
-        setState(() {
-          _selectedItem = value;
-        });
-      },
+    return Container(
+      height: 50,
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+      child: Row(
+        children: [
+          Text(
+            "Metode Pembayaran",
+            style: GoogleFonts.josefinSans(
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          SizedBox(width: size.width * 0.02),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 130, 212, 181),
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(
+                  color: const Color(0xff3F9272),
+                  width: 1,
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: DropdownButton<String>(
+                value: _selectedItem,
+                isExpanded: true,
+                underline: const SizedBox(),
+                hint: const Text(
+                  'Pilih metode pembayaran',
+                  style: TextStyle(
+                    color: Color(0xff3F9272),
+                  ),
+                ),
+                items: _pembayaran.map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      style: const TextStyle(
+                        color: Color(0xff3F9272),
+                      ),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (String? value) {
+                  setState(() {
+                    _selectedItem = value;
+                  });
+                },
+                icon: const Icon(
+                  Icons.arrow_drop_down,
+                  color: Color(0xff3F9272),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

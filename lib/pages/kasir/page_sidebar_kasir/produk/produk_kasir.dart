@@ -193,6 +193,8 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                         ),
                                         trailing: Row(
                                           mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
                                               width: 30,
@@ -211,14 +213,19 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                                 ),
                                               ),
                                             ),
-                                            IconButton(
-                                              icon: Icon(Icons.delete,
-                                                  color: Colors.red),
-                                              onPressed: () {
-                                                // Fungsi untuk menghapus produk berdasarkan index
-                                                produkCart.cart.removeAt(index);
-                                                setState(() {});
-                                              },
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: size.width * 0.01),
+                                              child: IconButton(
+                                                icon: Icon(Icons.delete,
+                                                    color: Colors.red),
+                                                onPressed: () {
+                                                  // Fungsi untuk menghapus produk berdasarkan index
+                                                  produkCart.cart
+                                                      .removeAt(index);
+                                                  setState(() {});
+                                                },
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -322,8 +329,9 @@ class _ProdukKasirState extends State<ProdukKasir> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsets.only(top: size.height * 0.02),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: size.height * 0.02,
+                                    horizontal: size.width * 0.02),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor:
