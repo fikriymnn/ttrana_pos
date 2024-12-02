@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ttrana_pos/pages/kasir/main_page_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/models/cart.dart';
 import 'package:ttrana_pos/pages/kasir/models/produk.dart';
@@ -14,13 +15,22 @@ import 'package:ttrana_pos/widget/responsive.dart';
 class PrinterStruckKasir extends StatefulWidget {
   final double nominalDiberikan;
 
-  const PrinterStruckKasir({super.key, required this.nominalDiberikan});
+  const PrinterStruckKasir(
+      {super.key,
+      required this.nominalDiberikan,
+      required double subTotal,
+      String? metodePembayaran});
 
   @override
   State<PrinterStruckKasir> createState() => _PrinterStruckKasirState();
 }
 
 class _PrinterStruckKasirState extends State<PrinterStruckKasir> {
+  Future<String> getKasirUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('username') ?? 'Kasir';
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -314,6 +324,9 @@ class _PrinterStruckKasirState extends State<PrinterStruckKasir> {
         }
       }
 
+      // Mengambil username kasir dari SharedPreferences
+      String kasirUsername = await getKasirUsername();
+
       pdf.addPage(
         pw.Page(
           build: (pw.Context context) {
@@ -352,7 +365,7 @@ class _PrinterStruckKasirState extends State<PrinterStruckKasir> {
                       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                       children: [
                         pw.Text(currentTime, style: pw.TextStyle(fontSize: 18)),
-                        pw.Text("Nama Kasir",
+                        pw.Text(kasirUsername,
                             style: pw.TextStyle(fontSize: 18)),
                       ],
                     ),

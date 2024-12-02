@@ -62,7 +62,6 @@ class _BurungKasirState extends State<BurungKasir> {
         product.variasis![0].namaVariasi ?? 'Nama variasi tidak tersedia';
 
     int quantity = 1;
-
     int? _selectedColor;
 
     final List<dynamic> category = product.variasis
@@ -81,91 +80,84 @@ class _BurungKasirState extends State<BurungKasir> {
               content: Container(
                 height: size.height * 0.3,
                 width: size.width * 0.3,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.01),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(height: 5),
-                      Column(
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsets.only(bottom: size.height * 0.01),
-                            child: Text(
-                              namaVariasi,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20,
-                              ),
-                            ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 5),
+                    Column(
+                      children: [
+                        Text(
+                          namaVariasi,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20,
                           ),
-                          Wrap(
-                            spacing: 10,
-                            runSpacing: 10.0,
-                            children: List.generate(category.length, (index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedColor = index;
-                                  });
-                                },
-                                child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 300),
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  decoration: BoxDecoration(
+                        ),
+                        Wrap(
+                          spacing: 10,
+                          runSpacing: 10.0,
+                          children: List.generate(category.length, (index) {
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedColor = index;
+                                });
+                              },
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 300),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                decoration: BoxDecoration(
+                                  color: _selectedColor == index
+                                      ? const Color(0xFF28DFB1)
+                                      : Colors.transparent,
+                                  border: Border.all(
                                     color: _selectedColor == index
                                         ? const Color(0xFF28DFB1)
-                                        : Colors.transparent,
-                                    border: Border.all(
-                                      color: _selectedColor == index
-                                          ? const Color(0xFF28DFB1)
-                                          : Colors.grey,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
+                                        : Colors.grey,
                                   ),
-                                  child: Text(
-                                    category[index],
-                                    style: TextStyle(
-                                      color: _selectedColor == index
-                                          ? Colors.white
-                                          : Colors.grey,
-                                      fontSize: 16,
-                                    ),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  category[index],
+                                  style: TextStyle(
+                                    color: _selectedColor == index
+                                        ? Colors.white
+                                        : Colors.grey,
+                                    fontSize: 16,
                                   ),
                                 ),
-                              );
-                            }),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                if (quantity > 1) quantity--;
-                              });
-                            },
-                            icon: Icon(Icons.remove),
-                          ),
-                          Text('$quantity'),
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                quantity++;
-                              });
-                            },
-                            icon: Icon(Icons.add),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                              ),
+                            );
+                          }),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (quantity > 1) quantity--;
+                            });
+                          },
+                          icon: Icon(Icons.remove),
+                        ),
+                        Text('$quantity'),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              quantity++;
+                            });
+                          },
+                          icon: Icon(Icons.add),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               actions: [
@@ -178,13 +170,31 @@ class _BurungKasirState extends State<BurungKasir> {
                 TextButton(
                   onPressed: () {
                     if (_selectedColor != null) {
-                      final selectedColor = category[_selectedColor!];
+                      final selectedSubvariasi = product.variasis!
+                          .expand((variasi) => variasi.subvariasis ?? [])
+                          .toList()[_selectedColor!];
 
-                      cartProvider.addToCart(product, quantity, selectedColor);
-                      Navigator.pop(context);
+                      final selectedSubvariasiId =
+                          selectedSubvariasi.id; // Perbaikan
+
+                      if (selectedSubvariasiId != null) {
+                        cartProvider.addToCart(
+                          product,
+                          quantity,
+                          selectedSubvariasiId,
+                        );
+                        Navigator.pop(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('ID subvariasi tidak valid'),
+                          ),
+                        );
+                      }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Pilih warna terlebih dahulu')),
+                        SnackBar(
+                            content: Text('Pilih subvariasi terlebih dahulu')),
                       );
                     }
                   },
@@ -333,8 +343,7 @@ class _BurungKasirState extends State<BurungKasir> {
                                               ),
                                               Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     'Rp. ${NumberFormat.currency(locale: 'id_ID', symbol: '', decimalDigits: 0).format(product.harga)}',

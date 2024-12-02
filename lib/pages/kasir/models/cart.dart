@@ -7,16 +7,22 @@ class Cart extends ChangeNotifier {
   List<Map<String, dynamic>> _cart = [];
   List<Map<String, dynamic>> get cart => _cart;
 
-  void addToCart(
-    Product tanaman,
-    int quantity,
-    String color,
-  ) {
-    _cart.add({
-      'product': tanaman,
-      'quantity': quantity,
-      'color': color,
-    });
+  void addToCart(Product product, int quantity, int id) {
+    final existingIndex = cart.indexWhere((item) =>
+        item['product'].id == product.id && item['id_subvariasi'] == id);
+
+    if (existingIndex >= 0) {
+      // Update jumlah jika produk dengan subvariasi yang sama sudah ada
+      cart[existingIndex]['quantity'] += quantity;
+    } else {
+      // Tambahkan produk baru
+      cart.add({
+        'product': product,
+        'quantity': quantity,
+        'id_subvariasi': id,
+      });
+    }
+
     notifyListeners();
   }
 

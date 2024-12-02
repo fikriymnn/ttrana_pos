@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ttrana_pos/pages/kasir/printer_struck_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/produk/produk_kasir.dart';
 import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/profile_kasir.dart';
@@ -7,12 +8,10 @@ import 'package:ttrana_pos/pages/kasir/page_sidebar_kasir/status_permintaan.dart
 import 'package:ttrana_pos/pages/kasir/sidebar_kasir.dart';
 
 class MainPageKasir extends StatefulWidget {
-  final String? username;
   final bool? pageSize;
   const MainPageKasir({
     super.key,
     this.pageSize,
-    this.username,
   });
 
   @override
@@ -21,6 +20,21 @@ class MainPageKasir extends StatefulWidget {
 
 class _MainPageKasirState extends State<MainPageKasir> {
   int _selectedIndex = 0; // Indeks untuk menyimpan halaman yang dipilih
+  String _username = 'Guest'; // Default username
+
+  // Fungsi untuk mengambil username dari SharedPreferences
+  Future<void> _loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _username = prefs.getString('username') ?? 'Kasir';
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername(); // Panggil saat widget diinisialisasi
+  }
 
   // Fungsi untuk meng-handle perubahan item yang dipilih
   void _onItemSelected(int index) {
@@ -43,13 +57,13 @@ class _MainPageKasirState extends State<MainPageKasir> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
+          // Tampilkan halaman berdasarkan pilihan
           Expanded(
-            child:
-                _pages[_selectedIndex], // Tampilkan halaman berdasarkan pilihan
+            child: _pages[_selectedIndex],
           ),
           SidebarKasir(
             onItemSelected: _onItemSelected,
-            username: widget.username ?? 'Guest',
+            username: _username, // Gunakan username dari SharedPreferences
           ),
         ],
       ),

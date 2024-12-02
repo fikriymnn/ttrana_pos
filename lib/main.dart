@@ -19,7 +19,7 @@ void main() {
         providers: [
           ChangeNotifierProvider(create: (context) => Cart()),
           ChangeNotifierProvider(
-              create: (context) => PaymentModel()), // Tambahkan PaymentModel
+              create: (context) => PaymentModel()), // Add PaymentModel
         ],
         child: const MyApp(),
       ),
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Aplikasi POS',
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }
@@ -56,29 +56,32 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? role = prefs.getString('role'); // Ambil role yang disimpan
+    String? role =
+        prefs.getString('role'); // Get role saved in SharedPreferences
 
     if (role != null) {
+      // Navigate based on the role
       if (role == 'kasir') {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => MainPageKasir(), // Halaman kasir
+            builder: (context) => MainPageKasir(), // Kasir's home page
           ),
         );
       } else if (role == 'admin') {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => MainPage(), // Halaman admin
+            builder: (context) => MainPage(), // Admin's home page
           ),
         );
       }
     } else {
+      // If no role is found, navigate to login page
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const Login(), // Jika belum login
+          builder: (context) => const Login(), // Login page
         ),
       );
     }
