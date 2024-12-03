@@ -106,21 +106,16 @@ class _PengeluaranFormPageState extends State<PengeluaranFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Form Pengeluaran"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () async {
-              await clearToken();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Login()),
-              );
-            },
+        title: Text(
+          "Pengeluaran",
+          style: TextStyle(
+            color: Color(0xff3F9272),
+            fontWeight: FontWeight.bold,
           ),
-        ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -129,39 +124,118 @@ class _PengeluaranFormPageState extends State<PengeluaranFormPage> {
           child: Column(
             children: [
               // Dropdown untuk kategori produk
-              DropdownButtonFormField<String>(
-                value: _kategoriProduk,
-                decoration: InputDecoration(labelText: "Kategori Produk"),
-                items: [
-                  DropdownMenuItem(value: "tanaman", child: Text("Tanaman")),
-                  DropdownMenuItem(value: "ikan", child: Text("Ikan")),
-                  DropdownMenuItem(value: "burung", child: Text("Burung")),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    _kategoriProduk = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null) {
-                    return "Kategori harus dipilih";
-                  }
-                  return null;
-                },
+              Padding(
+                padding: EdgeInsets.only(bottom: size.height * 0.01),
+                child: DropdownButtonFormField<String>(
+                  value: _kategoriProduk,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    labelText: "Kategori Produk",
+                    labelStyle: TextStyle(
+                      color: Color(0xff3F9272),
+                      fontWeight: FontWeight.bold,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide:
+                          BorderSide(color: Color(0xff3F9272), width: 1),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide:
+                          BorderSide(color: Color(0xff3F9272), width: 1),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
+                  ),
+                  items: [
+                    DropdownMenuItem(value: "tanaman", child: Text("Tanaman")),
+                    DropdownMenuItem(value: "ikan", child: Text("Ikan")),
+                    DropdownMenuItem(value: "burung", child: Text("Burung")),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      _kategoriProduk = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return "Kategori harus dipilih";
+                    }
+                    return null;
+                  },
+                ),
               ),
-              TextFormField(
-                controller: _namaPenjualController,
-                decoration: InputDecoration(labelText: "Nama Penjual"),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Nama Penjual harus diisi";
-                  }
-                  return null;
-                },
+              Padding(
+                padding: EdgeInsets.only(bottom: size.height * 0.01),
+                child: TextFormField(
+                  controller: _namaPenjualController,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    labelText: "Nama Penjual",
+                    labelStyle: TextStyle(
+                      color: Color(0xff3F9272),
+                      fontWeight: FontWeight.bold,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide:
+                          BorderSide(color: Color(0xff3F9272), width: 1),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide:
+                          BorderSide(color: Color(0xff3F9272), width: 1),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Nama Penjual harus diisi";
+                    }
+                    return null;
+                  },
+                ),
               ),
               TextFormField(
                 controller: _noPenjualController,
-                decoration: InputDecoration(labelText: "No. Penjual"),
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  labelText: "No. Penjual",
+                  labelStyle: TextStyle(
+                    color: Color(0xff3F9272),
+                    fontWeight: FontWeight.bold,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: BorderSide(color: Color(0xff3F9272), width: 1),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    borderSide: BorderSide(color: Color(0xff3F9272), width: 1),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
+                ),
                 keyboardType: TextInputType.phone,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -178,70 +252,213 @@ class _PengeluaranFormPageState extends State<PengeluaranFormPage> {
                     final produk = _produkList[index];
                     return produk["isEditing"]
                         ? Card(
+                            color: Color(0xFFEBFFF8),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
-                                  TextFormField(
-                                    initialValue: produk["nama_produk"],
-                                    decoration: InputDecoration(
-                                        labelText: "Nama Produk"),
-                                    onChanged: (value) {
-                                      produk["nama_produk"] = value;
-                                    },
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: size.height * 0.01),
+                                    child: TextFormField(
+                                      initialValue: produk["nama_produk"],
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        labelText: "Nama Produk",
+                                        labelStyle: TextStyle(
+                                          color: Color(0xff3F9272),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          borderSide: BorderSide(
+                                              color: Color(0xff3F9272),
+                                              width: 1),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          borderSide: BorderSide(
+                                              color: Color(0xff3F9272),
+                                              width: 1),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 5,
+                                        ),
+                                      ),
+                                      onChanged: (value) {
+                                        produk["nama_produk"] = value;
+                                      },
+                                    ),
                                   ),
-                                  TextFormField(
-                                    initialValue:
-                                        produk["harga_satuan"].toString(),
-                                    decoration: InputDecoration(
-                                        labelText: "Harga Satuan"),
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (value) {
-                                      produk["harga_satuan"] =
-                                          int.tryParse(value) ?? 0;
-                                    },
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: size.height * 0.01),
+                                    child: TextFormField(
+                                      initialValue:
+                                          produk["harga_satuan"].toString(),
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        labelText: "Harga Satuan",
+                                        labelStyle: TextStyle(
+                                          color: Color(0xff3F9272),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          borderSide: BorderSide(
+                                              color: Color(0xff3F9272),
+                                              width: 1),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          borderSide: BorderSide(
+                                              color: Color(0xff3F9272),
+                                              width: 1),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 5,
+                                        ),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (value) {
+                                        produk["harga_satuan"] =
+                                            int.tryParse(value) ?? 0;
+                                      },
+                                    ),
                                   ),
-                                  TextFormField(
-                                    initialValue: produk["stok"].toString(),
-                                    decoration:
-                                        InputDecoration(labelText: "Stok"),
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (value) {
-                                      produk["stok"] = int.tryParse(value) ?? 0;
-                                    },
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: size.height * 0.01),
+                                    child: TextFormField(
+                                      initialValue: produk["stok"].toString(),
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        labelText: "Stok",
+                                        labelStyle: TextStyle(
+                                          color: Color(0xff3F9272),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          borderSide: BorderSide(
+                                              color: Color(0xff3F9272),
+                                              width: 1),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          borderSide: BorderSide(
+                                              color: Color(0xff3F9272),
+                                              width: 1),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 5,
+                                        ),
+                                      ),
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (value) {
+                                        produk["stok"] =
+                                            int.tryParse(value) ?? 0;
+                                      },
+                                    ),
                                   ),
                                   ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xff3F9272),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
                                     onPressed: () => _saveProduk(index),
-                                    child: Text("Simpan Produk"),
+                                    child: Text(
+                                      "Simpan Produk",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
                           )
-                        : ListTile(
-                            title: Text(produk["nama_produk"]),
-                            subtitle: Text(
-                                "Harga: ${produk["harga_satuan"]}, Stok: ${produk["stok"]}, Total: ${produk["total"]}"),
-                            trailing: IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () {
-                                setState(() {
-                                  produk["isEditing"] = true;
-                                });
-                              },
+                        : Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 16.0),
+                            decoration: BoxDecoration(
+                              color: Color(0xff3F9272), // Warna latar belakang
+                              borderRadius:
+                                  BorderRadius.circular(12.0), // Border radius
+                            ),
+                            child: ListTile(
+                              textColor: Colors.white,
+                              title: Text(produk["nama_produk"]),
+                              subtitle: Text(
+                                  "Harga: ${produk["harga_satuan"]}, Stok: ${produk["stok"]}, Total: ${produk["total"]}"),
+                              trailing: IconButton(
+                                icon: Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    produk["isEditing"] = true;
+                                  });
+                                },
+                              ),
                             ),
                           );
                   },
                 ),
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xff3F9272),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
                 onPressed: _addProdukForm,
-                child: Text("Tambah Produk"),
+                child: Text(
+                  "Tambah Produk",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
               SizedBox(height: 20),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xff3F9272),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
                 onPressed: _submitForm,
-                child: Text("Kirim Pengeluaran"),
+                child: Text(
+                  "Kirim Pengeluaran",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),
