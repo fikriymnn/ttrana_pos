@@ -48,7 +48,7 @@ class _MainPageKasirState extends State<MainPageKasir> {
     const ProdukKasir(),
     PermintaanForm(),
     StatusPermintaan(),
-    const ProfileKasir(),
+    ProfileKasir(),
   ];
 
   @override
