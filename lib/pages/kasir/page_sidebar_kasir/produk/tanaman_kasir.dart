@@ -15,6 +15,9 @@ class TanamanKasir extends StatefulWidget {
 }
 
 class _TanamanKasirState extends State<TanamanKasir> {
+
+  
+
   late Future<List<Product>> _product;
   List<Product> _allProducts = []; // Store all products
   List<Product> _filteredProducts = []; // Store filtered products

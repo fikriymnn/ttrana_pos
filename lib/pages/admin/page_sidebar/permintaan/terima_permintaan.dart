@@ -26,14 +26,14 @@ class _AdminPermintaanPageState extends State<AdminPermintaanPage> {
 
       if (response.statusCode == 200) {
         setState(() {
-          permintaanData = response.data;
+          permintaanData = response.data ?? [];
           isLoading = false;
         });
       } else {
-        print('Gagal mendapatkan data: ${response.statusCode}');
+        _showError('Gagal mendapatkan data: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error saat mengambil data: $e');
+      _showError('Error saat mengambil data: $e');
       setState(() {
         isLoading = false;
       });
@@ -55,11 +55,39 @@ class _AdminPermintaanPageState extends State<AdminPermintaanPage> {
         );
         fetchPermintaanData(); // Refresh data setelah update
       } else {
-        print('Gagal memperbarui status: ${response.statusCode}');
+        _showError('Gagal memperbarui status: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error saat memperbarui status: $e');
+      _showError('Error saat memperbarui status: $e');
     }
+  }
+
+  void _showError(String message) {
+    final size = MediaQuery.of(context).size;
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Color.fromARGB(255, 73, 142, 125),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(size.width * 0.004),
+              ),
+            ),
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'OK',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -150,20 +178,28 @@ class _AdminPermintaanPageState extends State<AdminPermintaanPage> {
                           }),
                           cells: [
                             DataCell(
-                              Center(child: Text(item['nama_produk'])),
-                            ),
-                            DataCell(
-                              Center(child: Text(item['stok'].toString())),
+                              Center(
+                                  child: Text(
+                                      item['nama_produk'] ?? 'Tidak ada nama')),
                             ),
                             DataCell(
                               Center(
-                                  child: Text(item['hargaSatuan'].toString())),
+                                  child: Text(item['stok']?.toString() ?? '0')),
                             ),
                             DataCell(
-                              Center(child: Text(item['deskripsi'])),
+                              Center(
+                                  child: Text(
+                                      item['hargaSatuan']?.toString() ?? '0')),
                             ),
                             DataCell(
-                              Center(child: Text(item['total'].toString())),
+                              Center(
+                                  child: Text(item['deskripsi'] ??
+                                      'Tidak ada deskripsi')),
+                            ),
+                            DataCell(
+                              Center(
+                                  child:
+                                      Text(item['total']?.toString() ?? '0')),
                             ),
                             DataCell(
                               isAccepted
