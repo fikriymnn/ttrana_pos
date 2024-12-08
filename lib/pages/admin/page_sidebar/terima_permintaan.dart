@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class AdminPermintaanPage extends StatefulWidget {
   @override
@@ -88,6 +89,11 @@ class _AdminPermintaanPageState extends State<AdminPermintaanPage> {
         ],
       ),
     );
+  }
+
+  String formatAngka(double angka) {
+    final formatter = NumberFormat('#,##0', 'id_ID');
+    return formatter.format(angka);
   }
 
   @override
@@ -189,7 +195,9 @@ class _AdminPermintaanPageState extends State<AdminPermintaanPage> {
                             DataCell(
                               Center(
                                   child: Text(
-                                      item['hargaSatuan']?.toString() ?? '0')),
+                                      'Rp. ${NumberFormat.currency(locale: 'id_ID', symbol: '', decimalDigits: 0).format(item['hargaSatuan'])}'
+                                              .toString() ??
+                                          '0')),
                             ),
                             DataCell(
                               Center(

@@ -54,4 +54,5 @@ class ApiService {
       throw Exception('Failed to load products: $e');
     }
   }
+  
 }

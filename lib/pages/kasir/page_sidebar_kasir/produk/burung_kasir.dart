@@ -76,67 +76,83 @@ class _BurungKasirState extends State<BurungKasir> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('Masukkan Detail Produk'),
+              shape: BeveledRectangleBorder(),
+              title: Text(
+                'Masukkan Detail Produk',
+                textAlign: TextAlign.center,
+              ),
+              titleTextStyle: GoogleFonts.josefinSans(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black),
               content: Container(
-                height: size.height * 0.3,
-                width: size.width * 0.3,
+                height: size.height * 0.2,
+                width: size.width * 0.25,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    SizedBox(height: 5),
-                    Column(
-                      children: [
-                        Text(
-                          namaVariasi,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20,
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: size.height * 0.01),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: size.height * 0.01),
+                            child: Text(
+                              namaVariasi,
+                              style: GoogleFonts.josefinSans(
+                                color: Color(0xff8E8C8C),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 17,
+                              ),
+                            ),
                           ),
-                        ),
-                        Wrap(
-                          spacing: 10,
-                          runSpacing: 10.0,
-                          children: List.generate(category.length, (index) {
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _selectedColor = index;
-                                });
-                              },
-                              child: AnimatedContainer(
-                                duration: Duration(milliseconds: 300),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                decoration: BoxDecoration(
-                                  color: _selectedColor == index
-                                      ? const Color(0xFF28DFB1)
-                                      : Colors.transparent,
-                                  border: Border.all(
+                          Wrap(
+                            spacing: 10,
+                            runSpacing: 10.0,
+                            alignment: WrapAlignment
+                                .start, // Pastikan Wrap align ke kiri
+                            children: List.generate(category.length, (index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedColor = index;
+                                  });
+                                },
+                                child: AnimatedContainer(
+                                  duration: Duration(milliseconds: 300),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  decoration: BoxDecoration(
                                     color: _selectedColor == index
                                         ? const Color(0xFF28DFB1)
-                                        : Colors.grey,
+                                        : Colors.transparent,
+                                    border: Border.all(
+                                      color: _selectedColor == index
+                                          ? const Color(0xFF28DFB1)
+                                          : Colors.grey,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(
-                                  category[index],
-                                  style: TextStyle(
-                                    color: _selectedColor == index
-                                        ? Colors.white
-                                        : Colors.grey,
-                                    fontSize: 16,
+                                  child: Text(
+                                    category[index],
+                                    style: TextStyle(
+                                      color: _selectedColor == index
+                                          ? Colors.white
+                                          : Colors.grey,
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          }),
-                        ),
-                      ],
+                              );
+                            }),
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 20),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment:
+                          MainAxisAlignment.center, // Atur tombol ke kiri
                       children: [
                         IconButton(
                           onPressed: () {
@@ -144,16 +160,27 @@ class _BurungKasirState extends State<BurungKasir> {
                               if (quantity > 1) quantity--;
                             });
                           },
-                          icon: Icon(Icons.remove),
+                          icon: Icon(
+                            Icons.remove_circle,
+                            color: Color(0xff3F9272),
+                          ),
                         ),
-                        Text('$quantity'),
+                        Text(
+                          '$quantity',
+                          style: GoogleFonts.josefinSans(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         IconButton(
                           onPressed: () {
                             setState(() {
                               quantity++;
                             });
                           },
-                          icon: Icon(Icons.add),
+                          icon: Icon(
+                            Icons.add_circle,
+                            color: Color(0xff3F9272),
+                          ),
                         ),
                       ],
                     ),
@@ -161,13 +188,30 @@ class _BurungKasirState extends State<BurungKasir> {
                 ),
               ),
               actions: [
-                TextButton(
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xff3F9272),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('Batal'),
+                  child: Text(
+                    'Batal',
+                    style: GoogleFonts.josefinSans(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-                TextButton(
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xff3F9272),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                   onPressed: () {
                     if (_selectedColor != null) {
                       final selectedSubvariasi = product.variasis!
@@ -198,7 +242,12 @@ class _BurungKasirState extends State<BurungKasir> {
                       );
                     }
                   },
-                  child: Text('Tambah'),
+                  child: Text(
+                    'Tambah',
+                    style: GoogleFonts.josefinSans(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ],
             );
