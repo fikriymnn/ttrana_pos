@@ -5,35 +5,32 @@ import 'package:ttrana_pos/services/logout_function.dart';
 import 'package:ttrana_pos/widget/custom_button.dart';
 
 class ProfileKasir extends StatefulWidget {
-  ProfileKasir({
-    super.key,
-  });
+  const ProfileKasir({super.key});
 
   @override
   State<ProfileKasir> createState() => _ProfileKasirState();
 }
 
 class _ProfileKasirState extends State<ProfileKasir> {
-  String? _username = 'Guest'; // Default username
-  num? _noHp = 08;
-  String? _email = "Email";
-  String? _alamat = "Alamat";
-
-  // Fungsi untuk mengambil username dari SharedPreferences
-  Future<void> _loadUsername() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _username = prefs.getString('username') ?? 'Kasir';
-      _noHp = prefs.getInt('no_hp') ?? 628;
-      _email = prefs.getString('email') ?? "Email";
-      _alamat = prefs.getString('alamat') ?? "Alamat";
-    });
-  }
+  String nama = '';
+  String email = '';
+  String nomorTelepon = '';
+  String provinsi = '';
 
   @override
   void initState() {
     super.initState();
-    _loadUsername(); // Panggil saat widget diinisialisasi
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      nama = prefs.getString('username') ?? 'Tidak diketahui';
+      email = prefs.getString('email') ?? 'Tidak diketahui';
+      nomorTelepon = prefs.getString('no_hp') ?? 'Tidak diketahui';
+      provinsi = prefs.getString('provinsi') ?? 'Tidak diketahui';
+    });
   }
 
   @override
@@ -102,7 +99,7 @@ class _ProfileKasirState extends State<ProfileKasir> {
                                 vertical: size.height * 0.005,
                                 horizontal: size.width * 0.005),
                             child: Text(
-                              _username!,
+                              nama,
                               style: GoogleFonts.josefinSans(
                                 fontSize: 23,
                                 color: Color(0xff3F9272),
@@ -139,7 +136,7 @@ class _ProfileKasirState extends State<ProfileKasir> {
                                 vertical: size.height * 0.005,
                                 horizontal: size.width * 0.005),
                             child: Text(
-                              _noHp.toString(),
+                              nomorTelepon,
                               style: GoogleFonts.josefinSans(
                                 fontSize: 23,
                                 color: Color(0xff3F9272),
@@ -177,7 +174,7 @@ class _ProfileKasirState extends State<ProfileKasir> {
                                 vertical: size.height * 0.005,
                                 horizontal: size.width * 0.005),
                             child: Text(
-                              _email!,
+                              email,
                               style: GoogleFonts.josefinSans(
                                 fontSize: 23,
                                 color: Color(0xff3F9272),
@@ -214,7 +211,7 @@ class _ProfileKasirState extends State<ProfileKasir> {
                                 vertical: size.height * 0.005,
                                 horizontal: size.width * 0.005),
                             child: Text(
-                              _alamat!,
+                              provinsi,
                               style: GoogleFonts.josefinSans(
                                 fontSize: 23,
                                 color: Color(0xff3F9272),
@@ -234,10 +231,9 @@ class _ProfileKasirState extends State<ProfileKasir> {
                         //Button Logout
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 73, 142, 125),
+                            backgroundColor: Color(0xff3F9272),
                             shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(size.width * 0.006),
+                              borderRadius: BorderRadius.circular(5),
                             ),
                           ),
                           onPressed: () {

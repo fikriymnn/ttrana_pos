@@ -57,12 +57,43 @@ class _LoginState extends State<Login> {
         final role = response.data['user']['role'];
         final token = response.data['token'];
         final kasirName = response.data['user']['username'];
+        final noTelp = response.data['user']['no_hp'];
+        final email = response.data['user']['email'];
+        print(response.data); // Menampilkan objek user
+        print(response.data['user']); // Menampilkan objek user
+        print(response.data['user']['alamats']); // Menampilkan array alamats
+        // Memastikan alamats tidak null
+        final alamats = response.data['user']['alamats'] ?? [];
+        final alamat = alamats.isNotEmpty
+            ? alamats[0]
+            : null; // Ambil alamat pertama jika ada
+
+        // Menangani null pada alamat
+        final provinsi = alamat != null ? alamat['provinsi'] : '';
+        final kotaKabupaten = alamat != null ? alamat['kota_kabupaten'] : '';
+        final kecamatan = alamat != null ? alamat['kecamatan'] : '';
+        final kelurahanDesa = alamat != null ? alamat['kelurahan_desa'] : '';
+        final jalanNamaGedung =
+            alamat != null ? alamat['jalan_namagedung'] : '';
+        final rtrw = alamat != null ? alamat['rtrw'] : '';
+        final patokan = alamat != null ? alamat['patokan'] : '';
+        final namaPenerima = alamat != null ? alamat['nama_penerima'] : '';
 
         // Simpan data ke SharedPreferences
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', token);
         await prefs.setString('role', role);
         await prefs.setString('username', kasirName);
+        await prefs.setString('no_hp', noTelp);
+        await prefs.setString('email', email);
+        await prefs.setString('provinsi', provinsi);
+        await prefs.setString('kota_kabupaten', kotaKabupaten);
+        await prefs.setString('kecamatan', kecamatan);
+        await prefs.setString('kelurahan_desa', kelurahanDesa);
+        await prefs.setString('jalan_namagedung', jalanNamaGedung);
+        await prefs.setString('rtrw', rtrw);
+        await prefs.setString('patokan', patokan);
+        await prefs.setString('nama_penerima', namaPenerima);
 
         // Navigasi berdasarkan role
         if (role == 'kasir') {
@@ -393,7 +424,7 @@ class _LoginState extends State<Login> {
                                     color: const Color(0xFF3F9272),
                                     size: size.width * 0.025,
                                   ),
-                                  hintText: "username",
+                                  hintText: "Username",
                                   hintStyle: GoogleFonts.josefinSans(
                                     color: const Color(0xFF3F9272),
                                     fontWeight: FontWeight.w400,
@@ -464,8 +495,19 @@ class _LoginState extends State<Login> {
                       _isLoading
                           ? CircularProgressIndicator()
                           : ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff3F9272),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
                               onPressed: _isLoading ? null : _login,
-                              child: Text('Login'),
+                              child: Text(
+                                'Login',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                     ],
                   ),

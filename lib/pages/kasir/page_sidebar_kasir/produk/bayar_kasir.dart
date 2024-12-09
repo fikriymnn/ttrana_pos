@@ -289,7 +289,7 @@ class _BayarKasirState extends State<BayarKasir> {
                   contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
                 ),
                 onChanged: _onNominalChanged,
-                style: TextStyle(color: Color(0xff3F9272)),
+                style: TextStyle(color: Colors.black),
               ),
             ),
           ),
@@ -339,7 +339,7 @@ class _BayarKasirState extends State<BayarKasir> {
                     child: Text(
                       value,
                       style: const TextStyle(
-                        color: Color(0xff3F9272),
+                        color: Colors.black,
                       ),
                     ),
                   );

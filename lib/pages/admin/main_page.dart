@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/kebutuhan/kebutuhan.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/permintaan/terima_permintaan.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/pembelian.dart';
+import 'package:ttrana_pos/pages/admin/page_sidebar/terima_permintaan.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/produk/produk.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/profile.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_produk/tambah_produk.dart';
@@ -17,6 +18,21 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0; // Indeks untuk menyimpan halaman yang dipilih
   bool _isManagementExpanded = false; // Status apakah dropdown terbuka
+  String _username = 'Guest'; // Default username
+
+  // Fungsi untuk mengambil username dari SharedPreferences
+  Future<void> _loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _username = prefs.getString('username') ?? 'Admin';
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername(); // Panggil saat widget diinisialisasi
+  }
 
   // Fungsi untuk meng-handle perubahan item yang dipilih
   void _onItemSelected(int index) {
@@ -27,7 +43,6 @@ class _MainPageState extends State<MainPage> {
 
   // Daftar halaman berdasarkan item sidebar yang dipilih
   final List<Widget> _pages = [
-    const Produk(),
     const TambahProduk(),
     AdminPermintaanPage(),
     PengeluaranFormPage(),
@@ -48,7 +63,7 @@ class _MainPageState extends State<MainPage> {
                 _isManagementExpanded = value;
               });
             },
-            username: widget.username ?? 'Guest',
+            username: _username,
           ), // Sidebar
           Expanded(
             child:

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_produk/format_harga.dart';
 import 'produk_page.dart';
 
@@ -23,10 +24,30 @@ class _TambahProdukState extends State<TambahProduk> {
   double harga = 0.0;
   File? _image;
   List<Variasi> variasiList = [];
+  final TextEditingController _nominalController = TextEditingController();
 
   final List<String> kategoriOptions = ['tanaman', 'ikan', 'burung'];
 
   final ImagePicker _picker = ImagePicker();
+
+  void _onNominalChanged(String value) {
+    String rawValue = value.replaceAll('Rp ', '').replaceAll('.', '').trim();
+
+    if (rawValue.isNotEmpty) {
+      try {
+        int numberValue = int.parse(rawValue);
+        String formattedValue = NumberFormat.currency(
+                locale: "id_ID", symbol: "Rp ", decimalDigits: 0)
+            .format(numberValue);
+        _nominalController.value = TextEditingValue(
+          text: formattedValue,
+          selection: TextSelection.collapsed(offset: formattedValue.length),
+        );
+      } catch (_) {}
+    } else {
+      _nominalController.value = TextEditingValue(text: '');
+    }
+  }
 
   // Add this method to handle deletion
   void _deleteSubVariasi(int variasiIndex, int subVariasiIndex) {
@@ -425,10 +446,9 @@ class _TambahProdukState extends State<TambahProduk> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
+                            controller: _nominalController,
+                            onChanged: _onNominalChanged,
                             keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              CurrencyTextInputFormatter()
-                            ], // Tambahkan formatter
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Masukkan harga';
