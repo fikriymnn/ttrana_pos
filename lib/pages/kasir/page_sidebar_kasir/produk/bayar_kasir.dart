@@ -32,7 +32,7 @@ class _BayarKasirState extends State<BayarKasir> {
   final List<String> _pembayaran = [
     "Dana",
     "Gopay",
-    "Mbanking",
+    "M-Banking",
     "Ovo",
     "SeaBank"
   ];
@@ -164,6 +164,7 @@ class _BayarKasirState extends State<BayarKasir> {
         builder: (context) => PrinterStruckKasir(
           nominalDiberikan: nominal ?? 0.0,
           subTotal: widget.subTotal,
+          metodePembayaran: _selectedItem!,
         ),
       ),
     );
@@ -288,7 +289,7 @@ class _BayarKasirState extends State<BayarKasir> {
                   contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
                 ),
                 onChanged: _onNominalChanged,
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Color(0xff3F9272)),
               ),
             ),
           ),

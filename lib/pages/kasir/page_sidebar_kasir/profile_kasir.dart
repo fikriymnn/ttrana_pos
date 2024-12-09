@@ -1,10 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ttrana_pos/services/logout_function.dart';
 import 'package:ttrana_pos/widget/custom_button.dart';
 
-class ProfileKasir extends StatelessWidget {
-  const ProfileKasir({super.key});
+class ProfileKasir extends StatefulWidget {
+  ProfileKasir({
+    super.key,
+  });
+
+  @override
+  State<ProfileKasir> createState() => _ProfileKasirState();
+}
+
+class _ProfileKasirState extends State<ProfileKasir> {
+  String? _username = 'Guest'; // Default username
+  num? _noHp = 08;
+  String? _email = "Email";
+  String? _alamat = "Alamat";
+
+  // Fungsi untuk mengambil username dari SharedPreferences
+  Future<void> _loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _username = prefs.getString('username') ?? 'Kasir';
+      _noHp = prefs.getInt('no_hp') ?? 628;
+      _email = prefs.getString('email') ?? "Email";
+      _alamat = prefs.getString('alamat') ?? "Alamat";
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUsername(); // Panggil saat widget diinisialisasi
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +102,7 @@ class ProfileKasir extends StatelessWidget {
                                 vertical: size.height * 0.005,
                                 horizontal: size.width * 0.005),
                             child: Text(
-                              "AA",
+                              _username!,
                               style: GoogleFonts.josefinSans(
                                 fontSize: 23,
                                 color: Color(0xff3F9272),
@@ -109,7 +139,7 @@ class ProfileKasir extends StatelessWidget {
                                 vertical: size.height * 0.005,
                                 horizontal: size.width * 0.005),
                             child: Text(
-                              "0812971836173",
+                              _noHp.toString(),
                               style: GoogleFonts.josefinSans(
                                 fontSize: 23,
                                 color: Color(0xff3F9272),
@@ -147,7 +177,7 @@ class ProfileKasir extends StatelessWidget {
                                 vertical: size.height * 0.005,
                                 horizontal: size.width * 0.005),
                             child: Text(
-                              "AA",
+                              _email!,
                               style: GoogleFonts.josefinSans(
                                 fontSize: 23,
                                 color: Color(0xff3F9272),
@@ -184,7 +214,7 @@ class ProfileKasir extends StatelessWidget {
                                 vertical: size.height * 0.005,
                                 horizontal: size.width * 0.005),
                             child: Text(
-                              "vakjvcfaskdjsskajdjasbclsablkvcbsajhdsaghdvgufgkjdsfjdsfdsgfkjdsgfdshvcdsvhfsevfhsgdfhgdhsghgshfgdshgfhdsghfgshfghsghfsghfsghfgshdghfdgshgfhdsfh",
+                              _alamat!,
                               style: GoogleFonts.josefinSans(
                                 fontSize: 23,
                                 color: Color(0xff3F9272),
@@ -203,10 +233,23 @@ class ProfileKasir extends StatelessWidget {
                         ),
                         //Button Logout
                         ElevatedButton(
-                            onPressed: () {
-                              logout(context);
-                            },
-                            child: Text("Logout"))
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 73, 142, 125),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(size.width * 0.006),
+                            ),
+                          ),
+                          onPressed: () {
+                            logout(context);
+                          },
+                          child: Text(
+                            "Logout",
+                            style: GoogleFonts.josefinSans(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),

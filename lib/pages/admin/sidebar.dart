@@ -192,7 +192,7 @@ class _SidebarState extends State<Sidebar> {
                   ),
                   AnimasiT(
                     icon: AbilIcon.add_to_queue,
-                    text: "Pembelian",
+                    text: "Tambah Produk",
                     selected: _selected[1],
                     onTap: () => _onItemTapped(1),
                   ),
@@ -203,8 +203,8 @@ class _SidebarState extends State<Sidebar> {
                     onTap: () => _onItemTapped(2),
                   ),
                   AnimasiT(
-                    icon: Ionicons.git_pull_request_outline,
-                    text: "Kebutuhan",
+                    icon: Ionicons.help_buoy,
+                    text: "Pembelian",
                     selected: _selected[3],
                     onTap: () => _onItemTapped(3),
                   ),

@@ -381,9 +381,11 @@ class _ProdukKasirState extends State<ProdukKasir> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            SizedBox(height: size.height * 0.03),
                             Container(
+                              padding: EdgeInsets.only(top: size.height * 0.01),
                               width: size.width * 0.3,
-                              height: size.height * 0.045,
+                              height: size.height * 0.06,
                               // color: Colors.black,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,

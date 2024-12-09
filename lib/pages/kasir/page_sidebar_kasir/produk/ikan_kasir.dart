@@ -87,11 +87,15 @@ class _IkanKasirState extends State<IkanKasir> {
                     SizedBox(height: 5),
                     Column(
                       children: [
-                        Text(
-                          namaVariasi,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20,
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: size.height * 0.01),
+                          child: Text(
+                            namaVariasi,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                         Wrap(
@@ -162,12 +166,29 @@ class _IkanKasirState extends State<IkanKasir> {
               ),
               actions: [
                 TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 73, 142, 125),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(size.width * 0.006),
+                    ),
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('Batal'),
+                  child: Text(
+                    'Batal',
+                    style: GoogleFonts.josefinSans(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
                 TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 73, 142, 125),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(size.width * 0.006),
+                    ),
+                  ),
                   onPressed: () {
                     if (_selectedColor != null) {
                       final selectedSubvariasi = product.variasis!
@@ -198,7 +219,12 @@ class _IkanKasirState extends State<IkanKasir> {
                       );
                     }
                   },
-                  child: Text('Tambah'),
+                  child: Text(
+                    'Tambah',
+                    style: GoogleFonts.josefinSans(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ],
             );

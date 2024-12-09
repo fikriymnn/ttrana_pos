@@ -21,12 +21,18 @@ class MainPageKasir extends StatefulWidget {
 class _MainPageKasirState extends State<MainPageKasir> {
   int _selectedIndex = 0; // Indeks untuk menyimpan halaman yang dipilih
   String _username = 'Guest'; // Default username
+  num _noHp = 08;
+  String _email = "Email";
+  String _alamat = "Alamat";
 
   // Fungsi untuk mengambil username dari SharedPreferences
   Future<void> _loadUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _username = prefs.getString('username') ?? 'Kasir';
+      _noHp = prefs.getInt('no_hp') ?? 628;
+      _email = prefs.getString('email') ?? "Email";
+      _alamat = prefs.getString('alamat') ?? "Alamat";
     });
   }
 
@@ -44,15 +50,15 @@ class _MainPageKasirState extends State<MainPageKasir> {
   }
 
   // Daftar halaman berdasarkan item sidebar yang dipilih
-  final List<Widget> _pages = [
-    const ProdukKasir(),
-    PermintaanForm(),
-    StatusPermintaan(),
-    ProfileKasir(),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _pages = [
+      const ProdukKasir(),
+      PermintaanForm(),
+      StatusPermintaan(),
+      ProfileKasir(),
+    ];
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(

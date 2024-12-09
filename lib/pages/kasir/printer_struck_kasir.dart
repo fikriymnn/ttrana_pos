@@ -14,12 +14,14 @@ import 'package:ttrana_pos/widget/responsive.dart';
 
 class PrinterStruckKasir extends StatefulWidget {
   final double nominalDiberikan;
+  final String metodePembayaran;
 
-  const PrinterStruckKasir(
-      {super.key,
-      required this.nominalDiberikan,
-      required double subTotal,
-      String? metodePembayaran});
+  const PrinterStruckKasir({
+    super.key,
+    required this.nominalDiberikan,
+    required double subTotal,
+    required this.metodePembayaran,
+  });
 
   @override
   State<PrinterStruckKasir> createState() => _PrinterStruckKasirState();
@@ -468,6 +470,16 @@ class _PrinterStruckKasirState extends State<PrinterStruckKasir> {
                             style: pw.TextStyle(fontSize: 18)),
                         pw.Text(
                             currencyFormatter.format(widget.nominalDiberikan),
+                            style: pw.TextStyle(fontSize: 18)),
+                      ],
+                    ),
+                    pw.SizedBox(height: 7),
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text("Metode Pembayaran",
+                            style: pw.TextStyle(fontSize: 18)),
+                        pw.Text(widget.metodePembayaran,
                             style: pw.TextStyle(fontSize: 18)),
                       ],
                     ),
