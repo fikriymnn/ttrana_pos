@@ -275,14 +275,12 @@ class _PrinterStruckKasirState extends State<PrinterStruckKasir> {
 
       int total = produk.cart.fold(0, (previousValue, item) {
         // Pastikan item adalah Map<String, dynamic>
-        if (item is Map<String, dynamic>) {
-          final product = item['product'] as Product;
-          final quantity = item['quantity'] as int;
+        final product = item['product'] as Product;
+        final quantity = item['quantity'] as int;
 
-          // Hitung total harga untuk item ini
-          return previousValue + (product.harga!.toInt() * quantity);
-        }
-        return previousValue;
+        // Hitung total harga untuk item ini
+        return previousValue + (product.harga!.toInt() * quantity);
+              return previousValue;
       });
 
       double ppn = total * 0.02;
@@ -304,27 +302,25 @@ class _PrinterStruckKasirState extends State<PrinterStruckKasir> {
 
       for (var productEntry in produk.cart) {
         // productEntry adalah Map<String, dynamic>
-        if (productEntry is Map<String, dynamic>) {
-          final tanaman = productEntry['product'] as Product;
-          final quantity = productEntry['quantity'] as int;
+        final tanaman = productEntry['product'] as Product;
+        final quantity = productEntry['quantity'] as int;
 
-          items.add(
-            pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-              children: [
-                pw.Text(
-                  tanaman.judulProduk!,
-                  style: pw.TextStyle(fontSize: 16),
-                ),
-                pw.Text(
-                  '$quantity',
-                  style: pw.TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-          );
-        }
-      }
+        items.add(
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Text(
+                tanaman.judulProduk!,
+                style: pw.TextStyle(fontSize: 16),
+              ),
+              pw.Text(
+                '$quantity',
+                style: pw.TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+        );
+            }
 
       // Mengambil username kasir dari SharedPreferences
       String kasirUsername = await getKasirUsername();

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ttrana_pos/services/logout_function.dart';
-import 'package:ttrana_pos/widget/custom_button.dart';
 
 class ProfileKasir extends StatefulWidget {
   const ProfileKasir({super.key});
@@ -186,39 +185,7 @@ class _ProfileKasirState extends State<ProfileKasir> {
                           height: size.height * 0.01,
                         ),
                         //Alamat Pengguna
-                        Row(
-                          children: [
-                            Text(
-                              "Alamat Pengguna",
-                              style: GoogleFonts.josefinSans(
-                                color: Color(0xffA9A7A7),
-                                fontSize: 18,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: size.height * 0.005,
-                        ),
-                        Container(
-                          width: size.width,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: size.height * 0.005,
-                                horizontal: size.width * 0.005),
-                            child: Text(
-                              provinsi,
-                              style: GoogleFonts.josefinSans(
-                                fontSize: 23,
-                                color: Color(0xff3F9272),
-                              ),
-                            ),
-                          ),
-                        ),
+
                         //Divider
                         Padding(
                           padding: EdgeInsets.symmetric(

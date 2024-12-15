@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/pembelian.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/terima_permintaan.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/produk/produk.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/profile.dart';
 import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_produk/tambah_produk.dart';
 import 'package:ttrana_pos/pages/admin/sidebar.dart';

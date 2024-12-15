@@ -25,7 +25,6 @@ class _StatusPermintaanState extends State<StatusPermintaan> {
 
       if (response.statusCode == 200) {
         setState(() {
-          // Filter data yang hanya memiliki status 'ya' atau 'tidak'
           permintaanData = response.data
               .where(
                   (item) => item['status'] == 'ya' || item['status'] == 'tidak')
@@ -46,117 +45,129 @@ class _StatusPermintaanState extends State<StatusPermintaan> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    
     return Scaffold(
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : Center(
               child: SingleChildScrollView(
-                child: Container(
-                  color: Color(0xFFE0F7FA), // Warna latar belakang tabel
-                  padding: EdgeInsets.all(8.0),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      dataRowColor: MaterialStateColor.resolveWith(
-                          (states) => Colors.white), // Warna latar baris data
-                      headingRowColor: MaterialStateColor.resolveWith(
-                          (states) => Color(0xFF00796B)), // Warna latar header
-                      columnSpacing: 12.0,
-                      columns: [
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Nama Produk',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Stok',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Harga Satuan',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Deskripsi',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Subtotal',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Status',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ],
-                      rows: permintaanData.map((item) {
-                        final isAccepted = item['status'] == 'ya';
-                        final isRejected = item['status'] == 'tidak';
+                scrollDirection: Axis.vertical,
+                child: Padding(
+                  padding: EdgeInsets.only(left: size.width * 0.08),
+                  child: Container(
+                    color: Colors.white, // Background color of the table
 
-                        return DataRow(
-                          color: MaterialStateColor.resolveWith((states) {
-                            if (isAccepted)
-                              return Colors.green.withOpacity(0.2);
-                            if (isRejected) return Colors.red.withOpacity(0.2);
-                            return Colors.white;
-                          }),
-                          cells: [
-                            DataCell(Center(child: Text(item['nama_produk']))),
-                            DataCell(
-                                Center(child: Text(item['stok'].toString()))),
-                            DataCell(Center(
-                                child: Text(item['hargaSatuan'].toString()))),
-                            DataCell(Center(child: Text(item['deskripsi']))),
-                            DataCell(
-                                Center(child: Text(item['total'].toString()))),
-                            DataCell(
-                              isAccepted
-                                  ? Center(
-                                      child: Icon(Icons.check_circle,
-                                          color: Colors.green),
-                                    )
-                                  : isRejected
-                                      ? Center(
-                                          child: Icon(Icons.close,
-                                              color: Colors.red),
-                                        )
-                                      : Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: size.width * 0.07,
-                                              height: size.width * 0.02,
-                                              child: ElevatedButton(
+                    child: SingleChildScrollView(
+                      scrollDirection:
+                          Axis.horizontal, // Enable horizontal scroll
+                      child: DataTable(
+                        border: TableBorder.symmetric(
+                            outside:
+                                BorderSide(color: Color(0xFF00796B), width: 2),
+                            inside: BorderSide.none),
+                        dataRowColor: MaterialStateColor.resolveWith(
+                            (states) => Colors.white),
+                        headingRowColor: MaterialStateColor.resolveWith(
+                            (states) => Color(0xFF00796B)),
+                        columnSpacing: size.width * 0.01,
+                        columns: [
+                          DataColumn(
+                            label: Container(
+                              width: size.width *
+                                  0.2, // Set a fixed width for the column
+                              child: Text(
+                                'Nama Produk',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Container(
+                              width: size.width *
+                                  0.1, // Set a fixed width for the column
+                              child: Text(
+                                'Stok',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Container(
+                              width: size.width *
+                                  0.1, // Set a fixed width for the column
+                              child: Text(
+                                'Harga (Satuan)',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Container(
+                              width: size.width *
+                                  0.2, // Set a fixed width for the column
+                              child: Text(
+                                'Subtotal',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Container(
+                              width: size.width *
+                                  0.1, // Set a fixed width for the column
+                              child: Text(
+                                'Deskripsi',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Container(
+                              width: size.width *
+                                  0.1, // Set a fixed width for the column
+                              child: Text(
+                                'Status',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
+                        rows: permintaanData.map((item) {
+                          final isAccepted = item['status'] == 'ya';
+                          final isRejected = item['status'] == 'tidak';
+
+                          return DataRow(
+                            cells: [
+                              DataCell(
+                                  Center(child: Text(item['nama_produk']))),
+                              DataCell(
+                                  Center(child: Text(item['stok'].toString()))),
+                              DataCell(Center(
+                                  child: Text(item['hargaSatuan'].toString()))),
+                              DataCell(Center(child: Text(item['total']))),
+                              DataCell(Center(
+                                  child: Text(item['deskripsi'].toString()))),
+                              DataCell(
+                                isAccepted
+                                    ? Center(
+                                        child: Icon(Icons.check_circle,
+                                            color: Colors.green))
+                                    : isRejected
+                                        ? Center(
+                                            child: Icon(Icons.close,
+                                                color: Colors.red))
+                                        : Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              ElevatedButton(
                                                 onPressed: () {},
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor:
@@ -173,12 +184,8 @@ class _StatusPermintaanState extends State<StatusPermintaan> {
                                                       fontSize: 12),
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(width: size.width * 0.01),
-                                            Container(
-                                              width: size.width * 0.07,
-                                              height: size.width * 0.02,
-                                              child: ElevatedButton(
+                                              SizedBox(width: 8),
+                                              ElevatedButton(
                                                 onPressed: () {},
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor:
@@ -195,13 +202,13 @@ class _StatusPermintaanState extends State<StatusPermintaan> {
                                                       fontSize: 12),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                            ),
-                          ],
-                        );
-                      }).toList(),
+                                            ],
+                                          ),
+                              ),
+                            ],
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
                 ),

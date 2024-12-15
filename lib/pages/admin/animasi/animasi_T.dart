@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ttrana_pos/pages/admin/curve_pointer/curve_pointer_t.dart';
 
 class AnimasiT extends StatefulWidget {
   final String text;
