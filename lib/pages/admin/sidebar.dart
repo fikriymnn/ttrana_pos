@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ttrana_pos/pages/admin/animasi/animasi_m.dart';
 import 'package:ttrana_pos/widget/responsive.dart';
 import 'package:ttrana_pos/widget/abil_icon_icons.dart';
 import 'package:ttrana_pos/pages/admin/animasi/animasi_T.dart';
@@ -115,7 +114,7 @@ class _SidebarState extends State<Sidebar> {
                   ),
                   AnimasiT(
                     icon: Ionicons.git_pull_request_outline,
-                    text: "Pembelian",
+                    text: "Pengeluaran",
                     selected: _selected[2],
                     onTap: () => _onItemTapped(2),
                   ),

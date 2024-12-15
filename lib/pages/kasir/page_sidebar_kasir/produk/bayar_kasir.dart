@@ -131,7 +131,7 @@ class _BayarKasirState extends State<BayarKasir> {
           }
         }
       }
-    } on DioError catch (dioError) {
+    } on DioException catch (dioError) {
       // Tangkap kesalahan jaringan atau server
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Kesalahan jaringan: ${dioError.message}')),

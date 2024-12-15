@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ttrana_pos/pages/kasir/models/produk.dart';
 

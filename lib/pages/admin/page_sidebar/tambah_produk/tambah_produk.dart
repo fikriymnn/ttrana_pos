@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
-import 'package:ttrana_pos/pages/admin/page_sidebar/tambah_produk/format_harga.dart';
 import 'produk_page.dart';
 
 class TambahProduk extends StatefulWidget {

@@ -99,186 +99,208 @@ class _AdminPermintaanPageState extends State<AdminPermintaanPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : Center(
               child: SingleChildScrollView(
-                child: Container(
-                  color: Color(0xFFE0F7FA), // Warna latar belakang tabel
-                  padding: EdgeInsets.all(8.0),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                      dataRowColor: MaterialStateColor.resolveWith(
-                          (states) => Colors.white), // Warna latar baris data
-                      headingRowColor: MaterialStateColor.resolveWith(
-                          (states) => Color(0xFF00796B)), // Warna latar header
-                      columnSpacing: 12.0,
-                      columns: [
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Nama Produk',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Stok',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Harga Satuan',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Deskripsi',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Subtotal',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              'Status',
-                              style: TextStyle(color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ],
-                      rows: permintaanData.map((item) {
-                        final isAccepted = item['status'] == 'ya';
-                        final isRejected = item['status'] == 'tidak';
+                scrollDirection: Axis.vertical,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: size.height * 0.05),
+                  child: Container(
+                    color: Colors.white, // Background color of the table
 
-                        return DataRow(
-                          color: MaterialStateColor.resolveWith((states) {
-                            if (isAccepted)
-                              return Colors.green.withOpacity(0.2);
-                            if (isRejected) return Colors.red.withOpacity(0.2);
-                            return Colors.white;
-                          }),
-                          cells: [
-                            DataCell(
-                              Center(
-                                  child: Text(
-                                      item['nama_produk'] ?? 'Tidak ada nama')),
+                    child: SingleChildScrollView(
+                      scrollDirection:
+                          Axis.horizontal, // Enable horizontal scroll
+                      child: DataTable(
+                        border: TableBorder.symmetric(
+                            outside:
+                                BorderSide(color: Color(0xFF00796B), width: 2),
+                            inside: BorderSide.none),
+                        dataRowColor: MaterialStateColor.resolveWith(
+                            (states) => Colors.white),
+                        headingRowColor: MaterialStateColor.resolveWith(
+                            (states) => Color(0xFF00796B)),
+                        columnSpacing: size.width * 0.001,
+                        columns: [
+                          DataColumn(
+                            label: Container(
+                              width: size.width *
+                                  0.1, // Set a fixed width for the column
+                              child: Text(
+                                'Nama Produk',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                            DataCell(
-                              Center(
-                                  child: Text(item['stok']?.toString() ?? '0')),
+                          ),
+                          DataColumn(
+                            label: Container(
+                              width: size.width *
+                                  0.1, // Set a fixed width for the column
+                              child: Text(
+                                'Stok',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                            DataCell(
-                              Center(
-                                  child: Text(
-                                      'Rp. ${NumberFormat.currency(locale: 'id_ID', symbol: '', decimalDigits: 0).format(item['hargaSatuan'])}'
-                                              .toString() ??
-                                          '0')),
+                          ),
+                          DataColumn(
+                            label: Container(
+                              width: size.width *
+                                  0.1, // Set a fixed width for the column
+                              child: Text(
+                                'Harga (Satuan)',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                            DataCell(
-                              Center(
-                                  child: Text(item['deskripsi'] ??
-                                      'Tidak ada deskripsi')),
+                          ),
+                          DataColumn(
+                            label: Container(
+                              width: size.width *
+                                  0.1, // Set a fixed width for the column
+                              child: Text(
+                                'Subtotal',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                            DataCell(
-                              Center(
-                                  child:
-                                      Text(item['total']?.toString() ?? '0')),
+                          ),
+                          DataColumn(
+                            label: Container(
+                              width: size.width *
+                                  0.1, // Set a fixed width for the column
+                              child: Text(
+                                'Deskripsi',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                            DataCell(
-                              isAccepted
-                                  ? Center(
-                                      child: Icon(Icons.check_circle,
-                                          color: Colors.green),
-                                    )
-                                  : isRejected
-                                      ? Center(
-                                          child: Icon(Icons.close,
-                                              color: Colors.red),
-                                        )
-                                      : Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: size.width * 0.07,
-                                              height: size.width * 0.02,
-                                              child: ElevatedButton(
-                                                onPressed: () => updateStatus(
-                                                    item['id'], 'ya'),
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Color(0xFF3F9272),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.zero,
+                          ),
+                          DataColumn(
+                            label: Container(
+                              width: size.width *
+                                  0.1, // Set a fixed width for the column
+                              child: Text(
+                                'Status',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
+                        rows: permintaanData.map((item) {
+                          final isAccepted = item['status'] == 'ya';
+                          final isRejected = item['status'] == 'tidak';
+
+                          return DataRow(
+                            cells: [
+                              DataCell(
+                                Center(
+                                    child: Text(item['nama_produk'] ??
+                                        'Tidak ada nama')),
+                              ),
+                              DataCell(
+                                Center(
+                                    child:
+                                        Text(item['stok']?.toString() ?? '0')),
+                              ),
+                              DataCell(
+                                Center(
+                                    child: Text(
+                                        'Rp. ${NumberFormat.currency(locale: 'id_ID', symbol: '', decimalDigits: 0).format(item['hargaSatuan'])}'
+                                                .toString() ??
+                                            '0')),
+                              ),
+                              DataCell(
+                                
+                                Center(
+                                    child:
+                                        Text(item['total']?.toString() ?? '0')),
+                              ),
+                              DataCell(
+                                Center(
+                                    child: Text(item['deskripsi'] ??
+                                        'Tidak ada deskripsi')),
+                              ),
+                              DataCell(
+                                isAccepted
+                                    ? Center(
+                                        child: Icon(Icons.check_circle,
+                                            color: Colors.green),
+                                      )
+                                    : isRejected
+                                        ? Center(
+                                            child: Icon(Icons.close,
+                                                color: Colors.red),
+                                          )
+                                        : Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: size.width * 0.07,
+                                                height: size.width * 0.02,
+                                                child: ElevatedButton(
+                                                  onPressed: () => updateStatus(
+                                                      item['id'], 'ya'),
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Color(0xFF3F9272),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.zero,
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    "Terima",
+                                                    style:
+                                                        GoogleFonts.josefinSans(
+                                                            color: Colors.white,
+                                                            fontSize: 12),
                                                   ),
                                                 ),
-                                                child: Text(
-                                                  "Terima",
-                                                  style:
-                                                      GoogleFonts.josefinSans(
-                                                          color: Colors.white,
-                                                          fontSize: 12),
-                                                ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: size.width * 0.01,
-                                            ),
-                                            Container(
-                                              width: size.width * 0.07,
-                                              height: size.width * 0.02,
-                                              child: ElevatedButton(
-                                                onPressed: () => updateStatus(
-                                                    item['id'], 'tidak'),
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Color(0xFFC7C5C5),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.zero,
+                                              SizedBox(
+                                                width: size.width * 0.01,
+                                              ),
+                                              Container(
+                                                width: size.width * 0.07,
+                                                height: size.width * 0.02,
+                                                child: ElevatedButton(
+                                                  onPressed: () => updateStatus(
+                                                      item['id'], 'tidak'),
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Color(0xFFC7C5C5),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.zero,
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    "Tolak",
+                                                    style:
+                                                        GoogleFonts.josefinSans(
+                                                            color: Colors.white,
+                                                            fontSize: 12),
                                                   ),
                                                 ),
-                                                child: Text(
-                                                  "Tolak",
-                                                  style:
-                                                      GoogleFonts.josefinSans(
-                                                          color: Colors.white,
-                                                          fontSize: 12),
-                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                            ),
-                          ],
-                        );
-                      }).toList(),
+                                            ],
+                                          ),
+                              ),
+                            ],
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
                 ),
