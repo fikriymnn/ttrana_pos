@@ -55,7 +55,7 @@ class _SidebarState extends State<Sidebar> {
     final size = MediaQuery.of(context).size;
     return Responsive(
       //MOBILE
-      mobile: Container(
+      mobile:  Container(
         width: size.width * 0.23,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -66,7 +66,7 @@ class _SidebarState extends State<Sidebar> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
-        ), // Warna sidebar
+        ),
         child: Column(
           children: [
             Row(
@@ -86,12 +86,22 @@ class _SidebarState extends State<Sidebar> {
             ),
             ListTile(
               leading: const CircleAvatar(),
-              title: Text(widget.username ?? 'Guest'),
-              subtitle: const Text("Admin"),
+              title: Text(
+                widget.username ?? 'Guest',
+                style: GoogleFonts.josefinSans(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                "Admin",
+                style: GoogleFonts.josefinSans(color: Colors.white),
+              ),
             ),
             SizedBox(height: size.width * 0.005),
             Expanded(
               child: ListView(
+                padding: EdgeInsets.only(top: size.width * 0.03),
                 children: [
                   AnimasiM(
                     icon: AbilIcon.produk,
@@ -101,33 +111,27 @@ class _SidebarState extends State<Sidebar> {
                   ),
                   AnimasiM(
                     icon: AbilIcon.add_to_queue,
-                    text: "Tambah Produk",
+                    text: "Tambah Product",
                     selected: _selected[1],
                     onTap: () => _onItemTapped(1),
                   ),
                   AnimasiM(
-                    icon: Icons.request_page,
-                    text: 'Permintaan Kasir',
+                    icon: Ionicons.git_pull_request_outline,
+                    text: "Permintaan Kasir",
                     selected: _selected[2],
-                    onTap: () {
-                      _onItemTapped(2);
-                    },
+                    onTap: () => _onItemTapped(2),
                   ),
                   AnimasiM(
-                    icon: Icons.request_page,
-                    text: 'Kebutuhan',
+                    icon: Icons.money_off,
+                    text: "Pengeluaran",
                     selected: _selected[3],
-                    onTap: () {
-                      _onItemTapped(3);
-                    },
+                    onTap: () => _onItemTapped(3),
                   ),
                   AnimasiM(
-                    icon: Icons.person_2_outlined,
-                    text: 'Profile',
+                    icon: Ionicons.person_circle_outline,
+                    text: "Profil",
                     selected: _selected[4],
-                    onTap: () {
-                      _onItemTapped(4);
-                    },
+                    onTap: () => _onItemTapped(4),
                   ),
                 ],
               ),
@@ -192,7 +196,7 @@ class _SidebarState extends State<Sidebar> {
                   ),
                   AnimasiT(
                     icon: AbilIcon.add_to_queue,
-                    text: "Pembelian",
+                    text: "Tambah Product",
                     selected: _selected[1],
                     onTap: () => _onItemTapped(1),
                   ),
@@ -203,8 +207,8 @@ class _SidebarState extends State<Sidebar> {
                     onTap: () => _onItemTapped(2),
                   ),
                   AnimasiT(
-                    icon: Ionicons.git_pull_request_outline,
-                    text: "Kebutuhan",
+                    icon: Icons.money_off,
+                    text: "Pengeluaran",
                     selected: _selected[3],
                     onTap: () => _onItemTapped(3),
                   ),

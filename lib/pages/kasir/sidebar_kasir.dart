@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ttrana_pos/pages/kasir/animasi_kasir/animasi_m_kasir.dart';
@@ -242,7 +243,7 @@ class _SidebarKasirState extends State<SidebarKasir> {
                           onTap: () => _onItemTapped(1),
                         ),
                         AnimasiTKasir(
-                          icon: Icons.request_page,
+                          icon: CupertinoIcons.alarm,
                           text: "Status Permintaan",
                           selected: _selected[2],
                           onTap: () => _onItemTapped(2),
